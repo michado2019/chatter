@@ -1,0 +1,148 @@
+.smallScreenNav-wrapper {
+    display: none;
+    width: 99.6%;
+    height: 100vh;
+    position: absolute;
+    top: 90px;
+    left: 0;
+  }
+  .smallScreenNav-contents {
+    background-color: #fff;
+    width: 280px;
+    box-shadow: 2px 3px 4px #ccc;
+    padding: 10px 20px;
+    height: 94%;
+  }
+  .smallUser-div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: 0.5px 0.6px 1px #ccc;
+    padding: 0 20px;
+  }
+  .smallScreen-user_avatar {
+    width: 40px !important;
+    height: 40px !important;
+    color: #543ee0 !important;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  .smallScreen-user_name {
+    font-size: 20px;
+    color: #5d5d5d;
+  }
+  .smallScreenLinksOne {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-items: flex-start;
+    margin-left: -20px;
+  }
+  .smallScreenLink-list {
+    margin-top: 5px;
+    list-style: none;
+    width: 100%;
+    border-radius: 5px;
+    padding: 5px 10px;
+  }
+  .smallScreenLink-list:hover {
+    background-color: #f8f0dc;
+    transition: all 0.3s;
+  }
+  .smallScreenLinksOne-link {
+    font-size: 20px;
+    text-decoration: none;
+    color: #111;
+    font-weight: 600;
+  }
+  .smallScreen-sign_instructionDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 0 40px;
+    margin: 0 -20px;
+    background-color: #f8f0dc;
+  }
+  .smallScreen-sign_instruction {
+    font-size: 26px;
+    color: #111;
+  }
+  .smallScreen-sign_time {
+    color: #5d5d5d;
+    font-size: 16px;
+    margin-top: -10px;
+  }
+  .smallScreenLinksTwo {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    margin: 20px 5px;
+  }
+  .smallScreenLinksTwo-link {
+    padding: 7px 10px;
+    width: 70px;
+    border-radius: 8px;
+    text-align: center;
+    color: #111;
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    text-decoration: none;
+    border: 1px solid #d7d7d7;
+    margin: 0 10px;
+    color: #111;
+    background-color: #f2f2f2;
+  }
+  .smallScreenLinksTwo-link:hover {
+    background-color: #fff;
+  }
+  #smallScreenLinksTwo-link {
+    background: #543ee0;
+    color: #fff;
+  }
+  #smallScreenLinksTwo-link:hover {
+    background-color: #493ba0;
+    transition: all 0.3s ease-in-out;
+  }
+  .smallScreen-social_div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 10px;
+    margin-top: 60px;
+  }
+  .smallScreen-social_icon {
+    width: 30px !important;
+    height: 30px !important;
+    color: #543ee0 !important;
+    padding: 5px;
+    background-color: #f8f0dc;
+    margin: 0 10px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  .smallScreen-social_icon:hover {
+    color: #f8f0dc !important;
+    background-color: #543ee0;
+    transition: all 0.3s;
+  }
+  @media (max-width: 940px) {
+    .smallScreenNav-wrapper {
+      display: block;
+    }
+  }
+  @media (max-width: 480px) {
+    .smallScreenNav-wrapper {
+      width: 99.3%;
+    }
+    .smallScreenNav-contents {
+      padding: 20px 5px;
+    }
+    .smallScreen-sign_instructionDiv {
+      padding: 0 20px;
+      margin: 0 -5px;
+    }
+  }
+  

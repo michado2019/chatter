@@ -1,0 +1,110 @@
+.navbarWrapper {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    height: 70px;
+    padding: 10px 40px;
+  }
+  .navbarContents {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .navbarLogo {
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 72px;
+    color: #543ee0;
+    text-decoration: none;
+    margin-right: auto;
+  }
+  .navbarLinksOne {
+    display: flex;
+    align-items: center;
+  }
+  .navbarLink-list {
+    list-style: none;
+  }
+  .navbarLinksOne-link {
+    text-decoration: none;
+    margin: 0 10px;
+    color: #111;
+    font-weight: 600;
+  }
+  .navbarLinksTwo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: auto;
+  }
+  .navbarLinksTwo-link {
+    padding: 7px 10px;
+    width: 100px;
+    border-radius: 8px;
+    text-align: center;
+    color: #111;
+    font-family: "DM Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    text-decoration: none;
+    border: 1px solid #d7d7d7;
+    margin: 0 10px;
+    background-color: #f2f2f2;
+    color: #111;
+  }
+  .navbarLinksTwo-link:hover {
+    background-color: #fff;
+  }
+  #navbarLinksTwo-link {
+    background: #543ee0;
+    color: #fff;
+  }
+  #navbarLinksTwo-link:hover {
+    background-color: #493ba0;
+    transition: all 0.3s ease-in-out;
+  }
+  .navbarMenu-div {
+    display: none;
+    margin-left: auto;
+  }
+  .navbarMenu {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 7px;
+    cursor: pointer;
+    color: #543ee0 !important;
+  }
+  .navbarMenu:hover {
+    background-color: #f5f5f5;
+    color: #493ba0 !important;
+    transition: all 0.3s ease-in-out;
+  }
+  @media (max-width: 940px) {
+    .navbarLinksOne {
+      display: none;
+    }
+    .navbarLinksTwo {
+      display: none;
+    }
+    .navbarMenu-div {
+      display: block;
+    }
+  }
+  @media (max-width: 480px) {
+    .navbarWrapper {
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+      top: 0;
+      z-index: 999;
+      height: 70px;
+      padding: 10px 20px;
+    }
+  }
+  
