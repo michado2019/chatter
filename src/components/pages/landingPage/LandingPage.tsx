@@ -8,7 +8,6 @@ const LandingPage = () => {
       <div className="landingPage-contents">
         <ChatterWelcome />
         <ChatterAbout />
-        <ChatterUsers />
       </div>
     </div>
   );

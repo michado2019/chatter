@@ -1,0 +1,101 @@
+.chatterAbout-wrapper {
+  height: 100vh;
+}
+.chatterAbout-contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.chatterAbout-section1 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 5% 5%;
+}
+.chatterAbout-section1_1 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.chatterAbout-title {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 58px;
+}
+.chatterAbout-details {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 27px;
+  color: #111111;
+  width: 80%;
+}
+.chatterAbout-img {
+  width: 450px;
+  height: 384px;
+}
+.chatterAbout-section2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 15%;
+}
+.chatterAbout-title2 {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 72px;
+}
+.chatterAbout-details2 {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 27px;
+  color: #111111;
+  text-align: center;
+}
+.chatterAbout-section2_boxDiv {
+  display: flex;
+  justify-content: center;
+}
+.chatterAbout-section2_box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-sizing: border-box;
+  justify-content: space-evenly;
+  width: 230px;
+  height: 270px;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin: 20px;
+}
+.chatterAbout-section2_boxImg {
+  max-width: 32px;
+  max-height: 32px;
+  background: rgba(214, 209, 248, 0.2);
+  padding: 15px;
+  border-radius: 50%;
+}
+.chatterAbout-section2_boxTitle{
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 500;
+    margin-top: 0;
+    font-size: 24px;
+}
+.chatterAbout-section2_boxDetails{
+    font-family: 'DM Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    color: #626262;
+    margin-top: -10px;
+}
