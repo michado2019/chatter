@@ -81,7 +81,7 @@
     color: #543ee0 !important;
   }
   .navbarMenu:hover {
-    background-color: #f5f5f5;
+    background-color: #ffedcc;
     color: #493ba0 !important;
     transition: all 0.3s ease-in-out;
   }

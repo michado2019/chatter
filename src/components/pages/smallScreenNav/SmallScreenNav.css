@@ -2,14 +2,14 @@
     display: none;
     width: 99.6%;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     top: 90px;
     left: 0;
   }
   .smallScreenNav-contents {
     background-color: #fff;
     width: 280px;
-    box-shadow: 2px 3px 4px #ccc;
+    box-shadow: 0.2px 0.3px 1px #ffedcc;
     padding: 10px 20px;
     height: 94%;
   }
@@ -46,7 +46,7 @@
     padding: 5px 10px;
   }
   .smallScreenLink-list:hover {
-    background-color: #f8f0dc;
+    background-color: #ffedcc;
     transition: all 0.3s;
   }
   .smallScreenLinksOne-link {
@@ -62,7 +62,7 @@
     justify-content: flex-start;
     padding: 0 40px;
     margin: 0 -20px;
-    background-color: #f8f0dc;
+    background-color: #ffedcc;
   }
   .smallScreen-sign_instruction {
     font-size: 26px;
@@ -118,13 +118,13 @@
     height: 30px !important;
     color: #543ee0 !important;
     padding: 5px;
-    background-color: #f8f0dc;
+    background-color: #ffedcc;
     margin: 0 10px;
     border-radius: 3px;
     cursor: pointer;
   }
   .smallScreen-social_icon:hover {
-    color: #f8f0dc !important;
+    color: #ffedcc !important;
     background-color: #543ee0;
     transition: all 0.3s;
   }
@@ -145,4 +145,3 @@
       margin: 0 -5px;
     }
   }
-  
