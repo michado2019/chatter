@@ -96,15 +96,4 @@
       display: block;
     }
   }
-  @media (max-width: 480px) {
-    .navbarWrapper {
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      position: relative;
-      top: 0;
-      z-index: 999;
-      height: 70px;
-      padding: 10px 20px;
-    }
-  }
   

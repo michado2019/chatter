@@ -2,8 +2,6 @@ import { useState, useContext } from "react";
 import { UserContext } from "../../context/userContext/UserContext";
 import { FormData } from "./signInData/SignInData";
 import "./SignIn.css";
-import Navbar from "../../layouts/navbar/Navbar";
-import { navbarLinks } from "../../layouts/navbar/navbarData/NavabarData";
 const SignIn = () => {
   //State
   const [formData, setFormData] = useState<FormData>({
@@ -51,7 +49,6 @@ const SignIn = () => {
 
   return (
     <div className="signIn-wrapper">
-      <Navbar navbarLinks={navbarLinks} />
       <div className="signIn-Contents">
         <div className="signIn-Contents1">
           <h2 className="signIn-title">CHATTER</h2>
