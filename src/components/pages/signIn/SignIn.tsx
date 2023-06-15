@@ -2,6 +2,8 @@ import { useState, useContext } from "react";
 import { UserContext } from "../../context/userContext/UserContext";
 import { FormData } from "./signInData/SignInData";
 import "./SignIn.css";
+import Navbar from "../../layouts/navbar/Navbar";
+import { navbarLinks } from "../../layouts/navbar/navbarData/NavabarData";
 
 const SignIn = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -48,7 +50,8 @@ const SignIn = () => {
 
   return (
     <div className="signIn-wrapper">
-      <div className="signIn-wrapper">
+      <div className="signIn-Contents">
+        <Navbar navbarLinks={navbarLinks} />
         <form className="signIn-form" onSubmit={handleSignin}>
           <input
             type="email"
