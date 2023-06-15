@@ -39,11 +39,10 @@
     margin-left: -20px;
   }
   .smallScreenLink-list {
-    margin-top: 5px;
     list-style: none;
     width: 100%;
     border-radius: 5px;
-    padding: 5px 10px;
+    padding: 3px 0;
   }
   .smallScreenLink-list:hover {
     background-color: #ffedcc;
@@ -65,7 +64,7 @@
     background-color: #ffedcc;
   }
   .smallScreen-sign_instruction {
-    font-size: 26px;
+    font-size: 24px;
     color: #111;
   }
   .smallScreen-sign_time {
@@ -77,7 +76,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    margin: 20px 5px;
+    margin: 15px 5px;
   }
   .smallScreenLinksTwo-link {
     padding: 7px 10px;
@@ -111,7 +110,7 @@
     align-items: center;
     justify-content: flex-start;
     padding: 0 10px;
-    margin-top: 60px;
+    margin-top: 30px;
   }
   .smallScreen-social_icon {
     width: 30px !important;

@@ -57,7 +57,11 @@ const SmallScreenNav = (props: NavbarLink) => {
         <ul className="smallScreenLinksOne">
           {props.navbarLinks.map((smallScreenLink) => {
             return (
-              <li key={smallScreenLink.id} className="smallScreenLink-list">
+              <li
+                key={smallScreenLink.id}
+                className="smallScreenLink-list"
+                onClick={() => switchContext?.setState(false)}
+              >
                 <CustomNavLink
                   to={smallScreenLink.link}
                   className="smallScreenLinksOne-link"
@@ -75,25 +79,42 @@ const SmallScreenNav = (props: NavbarLink) => {
           <p className="smallScreen-sign_time">Takes less than a few seconds</p>
         </div>
         <div className="smallScreenLinksTwo">
-          <Link to="/sign-in" className="smallScreenLinksTwo-link">
+          <Link
+            to="/sign-in"
+            className="smallScreenLinksTwo-link"
+            onClick={() => switchContext?.setState(false)}
+          >
             Sign in
           </Link>
           <Link
             to="/sign-up"
             className="smallScreenLinksTwo-link"
             id="smallScreenLinksTwo-link"
+            onClick={() => switchContext?.setState(false)}
           >
             Sign up
           </Link>
         </div>
         <div className="smallScreen-social_div">
-          <a href="https://github.com/michado2019">
+          <a
+            href="https://github.com/michado2019"
+            target="_blank"
+            rel="noreferrer"
+          >
             <GitHub className="smallScreen-social_icon" />
           </a>
-          <a href="https://twitter.com/Mike_Adeshina">
+          <a
+            href="https://twitter.com/Mike_Adeshina"
+            target="_blank"
+            rel="noreferrer"
+          >
             <Twitter className="smallScreen-social_icon" />
           </a>
-          <a href="https://www.linkedin.com/in/michado2019">
+          <a
+            href="https://www.linkedin.com/in/michado2019"
+            target="_blank"
+            rel="noreferrer"
+          >
             <LinkedIn className="smallScreen-social_icon" />
           </a>
           <a href="mailto: adeshinaobafemi09@gmail.com">
