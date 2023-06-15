@@ -96,4 +96,17 @@
       display: block;
     }
   }
+  @media (max-width: 480px) {
+    .navbarWrapper{
+      padding: 20px;
+    }
+    .navbarLogo{
+      font-size: 24px;
+    }
+    .navbarMenu{
+      width: 30px !important;
+      height: 30px !important;
+    }
+  }
+  
   
