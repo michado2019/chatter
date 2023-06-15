@@ -1,12 +1,12 @@
 .chatterUser-wrapper {
-  height: 60vh;
-  margin-top: 590px;
+  margin-top: 600px;
 }
 .chatterUser-content {
   display: flex;
   align-items: center;
   background-color: #ffedcc;
   justify-content: center;
+  height: 60vh;
   padding: 40px 0;
 }
 .chatterUser-contents {

@@ -38,7 +38,7 @@ const ChatterUsers = () => {
             their ideas and engaging in thoughtful discussions.”
           </p>
           <p className="chatterUser"><span className="chatterUser-name">Adebobola Muhydeen,</span> Software developer at Apple </p>
-          <Link to="/sign-up" className="chatterUser-link">Join chatter</Link>
+          <Link to="/sign-up" className="chatterUser-link">Get started</Link>
         </div>
       </div>
     </div>

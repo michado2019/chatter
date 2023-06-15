@@ -14,7 +14,7 @@ const Navbar = (props: NavbarLink) => {
     <div className="navbarWrapper">
       <div className="navbarContents">
         <Link to="/" className="navbarLogo">
-          Chatter
+          CHATTER
         </Link>
         <ul className="navbarLinksOne">
           {props.navbarLinks.map((navbarLink) => {
