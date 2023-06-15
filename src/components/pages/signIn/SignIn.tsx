@@ -4,16 +4,20 @@ import { FormData } from "./signInData/SignInData";
 import "./SignIn.css";
 import Navbar from "../../layouts/navbar/Navbar";
 import { navbarLinks } from "../../layouts/navbar/navbarData/NavabarData";
-
+import { SwitchContext } from "../../context/switchContext/SwitchContext";
 const SignIn = () => {
+
+  //State
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
   });
 
+  const [formDisplay, setFormDisplay] = useState(false)
+
   //useContext
   const userContext = useContext(UserContext); //Context for user
-
+  const switchContext = useContext(SwitchContext) //Coontext for switch
   //Handlers
   const handleSignout = () => {
     // Form submission for signout
@@ -50,25 +54,42 @@ const SignIn = () => {
 
   return (
     <div className="signIn-wrapper">
-      <div className="signIn-Contents">
         <Navbar navbarLinks={navbarLinks} />
-        <form className="signIn-form" onSubmit={handleSignin}>
+      <div className="signIn-Contents">
+        <div className="signIn-Contents1">
+          <h2 className="signIn-title">CHATTER</h2>
+          <p className="signIn-details">Unleash the Power of Words, Connect with Like-minded Readers and Writers</p>
+        </div>
+        <div className="signIn-Contents2">
+        <div className="signIn-Contents2_linkDiv">
+           <h2 className="signIn-Contents2_link" onClick={() => setFormDisplay(true)}>Register</h2>
+           <h2 className="signIn-Contents2_link" onClick={() => setFormDisplay(false)}>Log in</h2>
+        </div>
+        <div>
+        <form className="signIn-form" onSubmit={handleSignin} style={{display: formDisplay===false?"flex":"none"}}>
           <input
             type="email"
             name="email"
             value={formData.email}
             onChange={handleInputChange}
+            className="formInput"
           />
           <input
             type="password"
             name="password"
             value={formData.password}
             onChange={handleInputChange}
+            className="formInput"
           />
           <button className="signIn-btn">Sign in</button>
+          <button onClick={handleSignout}>Sign out</button>
         </form>
+        </div>
+      <div style={{display: formDisplay===false?"none":"flex"}}>
+        Register
       </div>
-      <button onClick={handleSignout}>Sign out</button>
+        </div>
+      </div>
     </div>
   );
 };
