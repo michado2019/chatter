@@ -125,7 +125,7 @@
     width: 100px;
     height: 100px;
   }
-  #chatterUser-link{
+  #chatterUser-link {
     margin-bottom: 50px;
   }
 }
@@ -182,13 +182,14 @@
     align-items: center;
     justify-content: center;
   }
-  .chatterUser-comment, .chatterUser-comment2{
+  .chatterUser-comment,
+  .chatterUser-comment2 {
     text-align: center;
   }
-  .chatterUser{
+  .chatterUser {
     text-align: center;
   }
-  .chatterUser-Img{
+  .chatterUser-Img {
     margin-right: 0;
   }
   .chatterUser-imgDiv2 {
@@ -255,7 +256,7 @@
   .chatterUser-wrapper {
     margin-top: 585%;
   }
-  .chatterUser-Img{
+  .chatterUser-Img {
     width: 130px;
   }
 }
