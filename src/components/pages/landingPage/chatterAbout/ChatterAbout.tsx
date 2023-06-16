@@ -7,9 +7,9 @@ const ChatterAbout = () => {
   return (
     <div className="chatterAbout-wrapper">
       <div className="chatterAbout-contents">
+            <h2 className="chatterAbout-title">Chatter About</h2>
         <div className="chatterAbout-section1">
           <div className="chatterAbout-section1_1">
-            <h2 className="chatterAbout-title">Chatter About</h2>
             <p className="chatterAbout-details">
               Chatter is a multi-functional platform where authors and readers
               can have access to their own content. It aims to be a traditional
