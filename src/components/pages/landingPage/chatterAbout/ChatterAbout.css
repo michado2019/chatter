@@ -121,9 +121,9 @@
   .chatterAbout-title {
     font-size: 32px;
   }
-}
-.chatterAbout-title2 {
-  font-size: 32px;
+  .chatterAbout-title2 {
+    font-size: 32px;
+  }
 }
 @media (max-width: 768px) {
   .chatterAbout-section1 {
