@@ -5,6 +5,7 @@
   max-height: 101vh;
   left: 0;
   width: 100%;
+  background-position: center;
 }
 .chatterWelcome-contents {
   background-color: rgba(0, 0, 0, 0.55);
