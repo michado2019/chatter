@@ -29,6 +29,11 @@ const SignIn = () => {
       formData.password === "2052"
     ) {
       //Store userContext on localStorage
+      userContext?.setUser({
+        firstName: "Mike",
+        lastName: "Adeshina",
+        email: formData.email,
+      });
       localStorage.setItem("user", JSON.stringify(userContext));
     }
   };

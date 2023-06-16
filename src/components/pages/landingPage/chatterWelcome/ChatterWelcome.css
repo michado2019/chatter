@@ -64,8 +64,15 @@
   }
 }
 @media (max-width: 480px) {
+  .chatterWelcome-contents {
+    align-items: center;
+  }
   .chatterWelcome-intro {
     height: 140px;
+    text-align: center;
+  }
+  .chatterWelcome-details{
+    text-align: center;
   }
 }
 @media (max-width: 375px) {

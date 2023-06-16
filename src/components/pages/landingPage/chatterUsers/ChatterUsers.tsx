@@ -31,14 +31,11 @@ const ChatterUsers = () => {
         <img src={user3} alt="img" className="chatterUser-Img2" />
         </div>
         <div className="chatterUser-content2">
-          <p className="chatterUser-comment">
-            "Chatter has become an integral part of my online experience. As a
-            user of this incredible blogging platform, I have discovered a
-            vibrant community of individuals who are passionate about sharing
-            their ideas and engaging in thoughtful discussions.”
-          </p>
-          <p className="chatterUser"><span className="chatterUser-name">Adebobola Muhydeen,</span> Software developer at Apple </p>
-          <Link to="/sign-up" className="chatterUser-link">Get started</Link>
+          <h2 className="chatterUser-comment2">
+          Write, read and connect with great minds on chatter
+          </h2>
+          <p className="chatterUser2">Share people your great ideas, and also read write-ups based on your interests. connect with people of same interests and goals  </p>
+          <Link to="/sign-up" className="chatterUser-link" id="chatterUser-link">Get started</Link>
         </div>
       </div>
     </div>
