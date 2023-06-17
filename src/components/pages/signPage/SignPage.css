@@ -1,0 +1,35 @@
+.signPage-Contents {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.signPage-Contents1 {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-image: url("./assets/unsplash_9pjBx5uVBlgsignInBgImg.png");
+  background-blend-mode: overlay;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3%;
+  background-color: rgba(0, 0, 0, 0.55);
+}
+.signPage-title {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 72px;
+  color: #ffffff;
+}
+.signPage-details {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 36px;
+  color: #ffffff;
+}
