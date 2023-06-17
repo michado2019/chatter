@@ -1,13 +1,10 @@
-.signIn-wrapper {
-  background-color: #555;
-}
 .signIn-Contents {
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 .signIn-Contents1 {
-  width: 50%;
+  width: 35%;
   height: 100vh;
   background-size: cover;
   background-position: center;
@@ -15,11 +12,27 @@
   background-blend-mode: overlay;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  padding: 0 10%;
+  padding: 0 3%;
+  background-color: rgba(0, 0, 0, 0.55);
 }
-
+.signIn-title {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 72px;
+  color: #ffffff;
+}
+.signIn-details {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 36px;
+  color: #ffffff;
+}
 .signIn-Contents2 {
   display: flex;
   flex-direction: column;
@@ -28,12 +41,13 @@
   background-color: #fff;
   width: 70%;
   height: 100vh;
+  padding: 0 40px;
+  margin-top: -70px;
 }
 .signIn-Contents2_linkDiv {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 2px solid #555;
 }
 .signIn-Contents2_link {
   text-decoration: none;
@@ -42,28 +56,86 @@
   font-weight: 700;
   font-size: 16px;
   line-height: 24px;
-  cursor: pointer;
   margin: 0;
   width: 213px;
   text-align: left;
+  border-bottom-left-radius: 5px;
 }
 #signIn-Contents2_link {
-    text-align: right;
-  }
+  text-align: right;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 0;
+}
+.signIn-Contents2_link2 {
+  cursor: pointer;
+}
+.signIn-form_title {
+  margin: 40px 0;
+}
 .signIn-form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
+.signIn-form_label {
+  text-align: left !important;
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #3b3b3b;
+  margin-left: -340px;
+}
 .formInput {
-  width: 200%;
+  min-width: 200%;
+  max-width: 200%;
   margin: 10px 0;
   padding: 10px 12px 10px 16px;
   background: #fff;
   border: 1px solid #ced4da;
   box-shadow: 0px 2px 2px rgba(33, 37, 41, 0.06),
     0px 0px 1px rgba(33, 37, 41, 0.08);
+  border-radius: 7px;
+  outline: 0;
+  font-family: "DM Sans";
+  color: #3b3b3b;
+}
+.signInInputVisibilty-div {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-left: -230px;
+}
+.visibility {
+  margin-left: -40px;
+  cursor: pointer;
+}
+.visibility:hover {
+  color: #555 !important;
+  transition: all 0.3s;
+}
+.signIn-btn {
+  min-width: 215%;
+  max-width: 200%;
+  margin: 10px 0;
+  padding: 10px 12px 10px 20px;
+  background: #543ee0;
+  border: 1px solid #ced4da;
+  box-shadow: 0px 2px 2px rgba(33, 37, 41, 0.06),
+    0px 0px 1px rgba(33, 37, 41, 0.08);
+  border-radius: 7px;
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+}
+.signIn-btn:hover {
+  background-color: #493ba0;
+  transition: all 0.3s;
+  cursor: pointer;
 }
 
 /*British council english score*/

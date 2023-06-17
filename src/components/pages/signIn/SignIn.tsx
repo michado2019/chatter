@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { UserContext } from "../../context/userContext/UserContext";
 import { FormData } from "./signInData/SignInData";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import "./SignIn.css";
 const SignIn = () => {
   //State
@@ -10,6 +11,7 @@ const SignIn = () => {
   });
 
   const [formDisplay, setFormDisplay] = useState(false);
+  const [visibility, setVisibility] = useState(false);
 
   //useContext
   const userContext = useContext(UserContext); //Context for user
@@ -35,6 +37,10 @@ const SignIn = () => {
         email: formData.email,
       });
       localStorage.setItem("user", JSON.stringify(userContext));
+      setFormData({
+        email: "",
+        password: "",
+      })
     }
   };
 
@@ -68,30 +74,32 @@ const SignIn = () => {
               className="signIn-Contents2_link"
               onClick={() => setFormDisplay(true)}
               style={{
-                borderBottom: formDisplay === false ? "#111" : "3px solid #543ee0",
+                borderBottom: formDisplay === true ? "6px solid #543ee0" : "6px solid #ccc",
                 transition: "all 0.3s",
               }}
             >
-              Register
+              <span className="signIn-Contents2_link2">Register</span>
             </h2>
             <h2
               className="signIn-Contents2_link"
               id="signIn-Contents2_link"
               onClick={() => setFormDisplay(false)}
               style={{
-                borderBottom: formDisplay === false ? "3px solid #543ee0" : "#111",
+                borderBottom: formDisplay === true ? "6px solid #ccc" : "6px solid #543ee0",
                 transition: "all 0.3s",
               }}
             >
-              Log in
+              <span className="signIn-Contents2_link2">Log in</span>
             </h2>
           </div>
-          <div>
+          <h2 className="signIn-form_title">Welcome back</h2>
+            <div>
             <form
               className="signIn-form"
               onSubmit={handleSignin}
               style={{ display: formDisplay === false ? "flex" : "none" }}
             >
+              <label className="signIn-form_label">Email address</label>
               <input
                 type="email"
                 name="email"
@@ -99,13 +107,21 @@ const SignIn = () => {
                 onChange={handleInputChange}
                 className="formInput"
               />
+              <label className="signIn-form_label">Email address</label>
+              <div className="signInInputVisibilty-div">
               <input
-                type="password"
+                type={visibility?"text/password":"password"}
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
                 className="formInput"
+                placeholder="Enter password"
               />
+              <div>
+              <Visibility className="visibility" onClick={()=>setVisibility(prev=>!prev)} style={{display: visibility ? "flex":"none"}}/>
+              </div>
+              <VisibilityOff className="visibility" onClick={()=>setVisibility(prev=>!prev)} style={{display: visibility? "none":"flex"}}/>
+              </div>
               <button className="signIn-btn">Sign in</button>
               <button onClick={handleSignout}>Sign out</button>
             </form>
