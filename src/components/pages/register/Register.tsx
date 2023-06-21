@@ -33,6 +33,15 @@ const Register = () => {
 
     // Form submission logic
     console.log(formData);
+
+    setFormData({
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      userType: "Writer",
+    });
   };
 
   // Input change handler
