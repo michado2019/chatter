@@ -16,6 +16,7 @@ export const CustomNavLink = ({
   const activeStyle = {
     color: "#5d5d5d",
     transition: "all 0.3s ease-in-out",
+    borderBottom: "4px solid #543ee0"
   };
   return (
     <NavLink

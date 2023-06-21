@@ -1,5 +1,4 @@
 .logIn-wrapper {
-  margin-top: -100px;
 }
 .loginIn-form_title {
   text-align: center;
@@ -20,6 +19,9 @@
   line-height: 24px;
   color: #3b3b3b;
   margin-left: -340px;
+}
+#loginIn-form_label{
+  margin-left: -370px;
 }
 .formInput {
   min-width: 200%;

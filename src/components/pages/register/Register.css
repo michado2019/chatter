@@ -1,4 +1,142 @@
-  .register-Contents {
+.registerWrapper {
+  margin-left: -20px;
+  margin-bottom: -340px;
+}
+.registerTitle {
+  color: #3b3b3b;
+  text-align: center;
+  margin: 40px 0;
+}
+.registerForm1 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.registerForm1-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.registerForm1-flex2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.registerLabel {
+  margin-left: 10px;
+}
+.registerForm-flex_row {
+  display: flex;
+  align-items: center;
+}
+.registerForm {
+  width: 60%;
+}
+.registerForm1-input {
+  width: 85%;
+  margin: 10px 0;
+  margin-left: 10px;
+  padding: 10px 12px 10px 16px;
+  background: #fff;
+  border: 1px solid #ced4da;
+  box-shadow: 0px 2px 2px rgba(48, 48, 48, 0.06),
+    0px 0px 1px rgba(33, 37, 41, 0.08);
+  border-radius: 7px;
+  outline: 0;
+  font-family: "DM Sans";
+  color: #3b3b3b;
+}
+#registerForm1-input2{
+margin-left: 20px;
+}
+.registerForm1-input2 {
+  width: 102%;
+  margin: 10px;
+  padding: 10px 12px 10px 16px;
+  background: #fff;
+  border: 1px solid #ced4da;
+  box-shadow: 0px 2px 2px rgba(48, 48, 48, 0.06),
+    0px 0px 1px rgba(33, 37, 41, 0.08);
+  border-radius: 7px;
+  outline: 0;
+  font-family: "DM Sans";
+  color: #3b3b3b;
+}
+.registerForm1-flexx {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+#registerForm1 {
+  margin-left: 10px;
+}
+.registerForm2 {
+  max-width: 200%;
+  min-width: 200%;
+  margin: 10px;
+  padding: 10px 12px 10px 16px;
+  background: #fff;
+  border: 1px solid #ced4da;
+  box-shadow: 0px 2px 2px rgba(48, 48, 48, 0.06),
+    0px 0px 1px rgba(33, 37, 41, 0.08);
+  border-radius: 7px;
+  outline: 0;
+  font-family: "DM Sans";
+  color: #3b3b3b;
+}
+#registerForm2{
+  min-width: 184%;
+  max-width: 184%;
+}
+#registerForm22{
+  min-width: 203%;
+  max-width: 203%;
+}
+#signUp-btn {
+  min-width: 102%;
+  max-width: 102%;
+  margin-left: 10px;
+}
+.signUp-btn {
+  min-width: 104%;
+  max-width: 104%;
+  margin: 10px 0;
+  padding: 10px 12px 10px 20px;
+  background: #543ee0;
+  border: 1px solid #ced4da;
+  box-shadow: 0px 2px 2px rgba(33, 37, 41, 0.06),
+    0px 0px 1px rgba(33, 37, 41, 0.08);
+  border-radius: 7px;
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.signUp-btn:hover {
+  background-color: #493ba0 !important;
+  transition: all 0.3s;
+}
+#signUp-btn_white {
+  background-color: #fff;
+  color: #3b3b3b;
+}
+#signUp-btn_white:hover {
+  background-color: #543ee0;
+  color: #fff;
+  transition: all 0.3s;
+}
+.signUp-btn_icon {
+  width: 20px !important;
+  height: 20px !important;
+  margin-right: 10px;
+  border-radius: 3px;
+}
+/* .register-Contents {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
@@ -114,4 +252,3 @@
   }
   
   /*British council english score*/
-  

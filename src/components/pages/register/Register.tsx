@@ -1,48 +1,29 @@
 import "./Register.css";
 import { useState } from "react";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { FormData } from "../signIn/signInData/SignInData";
-import { useContext } from "react";
-import { UserContext } from "../../context/userContext/UserContext";
-
+import {
+  Visibility,
+  VisibilityOff,
+} from "@mui/icons-material";
+import googleImg from "./assets/googleImg.png";
+import linkedInImg from "./assets/linkedInImg.png";
+import comfirmPImg from "./assets/VectorconfirmP.png"
 const Register = () => {
   //State
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
+    comfirmPssord: "",
   });
 
   const [visibility, setVisibility] = useState(false);
 
-  //useContext
-  const userContext = useContext(UserContext); //Context for user
-  //Handlers
-  const handleSignout = () => {
-    // Form submission for signout
-    localStorage.removeItem("user");
-  };
-
   // Form submission handler
-  const handleSignin = (event: React.FormEvent) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    // Form submission for signin & Api call
-    if (
-      formData.email === "testing@gmail.com" &&
-      formData.password === "2052"
-    ) {
-      //Store userContext on localStorage
-      userContext?.setUser({
-        firstName: "Mike",
-        lastName: "Adeshina",
-        email: formData.email,
-      });
-      localStorage.setItem("user", JSON.stringify(userContext));
-      setFormData({
-        email: "",
-        password: "",
-      });
-    }
+    // Form submission for post
   };
 
   // Input change handler
@@ -52,63 +33,102 @@ const Register = () => {
       ...prevFormData,
       [name]: value,
     }));
-    userContext?.setUser({
-      firstName: "Mike",
-      lastName: "Adeshina",
-      email: formData.email,
-    });
   };
 
   return (
     <div className="registerWrapper">
-      <form className="register-form" onSubmit={handleSignin}>
-        <label className="register-form_label">You are joining as?</label>
-        <select>
-          <option value="writer">Writer</option>
-          <option value="reader">Reader</option>
-        </select>
-        <label className="register-form_label">Email address</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          className="formInput"
-        />
-        <label className="register-form_label">Password</label>
-        <div className="registerInputVisibilty-div">
-          <input
-            type={visibility ? "text/password" : "password"}
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            className="formInput"
-            placeholder="Enter password"
-          />
-          <label className="register-form_label">Confirm password</label>
-          <input
-            type="password"
-            name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            className="formInput"
-          />
-          <div>
-            <Visibility
-              className="visibility"
-              onClick={() => setVisibility((prev) => !prev)}
-              style={{ display: visibility ? "flex" : "none" }}
+      <h2 className="registerTitle">Register as a Writer/Reader</h2>
+      <form className="register-form" onSubmit={handleSubmit}>
+        <div className="registerForm1">
+          <div className="registerForm1-flex">
+            <div className="registerForm1-flex2">
+              <label className="registerLabel">First name</label>
+              <input
+                type="text"
+                placeholder="John"
+                className="registerForm1-input"
+                id="registerForm1-input1"
+              />
+            </div>
+            <div className="registerForm1-flex2">
+              <label className="registerLabel">Last name</label>
+              <input
+                type="text"
+                placeholder="Doe"
+                className="registerForm1-input"
+                id="registerForm1-input2"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="registerForm1">
+          <label className="registerLabel">Are you joining as?</label>
+          <select className="registerForm1-input2">
+            <option>Writer</option>
+            <option>Reader</option>
+          </select>
+        </div>
+        <div className="registerForm1-flexx">
+          <div className="registerForm1-flex2">
+            <label className="registerLabel">Email address</label>
+            <input
+              type="text"
+              placeholder="johndoe@gmail.com"
+              className="registerForm2"
+              id="registerForm2"
             />
           </div>
-          <VisibilityOff
-            className="visibility"
-            onClick={() => setVisibility((prev) => !prev)}
-            style={{ display: visibility ? "none" : "flex" }}
-          />
+          <div className="registerForm1-flex2">
+            <label className="registerLabel">Password</label>
+            <div className="registerForm-flex_row">
+              <input
+                type={visibility ? "text/password" : "password"}
+                placeholder="*********"
+                className="registerForm2"
+              />
+              <Visibility
+                className="visibility"
+                onClick={() => setVisibility((prev) => !prev)}
+                style={{ display: visibility ? "none" : "flex" }}
+              />
+              <VisibilityOff
+                className="visibility"
+                onClick={() => setVisibility((prev) => !prev)}
+                style={{ display: visibility ? "flex" : "none" }}
+              />
+            </div>
+          </div>
+          <div className="registerForm1-flex2">
+            <label className="registerLabel">Confirm password</label>
+            <div className="registerForm-flex_row">
+              <input
+                type={visibility ? "text/password" : "password"}
+                placeholder="*********"
+                className="registerForm2"
+                id="registerForm22"
+              />
+              <img src={comfirmPImg} alt="img"
+                className="visibility"
+                onClick={() => setVisibility((prev) => !prev)}
+              />
+            </div>
+          </div>
         </div>
-        <button className="register-btn">Sign in</button>
-        <button onClick={handleSignout}>Sign out</button>
+        <button className="signUp-btn" id="signUp-btn">
+          Create account
+        </button>
       </form>
+      <div className="registerForm1" id="registerForm1">
+        <button className="signUp-btn" id="signUp-btn_white">
+          <img src={googleImg} alt="img" className="signUp-btn_icon" />
+          Sign up with google
+        </button>
+        <button className="signUp-btn" id="signUp-btn_white">
+          {" "}
+          <img src={linkedInImg} alt="img" className="signUp-btn_icon" /> Sign
+          up with linkedin
+        </button>
+      </div>
     </div>
   );
 };

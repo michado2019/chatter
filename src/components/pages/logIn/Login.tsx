@@ -1,10 +1,10 @@
 import { useState, useContext } from "react";
 import { UserContext } from "../../context/userContext/UserContext";
 import { FormData } from "../signIn/signInData/SignInData";
-import { Visibility, VisibilityOff } from "@mui/icons-material";import "./Login.css"
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import "./Login.css";
 const Login = () => {
-
-    //State
+  //State
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -39,7 +39,7 @@ const Login = () => {
       setFormData({
         email: "",
         password: "",
-      })
+      });
     }
   };
 
@@ -58,42 +58,47 @@ const Login = () => {
   };
   return (
     <div className="logIn-wrapper">
-          <h2 className="loginIn-form_title">Welcome back</h2>
+      <h2 className="loginIn-form_title">Welcome back</h2>
+      <div>
+        <form className="loginIn-form" onSubmit={handleSignin}>
+          <label className="loginIn-form_label">Email address</label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            className="formInput"
+            placeholder="Enter email"
+          />
+          <label className="loginIn-form_label" id="loginIn-form_label">Password</label>
+          <div className="loginInInputVisibilty-div">
+            <input
+              type={visibility ? "text/password" : "password"}
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              className="formInput"
+              placeholder="Enter password"
+            />
             <div>
-            <form
-              className="loginIn-form"
-              onSubmit={handleSignin}
-            >
-              <label className="loginIn-form_label">Email address</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleInputChange}
-                className="formInput"
-                placeholder="Enter email"
+              <Visibility
+                className="visibility"
+                onClick={() => setVisibility((prev) => !prev)}
+                style={{ display: visibility ? "flex" : "none" }}
               />
-              <label className="loginIn-form_label">Email address</label>
-              <div className="loginInInputVisibilty-div">
-              <input
-                type={visibility?"text/password":"password"}
-                name="password"
-                value={formData.password}
-                onChange={handleInputChange}
-                className="formInput"
-                placeholder="Enter password"
-              />
-              <div>
-              <Visibility className="visibility" onClick={()=>setVisibility(prev=>!prev)} style={{display: visibility ? "flex":"none"}}/>
-              </div>
-              <VisibilityOff className="visibility" onClick={()=>setVisibility(prev=>!prev)} style={{display: visibility? "none":"flex"}}/>
-              </div>
-              <button className="loginIn-btn">Sign in</button>
-              <button onClick={handleSignout}>Sign out</button>
-            </form>
+            </div>
+            <VisibilityOff
+              className="visibility"
+              onClick={() => setVisibility((prev) => !prev)}
+              style={{ display: visibility ? "none" : "flex" }}
+            />
           </div>
-        </div>
-  )
-}
+          <button className="loginIn-btn">Sign in</button>
+          <button onClick={handleSignout}>Sign out</button>
+        </form>
+      </div>
+    </div>
+  );
+};
 
-export default Login
+export default Login;
