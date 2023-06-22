@@ -1,56 +1,12 @@
-.loginIn-form_title {
+.logIn-wrapper {
+  margin-left: -240px;
+}
+.logIn-form_title {
   text-align: center;
   margin: 40px 0;
 }
-.loginIn-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.loginIn-form_label {
-  text-align: left !important;
-  font-family: "DM Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #3b3b3b;
-  margin-left: -340px;
-}
-#loginIn-form_label {
-  margin-left: -370px;
-}
-.formInput {
-  min-width: 200%;
-  max-width: 200%;
-  margin: 10px 0;
-  padding: 10px 12px 10px 16px;
-  background: #fff;
-  border: 1px solid #ced4da;
-  box-shadow: 0px 2px 2px rgba(33, 37, 41, 0.06),
-    0px 0px 1px rgba(33, 37, 41, 0.08);
-  border-radius: 7px;
-  outline: 0;
-  font-family: "DM Sans";
-  color: #3b3b3b;
-}
-.loginInInputVisibilty-div {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  margin-left: -230px;
-}
-.visibility {
-  margin-left: -40px;
-  cursor: pointer;
-}
-.visibility:hover {
-  color: #555 !important;
-  transition: all 0.3s;
-}
-.loginIn-btn {
-  min-width: 215%;
+.logIn-btn {
+  min-width: 199%;
   max-width: 200%;
   margin: 10px 0;
   padding: 10px 12px 10px 20px;
@@ -64,8 +20,9 @@
   font-weight: 700;
   font-size: 18px;
   color: #fff;
+  margin-left: 10px;
 }
-.loginIn-btn:hover {
+.logIn-btn:hover {
   background-color: #493ba0;
   transition: all 0.3s;
   cursor: pointer;

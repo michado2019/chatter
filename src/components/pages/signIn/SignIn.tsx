@@ -1,16 +1,21 @@
-import {useState} from "react"
+import { useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 
 import "./SignIn.css";
 const SignIn = () => {
-
   //States
   const [formDisplay, setFormDisplay] = useState(false);
 
   return (
-    <div className="signIn-wrapper" style={{height: formDisplay? "150vh":""}}>
+    <div
+      className="signIn-wrapper"
+      style={{ height: formDisplay ? "150vh" : "" }}
+    >
       <div className="signIn-Contents">
-        <div className="signIn-Contents1" style={{height: formDisplay? "150vh":""}}>
+        <div
+          className="signIn-Contents1"
+          style={{ height: formDisplay ? "150vh" : "" }}
+        >
           <h2 className="signIn-title">CHATTER</h2>
           <p className="signIn-details">
             Unleash the Power of Words, Connect with Like-minded Readers and
@@ -28,7 +33,9 @@ const SignIn = () => {
                 transition: "all 0.3s",
               }}
             >
-              <Link to="/sign-in/register" className="signIn-Contents2_link2">Register</Link>
+              <Link to="/sign-in/register" className="signIn-Contents2_link2">
+                Register
+              </Link>
             </h2>
             <h2
               className="signIn-Contents2_link"
@@ -40,7 +47,9 @@ const SignIn = () => {
                 transition: "all 0.3s",
               }}
             >
-              <Link to="/sign-in/login" className="signIn-Contents2_link2">Log in</Link>
+              <Link to="/sign-in/login" className="signIn-Contents2_link2">
+                Log in
+              </Link>
             </h2>
           </div>
           <Outlet />

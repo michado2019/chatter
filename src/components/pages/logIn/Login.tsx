@@ -1,102 +1,87 @@
 import { useState, useContext } from "react";
 import { UserContext } from "../../context/userContext/UserContext";
-import { FormData } from "../signIn/signInData/SignInData";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import * as Yup from "yup";
+import { useFormik } from "formik";
 import "./Login.css";
+
+interface FormDataInterface {
+  email: string;
+  password: string;
+}
+
 const Login = () => {
-  //State
-  const [formData, setFormData] = useState<FormData>({
-    email: "",
-    password: "",
+  const [visibility, setVisibility] = useState(false);
+  // Formik configuration
+  const formik = useFormik<FormDataInterface>({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object().shape({
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required"),
+      password: Yup.string()
+        .min(6, "Password must be at least 6 characters")
+        .required("Password is required"),
+    }),
+    onSubmit: (values) => {
+      // Form submission logic
+      console.log(values);
+      formik.resetForm();
+    },
   });
 
-  const [visibility, setVisibility] = useState(false);
-
-  //useContext
-  const userContext = useContext(UserContext); //Context for user
-  //Handlers
-  const handleSignout = () => {
-    // Form submission for signout
-    localStorage.removeItem("user");
-  };
-
-  // Form submission handler
-  const handleSignin = (event: React.FormEvent) => {
-    event.preventDefault();
-
-    // Form submission for signin & Api call
-    if (
-      formData.email === "testing@gmail.com" &&
-      formData.password === "2052"
-    ) {
-      //Store userContext on localStorage
-      userContext?.setUser({
-        firstName: "Mike",
-        lastName: "Adeshina",
-        email: formData.email,
-      });
-      localStorage.setItem("user", JSON.stringify(userContext));
-      setFormData({
-        email: "",
-        password: "",
-      });
-    }
-  };
-
-  // Input change handler
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [name]: value,
-    }));
-    userContext?.setUser({
-      firstName: "Mike",
-      lastName: "Adeshina",
-      email: formData.email,
-    });
-  };
   return (
     <div className="logIn-wrapper">
-      <h2 className="loginIn-form_title">Welcome back</h2>
-      <div>
-        <form className="loginIn-form" onSubmit={handleSignin}>
-          <label className="loginIn-form_label">Email address</label>
+      <h2 className="logIn-form_title">Welcome back</h2>
+      <form className="register-form" onSubmit={formik.handleSubmit}>
+        <div className="registerForm1-flex2">
+          <label className="registerLabel">Email address</label>
           <input
-            type="email"
+            type="text"
+            placeholder="johndoe@gmail.com"
+            className="registerForm2"
+            id="registerForm2"
             name="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            className="formInput"
-            placeholder="Enter email"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
           />
-          <label className="loginIn-form_label" id="loginIn-form_label">Password</label>
-          <div className="loginInInputVisibilty-div">
+          {formik.touched.email && formik.errors.email && (
+            <div className="error-message">{formik.errors.email}</div>
+          )}
+        </div>
+        <div className="registerForm1-flex2">
+          <label className="registerLabel">Password</label>
+          <div className="registerForm-flex_row">
             <input
-              type={visibility ? "text/password" : "password"}
+              type={visibility ? "text" : "password"}
+              placeholder="*********"
+              className="registerForm2"
               name="password"
-              value={formData.password}
-              onChange={handleInputChange}
-              className="formInput"
-              placeholder="Enter password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
-            <div>
-              <Visibility
-                className="visibility"
-                onClick={() => setVisibility((prev) => !prev)}
-                style={{ display: visibility ? "flex" : "none" }}
-              />
-            </div>
-            <VisibilityOff
+            <Visibility
               className="visibility"
               onClick={() => setVisibility((prev) => !prev)}
               style={{ display: visibility ? "none" : "flex" }}
             />
+            <VisibilityOff
+              className="visibility"
+              onClick={() => setVisibility((prev) => !prev)}
+              style={{ display: visibility ? "flex" : "none" }}
+            />
           </div>
-          <button className="loginIn-btn">Sign in</button>
-          <button onClick={handleSignout}>Sign out</button>
-        </form>
-      </div>
+          {formik.touched.password && formik.errors.password && (
+            <div className="error-message">{formik.errors.password}</div>
+          )}
+          <button className="logIn-btn">Sign in</button>
+        </div>
+      </form>
     </div>
   );
 };

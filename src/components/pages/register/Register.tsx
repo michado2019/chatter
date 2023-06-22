@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./Register.css"
+import { useState } from "react";
+import "./Register.css";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -7,6 +7,7 @@ import googleImg from "./assets/googleImg.png";
 import linkedInImg from "./assets/linkedInImg.png";
 import comfirmPImg from "./assets/VectorconfirmP.png";
 
+//FormData interface
 interface FormData {
   firstName: string;
   lastName: string;
@@ -17,6 +18,9 @@ interface FormData {
 }
 
 const Register = () => {
+  //States
+  const [visibility, setVisibility] = useState(false);
+
   // Formik configuration
   const formik = useFormik<FormData>({
     initialValues: {
@@ -30,7 +34,9 @@ const Register = () => {
     validationSchema: Yup.object().shape({
       firstName: Yup.string().required("First name is required"),
       lastName: Yup.string().required("Last name is required"),
-      email: Yup.string().email("Invalid email address").required("Email is required"),
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required"),
       password: Yup.string()
         .min(6, "Password must be at least 6 characters")
         .required("Password is required"),
@@ -44,9 +50,6 @@ const Register = () => {
       formik.resetForm();
     },
   });
-
-  const [visibility, setVisibility] = useState(false);
-
   return (
     <div className="registerWrapper">
       <h2 className="registerTitle">Register as a Writer/Reader</h2>
@@ -82,7 +85,9 @@ const Register = () => {
                 onBlur={formik.handleBlur}
               />
               {formik.touched.lastName && formik.errors.lastName && (
-                <div className="error-message" id="error-message">{formik.errors.lastName}</div>
+                <div className="error-message" id="error-message">
+                  {formik.errors.lastName}
+                </div>
               )}
             </div>
           </div>
@@ -164,9 +169,12 @@ const Register = () => {
                 onClick={() => setVisibility((prev) => !prev)}
               />
             </div>
-            {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-              <div className="error-message">{formik.errors.confirmPassword}</div>
-            )}
+            {formik.touched.confirmPassword &&
+              formik.errors.confirmPassword && (
+                <div className="error-message">
+                  {formik.errors.confirmPassword}
+                </div>
+              )}
           </div>
         </div>
         <button className="signUp-btn" id="signUp-btn" type="submit">

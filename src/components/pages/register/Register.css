@@ -47,12 +47,12 @@
   font-family: "DM Sans";
   color: #3b3b3b;
 }
-.error-message{
+.error-message {
   color: red !important;
   font-size: 12px;
   margin-left: 10px;
 }
-#error-message{
+#error-message {
   margin-left: 10px;
 }
 #registerForm1-input2 {
@@ -145,5 +145,3 @@
   margin-right: 10px;
   border-radius: 3px;
 }
-
-/*British council english score*/
