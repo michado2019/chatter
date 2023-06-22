@@ -1,6 +1,6 @@
 .registerWrapper {
   margin-left: -20px;
-  margin-bottom: -340px;
+  margin-bottom: -400px;
 }
 .registerTitle {
   color: #3b3b3b;
@@ -46,6 +46,14 @@
   outline: 0;
   font-family: "DM Sans";
   color: #3b3b3b;
+}
+.error-message{
+  color: red !important;
+  font-size: 12px;
+  margin-left: 10px;
+}
+#error-message{
+  margin-left: 10px;
 }
 #registerForm1-input2 {
   margin-left: 20px;

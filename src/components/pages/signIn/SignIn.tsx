@@ -8,9 +8,9 @@ const SignIn = () => {
   const [formDisplay, setFormDisplay] = useState(false);
 
   return (
-    <div className="signIn-wrapper" style={{height: formDisplay? "130vh":""}}>
+    <div className="signIn-wrapper" style={{height: formDisplay? "150vh":""}}>
       <div className="signIn-Contents">
-        <div className="signIn-Contents1" style={{height: formDisplay? "130vh":""}}>
+        <div className="signIn-Contents1" style={{height: formDisplay? "150vh":""}}>
           <h2 className="signIn-title">CHATTER</h2>
           <p className="signIn-details">
             Unleash the Power of Words, Connect with Like-minded Readers and
