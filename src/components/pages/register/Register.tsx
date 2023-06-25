@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import googleImg from "./assets/googleImg.png";
 import linkedInImg from "./assets/linkedInImg.png";
 import comfirmPImg from "./assets/VectorconfirmP.png";
+import { signInWithPopup, getAuth, provider } from "../../firebase";
 
 //FormData interface
 interface FormData {
@@ -17,9 +18,32 @@ interface FormData {
   userType: string;
 }
 
+
 const Register = () => {
+
   //States
   const [visibility, setVisibility] = useState(false);
+
+
+  //Google sign in
+  const handleGoogleSignin = async () => {
+
+    const auth = getAuth();
+
+    await signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        console.log(user)
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        console.log(errorCode)
+        const errorMessage = error.message;
+        console.log(errorMessage)
+      });
+
+  };
 
   // Formik configuration
   const formik = useFormik<FormData>({
@@ -182,7 +206,7 @@ const Register = () => {
         </button>
       </form>
       <div className="registerForm1" id="registerForm1">
-        <button className="signUp-btn" id="signUp-btn_white">
+        <button className="signUp-btn" id="signUp-btn_white" onClick={handleGoogleSignin}>
           <img src={googleImg} alt="img" className="signUp-btn_icon" />
           Sign up with Google
         </button>
