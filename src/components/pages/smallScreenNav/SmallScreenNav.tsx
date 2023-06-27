@@ -22,6 +22,7 @@ const SmallScreenNav = (props: NavbarLink) => {
   const switchContext = useContext(SwitchContext); // This is a useContext for switch of navbar
   const [user, setUser] = useState<UserDataType | null>(null);
   const userData = localStorage.getItem("user");
+
   //UseEffect to handle the current user
   useEffect(() => {
     //Retrieve user data from the localStorage

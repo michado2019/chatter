@@ -5,8 +5,24 @@ import { MenuOutlined, CancelOutlined } from "@mui/icons-material";
 import { CustomNavLink } from "../../hooks/CustomNavLinks";
 import { SwitchContext } from "../../context/switchContext/SwitchContext";
 import { Link } from "react-router-dom";
-
+import { getAuth, signOut } from "firebase/auth";
 const Navbar = (props: NavbarLink) => {
+
+  //Handle signout 
+  const handleSignout = () => {
+
+    localStorage.removeItem("user")
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        console.log("out");
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
+
   //useContexts
   const switchContext = useContext(SwitchContext); // This is a useContext for switch of navbar
 
@@ -34,6 +50,9 @@ const Navbar = (props: NavbarLink) => {
           <Link to="/sign-in" className="navbarLinksTwo-link">
             Sign in
           </Link>
+          <button className="navbarLinksTwo-link" onClick={handleSignout}>
+            Sign out
+          </button>
           <Link
             to="/sign-up"
             className="navbarLinksTwo-link"

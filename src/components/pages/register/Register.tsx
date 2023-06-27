@@ -166,7 +166,7 @@ const Register = () => {
             <div className="registerForm-flex_row">
               <input
                 type={visibility ? "text" : "password"}
-                placeholder="*********"
+                placeholder="Create password"
                 className="registerForm2"
                 name="password"
                 value={formik.values.password}
@@ -193,7 +193,7 @@ const Register = () => {
             <div className="registerForm-flex_row">
               <input
                 type={visibility ? "text" : "password"}
-                placeholder="*********"
+                placeholder="Confirm password"
                 className="registerForm2"
                 id="registerForm22"
                 name="confirmPassword"
