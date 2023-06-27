@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Outlet, Link } from "react-router-dom";
-
 import "./SignIn.css";
+
 const SignIn = () => {
   //States
   const [formDisplay, setFormDisplay] = useState(false);

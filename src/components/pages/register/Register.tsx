@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import "./Register.css";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useFormik } from "formik";
@@ -7,6 +7,8 @@ import googleImg from "./assets/googleImg.png";
 import linkedInImg from "./assets/linkedInImg.png";
 import comfirmPImg from "./assets/VectorconfirmP.png";
 import { signInWithPopup, getAuth, provider } from "../../firebase";
+import { UserContext } from "../../context/userContext/UserContext";
+
 
 //FormData interface
 interface FormData {
@@ -18,31 +20,36 @@ interface FormData {
   userType: string;
 }
 
-
 const Register = () => {
-
   //States
   const [visibility, setVisibility] = useState(false);
 
+  //UserContext
+  const userContext = useContext(UserContext)
 
   //Google sign in
   const handleGoogleSignin = async () => {
-
     const auth = getAuth();
 
     await signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-        console.log(user)
+
+        //Updating userContext
+        userContext?.setUser({
+          displayName: user.displayName,
+          email: user.email,
+          photoUrl: user.photoURL,
+          emailVerified: user.emailVerified
+        })
       })
       .catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
-        console.log(errorCode)
+        console.log(errorCode);
         const errorMessage = error.message;
-        console.log(errorMessage)
+        console.log(errorMessage);
       });
-
   };
 
   // Formik configuration
@@ -74,6 +81,14 @@ const Register = () => {
       formik.resetForm();
     },
   });
+
+  //UseEffect
+  useEffect(() => {
+    if(userContext?.user!==null){
+      //Store user to local storage for persistency
+      localStorage.setItem("user", JSON.stringify(userContext))
+    }
+  })
   return (
     <div className="registerWrapper">
       <h2 className="registerTitle">Register as a Writer/Reader</h2>
@@ -206,7 +221,11 @@ const Register = () => {
         </button>
       </form>
       <div className="registerForm1" id="registerForm1">
-        <button className="signUp-btn" id="signUp-btn_white" onClick={handleGoogleSignin}>
+        <button
+          className="signUp-btn"
+          id="signUp-btn_white"
+          onClick={handleGoogleSignin}
+        >
           <img src={googleImg} alt="img" className="signUp-btn_icon" />
           Sign up with Google
         </button>

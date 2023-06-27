@@ -1,9 +1,10 @@
 
 //Type for authenticated user
 export type AuthUserType = {
-    firstName: string;
-    lastName: string;
-    email: string;
+    displayName?: string | null;
+    email?: string | null;
+    photoUrl?: string | null;
+    emailVerified?: boolean | null
   };
   export type UserProps = {
       user: AuthUserType | null,

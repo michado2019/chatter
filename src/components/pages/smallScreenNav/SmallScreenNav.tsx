@@ -7,11 +7,13 @@ import { Avatar } from "@mui/material";
 import { Email, GitHub, LinkedIn, Twitter } from "@mui/icons-material";
 import { useContext, useEffect, useState } from "react";
 
+//UserDataType
 type UserDataType = {
   user: {
-    firstName: string;
-    lastName: string;
+    displayName: string;
     email: string;
+    photoUrl: string;
+    emailVerified: boolean;
   };
 };
 
@@ -19,17 +21,15 @@ const SmallScreenNav = (props: NavbarLink) => {
   //useContexts
   const switchContext = useContext(SwitchContext); // This is a useContext for switch of navbar
   const [user, setUser] = useState<UserDataType | null>(null);
-
+  const userData = localStorage.getItem("user");
+  //UseEffect to handle the current user
   useEffect(() => {
     //Retrieve user data from the localStorage
-    const userData = localStorage.getItem("user");
     if (userData !== null) {
       const parsedUserData = JSON.parse(userData);
       setUser(parsedUserData);
     }
-  }, []);
-
-  console.log(user);
+  }, [userData]);
 
   return (
     <div
@@ -47,13 +47,14 @@ const SmallScreenNav = (props: NavbarLink) => {
           </div>
         ) : (
           <div className="smallUser-div">
-            <Avatar className="smallScreen-user_avatar" />
-            <h2 className="smallScreen-user_name">
-              {user.user.firstName} {user.user.lastName}
-            </h2>
+            <img
+              src={user.user?.photoUrl}
+              alt="profilePix"
+              className="smallScreen-user_avatar"
+            />
+            <h2 className="smallScreen-user_name">{user.user?.displayName}</h2>
           </div>
         )}
-
         <ul className="smallScreenLinksOne">
           {props.navbarLinks.map((smallScreenLink) => {
             return (
@@ -125,5 +126,4 @@ const SmallScreenNav = (props: NavbarLink) => {
     </div>
   );
 };
-
 export default SmallScreenNav;
