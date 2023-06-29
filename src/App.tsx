@@ -6,6 +6,7 @@ import SmallScreenNav from './components/pages/smallScreenNav/SmallScreenNav';
 import AppRouter from './components/route';
 
 function App() {
+  
   return (
     <div className="App">
       <Navbar navbarLinks={navbarLinks}/>

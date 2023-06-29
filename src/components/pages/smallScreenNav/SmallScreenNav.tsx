@@ -3,34 +3,43 @@ import { SwitchContext } from "../../context/switchContext/SwitchContext";
 import { Link } from "react-router-dom";
 import { CustomNavLink } from "../../hooks/CustomNavLinks";
 import { NavbarLink } from "../../layouts/navbar/navbarData/NavabarData";
-import { Avatar } from "@mui/material";
+import { Avatar } from "@mui/material"; // Updated import statement
 import { Email, GitHub, LinkedIn, Twitter } from "@mui/icons-material";
-import { useContext, useEffect, useState } from "react";
-
-//UserDataType
-type UserDataType = {
-  user: {
-    displayName: string;
-    email: string;
-    photoUrl: string;
-    emailVerified: boolean;
-  };
-};
+import { useContext, useEffect } from "react";
+import { signOut, getAuth } from "firebase/auth";
+import { UserContext } from "../../context/userContext/UserContext";
 
 const SmallScreenNav = (props: NavbarLink) => {
-  //useContexts
+  // useContexts
   const switchContext = useContext(SwitchContext); // This is a useContext for switch of navbar
-  const [user, setUser] = useState<UserDataType | null>(null);
+  const userContext = useContext(UserContext); // This is a useContext for user
   const userData = localStorage.getItem("user");
 
-  //UseEffect to handle the current user
+  // Handle signout
+  const handleSignout = () => {
+    localStorage.removeItem("user");
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        console.log("out");
+        userContext?.setUser(null);
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
+
+  // useEffect to handle the current user
   useEffect(() => {
-    //Retrieve user data from the localStorage
+    // Retrieve user data from the localStorage
     if (userData !== null) {
       const parsedUserData = JSON.parse(userData);
-      setUser(parsedUserData);
+      userContext?.setUser(parsedUserData);
     }
-  }, [userData]);
+  }, []);
+
+  const defaultAvatarSrc = ""; //Default image
 
   return (
     <div
@@ -41,19 +50,24 @@ const SmallScreenNav = (props: NavbarLink) => {
       }}
     >
       <div className="smallScreenNav-contents">
-        {user === null ? (
+        {userContext?.user === null ? (
           <div className="smallUser-div">
-            <Avatar className="smallScreen-user_avatar" />
+            <Avatar
+              className="smallScreen-user_avatar"
+              src={defaultAvatarSrc} // Use the default image source
+            />
             <h2 className="smallScreen-user_name">Chatter</h2>
           </div>
         ) : (
           <div className="smallUser-div">
             <img
-              src={user.user?.photoUrl}
+              src={userContext?.user?.photoURL || defaultAvatarSrc} // Use the default image source if photoUrl is falsy
               alt="profilePix"
               className="smallScreen-user_avatar"
             />
-            <h2 className="smallScreen-user_name">{user.user?.displayName}</h2>
+            <h2 className="smallScreen-user_name">
+              {userContext?.user?.displayName}
+            </h2>
           </div>
         )}
         <ul className="smallScreenLinksOne">
@@ -81,13 +95,23 @@ const SmallScreenNav = (props: NavbarLink) => {
           <p className="smallScreen-sign_time">Takes less than a few seconds</p>
         </div>
         <div className="smallScreenLinksTwo">
-          <Link
-            to="/sign-in"
-            className="smallScreenLinksTwo-link"
-            onClick={() => switchContext?.setState(false)}
-          >
-            Sign in
-          </Link>
+          {userContext?.user === null ? (
+            <Link
+              to="/sign-in"
+              className="smallScreenLinksTwo-link"
+              onClick={() => switchContext?.setState(false)}
+            >
+              Sign in
+            </Link>
+          ) : (
+            <button
+              className="smallScreenLinksTwo-link"
+              id="smallScreen-signout"
+              onClick={handleSignout}
+            >
+              Sign out
+            </button>
+          )}
           <Link
             to="/sign-up"
             className="smallScreenLinksTwo-link"
@@ -127,4 +151,5 @@ const SmallScreenNav = (props: NavbarLink) => {
     </div>
   );
 };
+
 export default SmallScreenNav;

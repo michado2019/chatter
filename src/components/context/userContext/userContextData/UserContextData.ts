@@ -4,7 +4,8 @@ export type AuthUserType = {
     displayName?: string | null;
     email?: string | null;
     photoUrl?: string | null;
-    emailVerified?: boolean | null
+    photoURL?: string | null;
+    emailVerified?: boolean | null;
   };
   export type UserProps = {
       user: AuthUserType | null,

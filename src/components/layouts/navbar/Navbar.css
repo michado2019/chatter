@@ -69,6 +69,30 @@
   background-color: #493ba0;
   transition: all 0.3s ease-in-out;
 }
+.navbarUser-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: auto;
+}
+.navbarUser_avatar {
+  box-shadow: 1px 1px 1px #612e2e;
+  width: 35px !important;
+  height: 35px !important;
+  cursor: pointer;
+  border-radius: 50%;
+}
+#navbarSignout {
+  background-color: #612e2e;
+  color: #fff;
+  margin-right: -10px;
+  margin-top: 5px;
+}
+#navbarSignout:hover {
+  background-color: #783333;
+  cursor: pointer;
+  transition: all 0.3s;
+}
 .navbarMenu-div {
   display: none;
   margin-left: auto;
@@ -90,6 +114,13 @@
     display: none;
   }
   .navbarLinksTwo {
+    display: none;
+  }
+  #navbarLinksTwo-link,
+  #navbarLinksTwo-link2 {
+    display: none;
+  }
+  .navbarUser-flex {
     display: none;
   }
   .navbarMenu-div {

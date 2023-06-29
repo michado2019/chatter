@@ -8,8 +8,7 @@ import linkedInImg from "./assets/linkedInImg.png";
 import comfirmPImg from "./assets/VectorconfirmP.png";
 import { signInWithPopup, getAuth, provider } from "../../firebase";
 import { UserContext } from "../../context/userContext/UserContext";
-
-
+import { AuthUserType } from "../../context/userContext/userContextData/UserContextData";
 //FormData interface
 interface FormData {
   firstName: string;
@@ -23,9 +22,13 @@ interface FormData {
 const Register = () => {
   //States
   const [visibility, setVisibility] = useState(false);
+  const [user, setUser] = useState<AuthUserType | null>(() => {
+    const savedUser = localStorage.getItem('user')
+    return savedUser ? JSON.parse(savedUser) : null
+  });
 
   //UserContext
-  const userContext = useContext(UserContext)
+  const userContext = useContext(UserContext);
 
   //Google sign in
   const handleGoogleSignin = async () => {
@@ -34,14 +37,14 @@ const Register = () => {
     await signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
-
+        setUser(user);
         //Updating userContext
         userContext?.setUser({
           displayName: user.displayName,
           email: user.email,
           photoUrl: user.photoURL,
-          emailVerified: user.emailVerified
-        })
+          emailVerified: user.emailVerified,
+        });
       })
       .catch((error) => {
         // Handle Errors here.
@@ -84,11 +87,8 @@ const Register = () => {
 
   //UseEffect
   useEffect(() => {
-    if(userContext?.user!==null){
-      //Store user to local storage for persistency
-      localStorage.setItem("user", JSON.stringify(userContext))
-    }
-  })
+      localStorage.setItem("user", JSON.stringify(user));
+  }, [user])
   return (
     <div className="registerWrapper">
       <h2 className="registerTitle">Register as a Writer/Reader</h2>
@@ -237,5 +237,4 @@ const Register = () => {
     </div>
   );
 };
-
 export default Register;
