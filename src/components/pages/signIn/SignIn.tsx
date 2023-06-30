@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Outlet, Link } from "react-router-dom";
 import "./SignIn.css";
+import Navbar from "../../layouts/navbar/Navbar";
+import { navbarLinks } from "../../layouts/navbar/navbarData/NavabarData";
 
 const SignIn = () => {
   //States
@@ -11,6 +13,7 @@ const SignIn = () => {
       className="signIn-wrapper"
       style={{ height: formDisplay ? "150vh" : "" }}
     >
+        <Navbar navbarLinks={navbarLinks}/>
       <div className="signIn-Contents">
         <div
           className="signIn-Contents1"

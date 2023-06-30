@@ -23,8 +23,8 @@ const Register = () => {
   //States
   const [visibility, setVisibility] = useState(false);
   const [user, setUser] = useState<AuthUserType | null>(() => {
-    const savedUser = localStorage.getItem('user')
-    return savedUser ? JSON.parse(savedUser) : null
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
   });
 
   //UserContext
@@ -85,10 +85,10 @@ const Register = () => {
     },
   });
 
-  //UseEffect
+  //UseEffect to save in the localStorage
   useEffect(() => {
-      localStorage.setItem("user", JSON.stringify(user));
-  }, [user])
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
   return (
     <div className="registerWrapper">
       <h2 className="registerTitle">Register as a Writer/Reader</h2>

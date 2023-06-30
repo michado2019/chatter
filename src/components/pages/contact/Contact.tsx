@@ -1,7 +1,12 @@
+import Navbar from "../../layouts/navbar/Navbar"
+import { navbarLinks } from "../../layouts/navbar/navbarData/NavabarData"
+
 const Contact = () => {
   return (
     <div className='contactWrapper'>
-      <p>Contact us page</p>
+      <div className="ccontactContents">
+      <Navbar navbarLinks={navbarLinks}/>
+      </div>
     </div>
   )
 }

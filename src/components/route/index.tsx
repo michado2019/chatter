@@ -10,12 +10,11 @@ import { UserContext } from "../context/userContext/UserContext";
 import { useContext } from "react";
 import Login from "../pages/logIn/Login";
 import Register from "../pages/register/Register";
+import Feed from "../pages/feed/Feed";
+import BookMarks from "../pages/bookMarks/BookMarks";
 const AppRouter = () => {
-
   //UseContexts
-  const userContext = useContext(UserContext) //Context for authenticated user
-  
-  
+  const userContext = useContext(UserContext); //Context for authenticated user
 
   return (
     <div className="appRouter-wrapper">
@@ -23,16 +22,23 @@ const AppRouter = () => {
         <Route path="/" element={<Home />} />
         <Route path="/about-us" element={<About />} />
         <Route path="/contact-us" element={<Contact />} />
-        <Route path="/blogs" element={userContext?.user? <Blogs /> : <Navigate to="/sign-in" />} />
+        <Route
+          path="/blogs"
+          element={userContext?.user ? <Blogs /> : <Navigate to="/sign-in" />}
+        >
+          <Route index element={<Feed />} />
+          <Route path="/blogs/feed" element={<Feed />} />
+          <Route path="/blogs/bookMarks" element={<BookMarks />} />
+        </Route>
         <Route path="/sign-in" element={<SignIn />}>
-        <Route  index element={<Login />} />
-        <Route path="/sign-in/login" element={<Login />} />
-        <Route path="/sign-in/register" element={<Register />} />
+          <Route index element={<Login />} />
+          <Route path="/sign-in/login" element={<Login />} />
+          <Route path="/sign-in/register" element={<Register />} />
         </Route>
         <Route path="/sign-up" element={<SignUp />}>
-        <Route  index element={<Register />} />
-        <Route path="/sign-up/register" element={<Register />} />
-        <Route path="/sign-up/login" element={<Login />} />
+          <Route index element={<Register />} />
+          <Route path="/sign-up/register" element={<Register />} />
+          <Route path="/sign-up/login" element={<Login />} />
         </Route>
       </Routes>
     </div>

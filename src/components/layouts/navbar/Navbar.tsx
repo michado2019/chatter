@@ -9,9 +9,10 @@ import { getAuth, signOut } from "firebase/auth";
 import { UserContext } from "../../context/userContext/UserContext";
 
 const Navbar = (props: NavbarLink) => {
+  const userContext = useContext(UserContext); // This is a useContext for user
+  
   //useStates
   const [userDisplay, setUserDisplay] = useState(false);
-  const userContext = useContext(UserContext); // This is a useContext for user
   const [user, setUser] = useState(userContext?.user);
 
   //useContexts

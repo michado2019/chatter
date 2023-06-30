@@ -1,12 +1,15 @@
 import "./SignUp.css";
 import { useState } from "react";
 import { Outlet, Link } from "react-router-dom";
+import Navbar from "../../layouts/navbar/Navbar";
+import { navbarLinks } from "../../layouts/navbar/navbarData/NavabarData";
 const SignUp = () => {
   //States
   const [formDisplay, setFormDisplay] = useState(true);
 
   return (
     <div className="signUp-wrapper">
+      <Navbar navbarLinks={navbarLinks}/>
       <div className="signIn-Contents">
         <div
           className="signIn-Contents1"
