@@ -1,7 +1,10 @@
 .feedWrapper {
-  margin: 10px;
-  margin-top: 15px;
-  margin-left: 210px;
-  border: 1px solid #d0d0d0;
+  margin-left: 280px;
+  border-left: 1px solid #d0d0d0;
+  min-height: 120vh;
+  padding: 15px 10px;
+}
+.feedContents{
   padding: 10px 50px;
+  border: 1px solid #d0d0d0;
 }

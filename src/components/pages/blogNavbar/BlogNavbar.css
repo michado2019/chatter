@@ -1,16 +1,21 @@
 .blogNavbar-wrapper {
-  margin-left: 200px;
+  margin-left: 280px;
   border: 1px solid #d0d0d0;
   height: 66px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  border-top: none;
 }
 .blogNavbar-contents {
   display: flex;
   align-items: center;
-  margin-left: 147px;
+  margin-left: 130px;
   justify-content: center;
 }
 .blogNavbar-search {
@@ -26,13 +31,14 @@
   margin-left: -370px;
 }
 .blogNavbar-user_div {
-  margin-left: 480px;
+  margin-left: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .blogNavbar-content_bell {
   width: 20px;
+  cursor: pointer;
   height: 20px;
   color: "3b3b3b";
   margin-right: 7px;

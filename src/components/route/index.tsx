@@ -23,12 +23,12 @@ const AppRouter = () => {
         <Route path="/about-us" element={<About />} />
         <Route path="/contact-us" element={<Contact />} />
         <Route
-          path="/blogs"
+          path="/blogs/*"
           element={userContext?.user ? <Blogs /> : <Navigate to="/sign-in" />}
         >
           <Route index element={<Feed />} />
-          <Route path="/blogs/feed" element={<Feed />} />
-          <Route path="/blogs/bookMarks" element={<BookMarks />} />
+          <Route path="/blogs/*/feed" element={<Feed />} />
+          <Route path="/blogs/*/bookMarks" element={<BookMarks />} />
         </Route>
         <Route path="/sign-in" element={<SignIn />}>
           <Route index element={<Login />} />
@@ -44,5 +44,4 @@ const AppRouter = () => {
     </div>
   );
 };
-
 export default AppRouter;

@@ -13,3 +13,22 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+/*Scrollbar css*/
+body {
+  font-family: "Poppins", sans-serif;
+  font-family: "Roboto", sans-serif;
+}
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #323232;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #543ee0;
+  border-radius: 20px;
+  border: 2px solid #323232;
+}
