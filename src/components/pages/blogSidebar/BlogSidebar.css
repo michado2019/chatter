@@ -30,7 +30,10 @@
   text-decoration: none;
   margin-right: auto;
   position: sticky;
-  top: 20px;
+  top: 0;
+  padding: 15px 0;
+  background-color: #fff;
+  width: 280px;
 }
 .blogSidebar-section_title {
   font: DM Sans;
@@ -79,7 +82,6 @@
   font: DM Sans;
   font-weight: 400;
   size: 18px;
-  background-color: #fff;
   margin-top: 10px;
   cursor: pointer;
 }
