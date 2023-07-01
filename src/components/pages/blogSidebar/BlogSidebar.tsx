@@ -185,7 +185,7 @@ const BlogSidebar = () => {
           <h2 className="blogSidebar-section_title">{title[2]}</h2>
           {personalData.map((each) => {
             return (
-              <div className="blogSidebar-personal">
+              <div className="blogSidebar-personal" key={each.id}>
                 <NavLink
                   to={`${each.path}`}
                   className="blogSidebar-contents_link2"

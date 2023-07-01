@@ -9,6 +9,7 @@ import comfirmPImg from "./assets/VectorconfirmP.png";
 import { signInWithPopup, getAuth, provider } from "../../firebase";
 import { UserContext } from "../../context/userContext/UserContext";
 import { AuthUserType } from "../../context/userContext/userContextData/UserContextData";
+import { useNavigate } from "react-router-dom";
 //FormData interface
 interface FormData {
   firstName: string;
@@ -20,6 +21,9 @@ interface FormData {
 }
 
 const Register = () => {
+  //useNagigate to toute to blogs page if user exists
+  const navigate = useNavigate();
+
   //States
   const [visibility, setVisibility] = useState(false);
   const [user, setUser] = useState<AuthUserType | null>(() => {
@@ -33,7 +37,6 @@ const Register = () => {
   //Google sign in
   const handleGoogleSignin = async () => {
     const auth = getAuth();
-
     await signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
@@ -89,6 +92,13 @@ const Register = () => {
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
   }, [user]);
+
+  //useEffect to navigate to blogs if user exists
+  useEffect(() => {
+    if (user !== null) {
+      navigate("/blogs");
+    }
+  }, [user, navigate]);
   return (
     <div className="registerWrapper">
       <h2 className="registerTitle">Register as a Writer/Reader</h2>
