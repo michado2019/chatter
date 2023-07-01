@@ -12,7 +12,8 @@ import Login from "../pages/logIn/Login";
 import Register from "../pages/register/Register";
 import Feed from "../pages/feed/Feed";
 import BookMarks from "../pages/bookMarks/BookMarks";
-const AppRouter = () => {
+
+const AppRouter= () => {
   //UseContexts
   const userContext = useContext(UserContext); //Context for authenticated user
 

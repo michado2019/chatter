@@ -7,17 +7,15 @@
   overflow-y: scroll;
 }
 .blogSidebar-wrapper::-webkit-scrollbar {
-  width: 15px;
+  width: 1px;
 }
 
 .blogSidebar-wrapper::-webkit-scrollbar-track {
-  background: #323232;
+  background: #f2f2f2;
 }
 
 .blogSidebar-wrapper::-webkit-scrollbar-thumb {
-  background-color: #543ee0;
   border-radius: 20px;
-  border: 3px solid #323232;
 }
 .blogSidebar-contents {
   padding: 10px 40px;
