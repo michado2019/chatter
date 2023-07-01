@@ -12,8 +12,9 @@ import Login from "../pages/logIn/Login";
 import Register from "../pages/register/Register";
 import Feed from "../pages/feed/Feed";
 import BookMarks from "../pages/bookMarks/BookMarks";
+import ForYou from "../pages/forYou/ForYou";
 
-const AppRouter= () => {
+const AppRouter = () => {
   //UseContexts
   const userContext = useContext(UserContext); //Context for authenticated user
 
@@ -35,7 +36,9 @@ const AppRouter= () => {
           }
         >
           <Route index element={<Feed />} />
-          <Route path="/blogs/*/feed" element={<Feed />} />
+          <Route path="/blogs/*/feed" element={<Feed />}>
+            <Route path="/blogs/*/feed/forYou" element={<ForYou />} />
+          </Route>
           <Route path="/blogs/*/bookMarks" element={<BookMarks />} />
         </Route>
         <Route path="/sign-in" element={<SignIn />}>

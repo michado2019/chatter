@@ -82,6 +82,7 @@
   font: DM Sans;
   font-weight: 400;
   size: 18px;
+  background-color: none;
   margin-top: 10px;
   cursor: pointer;
 }
