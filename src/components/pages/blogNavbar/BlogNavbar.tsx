@@ -6,10 +6,9 @@ import { useContext, useEffect, useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
 
 const BlogNavbar = () => {
-
-   //useContext
+  //useContext
   const userContext = useContext(UserContext);
-  
+
   //States
   const [userDisplay, setUserDisplay] = useState(false);
   const [user, setUser] = useState(userContext?.user);

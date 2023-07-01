@@ -1,28 +1,25 @@
 .blogSidebar-wrapper {
   width: 280px;
   position: absolute;
-  top: 0;
   left: 0;
+  top: 0;
+  height: 95%;
   overflow-y: scroll;
-  height: 120vh;
-  min-height: fit-content;
 }
 .blogSidebar-wrapper::-webkit-scrollbar {
-  width: 0;
+  width: 15px;
 }
 
 .blogSidebar-wrapper::-webkit-scrollbar-track {
-  background: #d0d0d0;
+  background: #323232;
 }
 
 .blogSidebar-wrapper::-webkit-scrollbar-thumb {
+  background-color: #543ee0;
   border-radius: 20px;
+  border: 3px solid #323232;
 }
-
 .blogSidebar-contents {
-  position: sticky;
-  top: 66px;
-  left: 0;
   padding: 10px 40px;
 }
 .blogLogo {
@@ -34,6 +31,8 @@
   color: #543ee0;
   text-decoration: none;
   margin-right: auto;
+  position: sticky;
+  top: 20px;
 }
 .blogSidebar-section_title {
   font: DM Sans;

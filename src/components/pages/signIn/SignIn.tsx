@@ -11,7 +11,7 @@ const SignIn = () => {
   return (
     <div
       className="signIn-wrapper"
-      style={{ height: formDisplay ? "150vh" : "" }}
+      style={{ height: formDisplay ? "164vh" : "" }}
     >
         <Navbar navbarLinks={navbarLinks}/>
       <div className="signIn-Contents">

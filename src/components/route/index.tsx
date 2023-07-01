@@ -13,19 +13,25 @@ import Register from "../pages/register/Register";
 import Feed from "../pages/feed/Feed";
 import BookMarks from "../pages/bookMarks/BookMarks";
 const AppRouter = () => {
-  
   //UseContexts
   const userContext = useContext(UserContext); //Context for authenticated user
 
   return (
     <div className="appRouter-wrapper">
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            userContext?.user !== null ? <Home /> : <Navigate to="/blogs" />
+          }
+        />
         <Route path="/about-us" element={<About />} />
         <Route path="/contact-us" element={<Contact />} />
         <Route
           path="/blogs/*"
-          element={userContext?.user!==null ? <Blogs /> : <Navigate to="/sign-in" />}
+          element={
+            userContext?.user !== null ? <Blogs /> : <Navigate to="/sign-in" />
+          }
         >
           <Route index element={<Feed />} />
           <Route path="/blogs/*/feed" element={<Feed />} />
