@@ -1,56 +1,79 @@
-.forYou-wrapper{
-    border: 1px solid #d0d0d0;
-    padding: 20px;
-    border-radius: 4px;
+.forYou-wrapper {
+  border-radius: 4px;
 }
-.forYou-contents{
-    width: 80%;
+.forYou-contents {
+  width: 100%;
 }
-.forYou-content_flex1{
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+.forYou-content {
+  padding: 20px;
+  border: 1px solid #d0d0d0;
+  padding-right: 30%;
+  border-radius: 4px;
 }
-.forYou-content_flex2{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;  
+.forYou-content_flex1 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
-.forYou-userImg{
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    margin-right: 10px;
+.forYou-content_flex2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
 }
-.forYou-userName{
-    font: DM San;
-    font-weight: 500;
-    font-size: 24px;
-    color: #111;
-    line-height: 36px;
+.forYou-userImg {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
-.forYou-job{
-    font: DM San;
-    font-weight: 500;
-    font-size: 18px;
-    color: #626262;
-    line-height: 27px;
-    margin-top: -15px; 
+.forYou-userName {
+  font: DM Sans;
+  font-weight: 500;
+  font-size: 24px;
+  color: #111;
+  line-height: 36px;
 }
-.forYou-post_timing{
-    display: flex;
-    align-items: center;
+.forYou-job {
+  font: DM Sans;
+  font-weight: 500;
+  font-size: 18px;
+  color: #626262;
+  line-height: 27px;
+  margin-top: -15px;
 }
-.forYou-post_img{
-    height: 250px;
-    width: 100%;
+.forYou-post_timing {
+  display: flex;
+  color: #626262;
+  align-items: center;
 }
-.forYou-post_reactions{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+.forYou-timingImg {
+  margin-right: 5px;
 }
-.forYou-post_comment, .forYou-post_love, .forYou-post_views{
-    display: flex;
-    align-items: center;
+.forYou-post_content {
+  color: #626262;
+}
+.forYou-post_img {
+  height: 300px;
+  width: 100%;
+  border-radius: 4px;
+}
+.forYou-post_reactions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 4px;
+}
+.forYou-post_comment,
+.forYou-post_love,
+.forYou-post_views {
+  display: flex;
+  align-items: center;
+  color: #626262;
+  font-size: 14px !important;
+}
+.forYou-reactionsImg {
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
+  cursor: pointer;
 }

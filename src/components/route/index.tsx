@@ -24,7 +24,7 @@ const AppRouter = () => {
         <Route
           path="/"
           element={
-            userContext?.user !== null ? <Home /> : <Navigate to="/blogs" />
+            userContext?.user === null ? <Home /> : <Navigate to="/blogs" />
           }
         />
         <Route path="/about-us" element={<About />} />

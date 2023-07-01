@@ -12,7 +12,7 @@ import { UserContext } from "../../context/userContext/UserContext";
 import { getAuth, signOut } from "firebase/auth";
 const BlogSidebar = () => {
   //States
-  const [skip, setSkip] = useState(5);
+  const [skip, setSkip] = useState(3);
   const [isSkip, setIsSkip] = useState(false);
 
   //Handle skip
@@ -22,7 +22,7 @@ const BlogSidebar = () => {
     }
     setIsSkip((prev) => !prev);
     if (isSkip === false) {
-      setSkip(5);
+      setSkip(3);
     }
   };
 
@@ -39,36 +39,35 @@ const BlogSidebar = () => {
   //Sidebar title array
   const title = ["Overview", "Trending tags", "Personal"];
 
-   //useContext
-   const userContext = useContext(UserContext);
-  
-   //States
-   const [user, setUser] = useState(userContext?.user);
- 
-   //Handle signout
-   const handleSignout = () => {
-     const auth = getAuth();
-     signOut(auth)
-       .then(() => {
+  //useContext
+  const userContext = useContext(UserContext);
 
-         // Sign-out successful.
-         localStorage.removeItem("user");
-         userContext?.setUser(null);
-         console.log("out");
-       })
-       .catch((error) => {
-         // An error happened.
-       });
-   };
- 
-   //useEffect
-   useEffect(() => {
-     const savedUser = localStorage.getItem("user");
-     if (savedUser !== null) {
-       const parsedUser = JSON.parse(savedUser);
-       setUser(parsedUser);
-     }
-   }, []);
+  //States
+  const [user, setUser] = useState(userContext?.user);
+
+  //Handle signout
+  const handleSignout = () => {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        localStorage.removeItem("user");
+        userContext?.setUser(null);
+        console.log("out");
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
+
+  //useEffect
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser !== null) {
+      const parsedUser = JSON.parse(savedUser);
+      setUser(parsedUser);
+    }
+  }, []);
   return (
     <div className="blogSidebar-wrapper">
       <div className="blogSidebar-contents">
@@ -76,7 +75,12 @@ const BlogSidebar = () => {
           CHATTER
         </Link>
         <div className="blogSidebar-section">
-          <h2 className="blogSidebar-section_title">{title[0]}</h2>
+          <h2
+            className="blogSidebar-section_title"
+            id="blogSidebar-section_title"
+          >
+            {title[0]}
+          </h2>
           <div className="blogSidebar-content">
             <div className="blogSidebar-content_flex">
               <img
@@ -91,7 +95,7 @@ const BlogSidebar = () => {
                 }
                 className="blogSidebar-contents_link"
               >
-                {blogSidebarDataOne[0].path}
+                {blogSidebarDataOne[0].link}
               </NavLink>
             </div>
             <div className="blogSidebar-content_flex">
@@ -107,7 +111,7 @@ const BlogSidebar = () => {
                 }
                 className="blogSidebar-contents_link"
               >
-                {blogSidebarDataOne[1].path}
+                {blogSidebarDataOne[1].link}
               </NavLink>
             </div>
             <div className="blogSidebar-content_flex">
@@ -123,7 +127,7 @@ const BlogSidebar = () => {
                 }
                 className="blogSidebar-contents_link"
               >
-                {blogSidebarDataOne[2].path}
+                {blogSidebarDataOne[2].link}
               </NavLink>
             </div>
             <div className="blogSidebar-content_flex">
@@ -139,7 +143,7 @@ const BlogSidebar = () => {
                 }
                 className="blogSidebar-contents_link"
               >
-                {blogSidebarDataOne[3].path}
+                {blogSidebarDataOne[3].link}
               </NavLink>
             </div>
             <div className="blogSidebar-content_flex">
@@ -155,7 +159,7 @@ const BlogSidebar = () => {
                 }
                 className="blogSidebar-contents_link"
               >
-                {blogSidebarDataOne[4].path}
+                {blogSidebarDataOne[4].link}
               </NavLink>
             </div>
           </div>
@@ -198,7 +202,9 @@ const BlogSidebar = () => {
               </div>
             );
           })}
-          <button className="blogSidebar-logout_btn" onClick={handleSignout}>Logout</button>
+          <button className="blogSidebar-logout_btn" onClick={handleSignout}>
+            Logout
+          </button>
         </div>
       </div>
     </div>

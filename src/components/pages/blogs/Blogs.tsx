@@ -12,8 +12,9 @@ const Blogs = () => {
         <BlogNavbar />
         <BlogSidebar />
         <Routes>
-          <Route index element={<Feed />} />
+          <Route path="/" element={<Feed />} index />
           <Route path="/feed/*" element={<Feed />}>
+            <Route index element={<ForYou />} />
             <Route path="/feed/*/forYou" element={<ForYou />} />
           </Route>
           <Route path="/bookMarks" element={<BookMarks />} />
