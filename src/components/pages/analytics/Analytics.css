@@ -1,4 +1,58 @@
-
-.analyticsWrapper{
-    margin-left: 280px;
+.analyticsWrapper {
+  margin-left: 280px;
+  padding: 20px 50px;
+}
+.analyticsTitle {
+  font-size: 28px;
+  line-height: 32px;
+  font-size: MD Sans;
+  color: #000;
+}
+.analyticsDate,
+.analyticsDays {
+  font: DM Sans;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 32px;
+  border-bottom: 2px solid #543ee0;
+}
+.analyticsDays {
+  color: #626262;
+  border-bottom: none;
+}
+.analyticsPosts-highlights {
+  font-size: 20px;
+  line-height: 32px;
+  font-size: MD Sans;
+  color: #000;
+}
+.analyticsTop-posts {
+  font: DM Sans;
+  font-weight: 500;
+  font-size: 18px;
+  color: #626262;
+  line-height: 32px;
+}
+.nextPrev-arrow_div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.nextPrev-arrow{
+    color: #543ee0 !important;
+    cursor: pointer;
+    background-color: #f2f2f2;
+    border-radius: 2px;
+    border: 1px solid #543ee0;
+}
+.analytics-post_viewBtn {
+  background-color: #543ee0;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 700;
+  font: DM Sans;
+  padding: 15px 20px;
+  border: 0;
+  margin-top: 15px;
+  cursor: pointer;
 }

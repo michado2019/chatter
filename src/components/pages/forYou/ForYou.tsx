@@ -3,9 +3,9 @@ import commentImg from "./assets/ant-design_comment-outlinedcommentImg.png";
 import loveImg from "./assets/material-symbols_favorite-outlineloveImg.png";
 import viewsImg from "./assets/ant-design_read-outlinedtimingImg.png";
 import timingImg from "./assets/ant-design_read-outlinedtimingImg.png";
-const ForYou = () => {
-  //feeds
-  const feed = [
+
+ //feeds
+ export const feed = [
     {
       id: 1,
       userImg:
@@ -46,6 +46,7 @@ const ForYou = () => {
         post: "Embarking on a journey as a product designer can be an exhilarating and fulfilling experience. As a profession that bridges the realms of art, technology, and problem-solving, product design offers an opportunity to shape the way people interact with the world around them.",
       }
   ];
+const ForYou = () => {
   return (
     <div className="forYou-wrapper">
       <div className="forYou-contents">

@@ -1,0 +1,32 @@
+.postSummary-wrapper {
+  padding: 20px 50px;
+}
+.postSummary-contents {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.postSummary-title {
+  border-bottom: 2px solid #543ee0;
+  font-size: 20px;
+  line-height: 20px;
+  font-size: MD Sans;
+  color: #000;
+}
+.postSummary-date {
+  border-bottom: 2px solid #543ee0;
+  font-size: 20px;
+  line-height: 16px;
+  font-size: MD Sans;
+  color: #626262;
+}
+.postSummary-grid {
+  display: grid;
+  grid-row: 2fr 2fr;
+}
+.postSummary-posts{
+  color: #626262;
+}
+.postSummary-posts_results{
+    color: #1111;
+}
