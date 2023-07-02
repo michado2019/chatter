@@ -68,12 +68,12 @@ export const trendingTags = [
 export const  personalData = [
   {
     id:1,
-    link: "Notifications",
-    path: "notifications"
+    link: "Account",
+    path: "account"
   },
   {
     id:2,
-    link: "Account",
-    path: "account"
+    link: "Notifications",
+    path: "notifications"
   }
 ]

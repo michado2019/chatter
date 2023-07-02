@@ -6,6 +6,8 @@ import bookMarksImg from "./assets/VectorbookMarksImg.png";
 import teamBlogsImg from "./assets/VectorteamImg.png";
 import draftsImg from "./assets/VectordraftsImg.png";
 import analyticsImg from "./assets/VectoranalyticsImg.png";
+import bellImg from "./assets/Vectorbell.png";
+import accountImg from "./assets/VectorteamImg.png";
 import { trendingTags } from "./blogSidebarData";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/userContext/UserContext";
@@ -187,21 +189,40 @@ const BlogSidebar = () => {
         </div>
         <div className="blogSidebar-section">
           <h2 className="blogSidebar-section_title">{title[2]}</h2>
-          {personalData.map((each) => {
-            return (
-              <div className="blogSidebar-personal" key={each.id}>
-                <NavLink
-                  to={`${each.path}`}
-                  className="blogSidebar-contents_link2"
-                  style={({ isActive }) =>
-                    isActive ? activeStyle : inActiveStyle
-                  }
-                >
-                  {each.link}
-                </NavLink>
-              </div>
-            );
-          })}
+          <div className="blogSidebar-personal">
+            <div className="blogSidebar-content_flex">
+              <img
+                src={accountImg}
+                alt="img"
+                className="blogSidebar-contents_img"
+              />
+              <NavLink
+                to={personalData[0].path}
+                className="blogSidebar-contents_link2"
+                style={({ isActive }) =>
+                  isActive ? activeStyle : inActiveStyle
+                }
+              >
+                {personalData[0].link}
+              </NavLink>
+            </div>
+            <div className="blogSidebar-content_flex">
+              <img
+                src={bellImg}
+                alt="img"
+                className="blogSidebar-contents_img"
+              />
+              <NavLink
+                to={personalData[1].path}
+                className="blogSidebar-contents_link2"
+                style={({ isActive }) =>
+                  isActive ? activeStyle : inActiveStyle
+                }
+              >
+                {personalData[1].link}
+              </NavLink>
+            </div>
+          </div>
           <button className="blogSidebar-logout_btn" onClick={handleSignout}>
             Logout
           </button>
