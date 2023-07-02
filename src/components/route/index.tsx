@@ -21,6 +21,7 @@ const AppRouter = () => {
   return (
     <div className="appRouter-wrapper">
       <Routes>
+        <Route index element={<Home />} />
         <Route
           path="/"
           element={
