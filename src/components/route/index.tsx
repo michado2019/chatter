@@ -41,10 +41,10 @@ const AppRouter = () => {
           <Route index element={<Feed />} />
           <Route path="/blogs/*/feed" element={<Feed />}>
             <Route path="/blogs/*/feed/forYou" element={<ForYou />} />
-            <Route path="/blogs/*/feed/*/post" element={<Post />} />
           </Route>
           <Route path="/blogs/*/bookMarks" element={<BookMarks />} />
           <Route path="/blogs/*/analytics" element={<Analytics />} />
+          <Route path="/blogs/*/post" element={<Post />} />
         </Route>
         <Route path="/sign-in" element={<SignIn />}>
           <Route index element={<Login />} />

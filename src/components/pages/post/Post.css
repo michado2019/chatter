@@ -1,0 +1,7 @@
+.postWrapper{
+    margin-left: 280px;
+}
+.postEditor{
+    display: flex;
+    flex-direction: column;
+}

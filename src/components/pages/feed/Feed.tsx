@@ -16,7 +16,7 @@ const Feed = () => {
               </p>
             </div>
             <div className="feedContents-top_section2">
-              <Link to="/blogs/feed/post" className="feedContents-post_btn">
+              <Link to="/blogs/post" className="feedContents-post_btn">
                 <img
                   src={postPenImg}
                   alt="img"

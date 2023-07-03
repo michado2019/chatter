@@ -1,9 +1,18 @@
-import React from 'react';
 import MarkdownIt from 'markdown-it';
+import { useState } from "react";
 import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 
-const Post = () => {
+import "./Post.css";
+
+type PostProps = {
+  view?: { menu: boolean; md: boolean; html: boolean; } | undefined;
+};
+
+const Post: React.FC<PostProps> = ({ view = { menu: true, md: false, html: true } }) => {
+  const [postHtml, setPostHtml] = useState("");
+  const [postText, setPostText] = useState("");
+
   const mdParser = new MarkdownIt({
     html: false,
     xhtmlOut: false,
@@ -12,23 +21,28 @@ const Post = () => {
     typographer: false,
     quotes: '“”‘’',
     highlight: (code, lang) => {
-      // Syntax highlighting function
-      // Implement your own syntax highlighting logic here
       return `<pre><code class="language-${lang}">${code}</code></pre>`;
     },
   });
 
-  function handleEditorChange({ html, text }: {html: string, text: string}) {
-    console.log('handleEditorChange', html, text);
+  function handleEditorChange({ html, text }: { html: string; text: string }) {
+    if (html !== "") {
+      setPostHtml(html);
+    }
+    if (text !== "") {
+      setPostText(text);
+    }
+    console.log(postText, postHtml);
   }
 
   return (
     <div className='postWrapper'>
       <div className='postContents'>
         <MdEditor
-          style={{ height: '300px' }}
+          style={{ height: "300px" }}
           renderHTML={(text) => mdParser.render(text)}
           onChange={handleEditorChange}
+          view={view}
         />
       </div>
     </div>

@@ -20,10 +20,10 @@ const Blogs = () => {
           <Route path="/feed/*" element={<Feed />}>
             <Route index element={<ForYou />} />
             <Route path="/feed/*/forYou" element={<ForYou />} />
-            <Route path="/feed/*/post" element={<Post />} />
           </Route>
           <Route path="/bookMarks" element={<BookMarks />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/post" element={<Post />} />
         </Routes>
       </div>
     </div>
