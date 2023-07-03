@@ -4,9 +4,11 @@ import commentImg from "./assets/ant-design_comment-outlinedcommentImg.png";
 import loveImg from "./assets/material-symbols_favorite-outlineloveImg.png";
 import viewsImg from "./assets/ant-design_read-outlinedtimingImg.png";
 import timingImg from "./assets/ant-design_read-outlinedtimingImg.png";
+import bookMarksImg from "../blogSidebar/assets/VectorbookMarksImg.png"
 import { ArrowBackIosNew, ArrowForwardIos } from "@mui/icons-material";
-import { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { useState, useContext } from "react";
+import PostSummary from "../postSummary/PostSummary";
+import { SwitchContext } from "../../context/switchContext/SwitchContext";
 const Analytics = () => {
   // States
   const [page, setPage] = useState(1);
@@ -16,6 +18,8 @@ const Analytics = () => {
   const pages = Math.ceil(feed.length / perPage);
   const skip = page * perPage - perPage;
 
+  //useContext
+  const switchContext = useContext(SwitchContext);
   return (
     <div className="analyticsWrapper">
       <div className="analyticsContents">
@@ -62,6 +66,13 @@ const Analytics = () => {
                   />
                 </div>
                 <div className="forYou-post_reactions">
+                <div className="forYou-post_comment">
+                    <img
+                      src={bookMarksImg}
+                      alt="img"
+                      className="forYou-reactionsImg"
+                    />
+                  </div>
                   <div className="forYou-post_comment">
                     <img
                       src={commentImg}
@@ -93,18 +104,23 @@ const Analytics = () => {
           <div className="nextPrev-arrow_div">
             <ArrowBackIosNew
               className="nextPrev-arrow"
-            style={{ display: page <= 1 ? "none" : "block" }}
-            onClick={() => setPage((prev) => prev - 1)}
+              style={{ display: page <= 1 ? "none" : "block" }}
+              onClick={() => setPage((prev) => prev - 1)}
             />
             <ArrowForwardIos
-            style={{ display: page >= pages ? "none" : "block" }}
-            className="nextPrev-arrow"
+              style={{ display: page >= pages ? "none" : "block" }}
+              className="nextPrev-arrow"
               onClick={() => setPage((prev) => prev + 1)}
             />
           </div>
         </div>
-        <Link to="/blogs/analytics/postSummary" className="analytics-post_viewBtn">View post activity</Link>
-        <Outlet />
+        <button
+          className="analytics-post_viewBtn"
+          onClick={() => switchContext?.setState((prev) => !prev)}
+        >
+          View post activity
+        </button>
+        {switchContext?.state && <PostSummary />}
       </div>
       ;
     </div>

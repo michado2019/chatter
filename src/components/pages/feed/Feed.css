@@ -42,16 +42,17 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  font-size: 20px;
   justify-content: center;
 }
 .feedContents-postPen_img {
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   margin-right: 5px;
 }
 .feedContents-top_section2_1 {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 10px 20px;
   border: 1px solid #d0d0d0;
 }
@@ -63,7 +64,7 @@
 .feedContent-top_link {
   font: DM Sans;
   font-weight: 550;
-  font-size: 16px;
+  font-size: 18px;
   text-decoration: none;
   color: #191919;
   padding-bottom: 15px;

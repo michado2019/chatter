@@ -60,9 +60,10 @@
 }
 .forYou-post_reactions {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   margin-top: 4px;
 }
+.forYou-post_bookMark,
 .forYou-post_comment,
 .forYou-post_love,
 .forYou-post_views {

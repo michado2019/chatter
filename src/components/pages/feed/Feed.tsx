@@ -22,7 +22,7 @@ const Feed = () => {
                   alt="img"
                   className="feedContents-postPen_img"
                 />
-                Write a post
+                Write
               </button>
             </div>
           </div>

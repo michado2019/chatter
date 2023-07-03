@@ -3,6 +3,7 @@ import commentImg from "./assets/ant-design_comment-outlinedcommentImg.png";
 import loveImg from "./assets/material-symbols_favorite-outlineloveImg.png";
 import viewsImg from "./assets/ant-design_read-outlinedtimingImg.png";
 import timingImg from "./assets/ant-design_read-outlinedtimingImg.png";
+import bookMarksImg from "../blogSidebar/assets/VectorbookMarksImg.png"
 
  //feeds
  export const feed = [
@@ -72,6 +73,13 @@ const ForYou = () => {
                 <img src={each.postImg} alt="img" className="forYou-post_img" />
               </div>
               <div className="forYou-post_reactions">
+              <div className="forYou-post_bookMark">
+                  <img
+                    src={bookMarksImg}
+                    alt="img"
+                    className="forYou-reactionsImg"
+                  />
+                </div>
                 <div className="forYou-post_comment">
                   <img
                     src={commentImg}

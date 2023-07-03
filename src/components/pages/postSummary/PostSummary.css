@@ -1,20 +1,24 @@
 .postSummary-wrapper {
-  padding: 20px 50px;
+  padding: 20px 0;
 }
 .postSummary-contents {
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
 }
-.postSummary-title {
+.postSummary-content {
+  display: flex;
+  flex-direction: column;
   border-bottom: 2px solid #543ee0;
+  width: 100%;
+}
+.postSummary-title {
   font-size: 20px;
   line-height: 20px;
   font-size: MD Sans;
   color: #000;
 }
 .postSummary-date {
-  border-bottom: 2px solid #543ee0;
   font-size: 20px;
   line-height: 16px;
   font-size: MD Sans;
@@ -22,11 +26,24 @@
 }
 .postSummary-grid {
   display: grid;
-  grid-row: 2fr 2fr;
+  grid-template-columns: 2fr 2fr;
 }
-.postSummary-posts{
-  color: #626262;
+.postSummary-posts,
+.postSummary-views,
+.postSummary-visits,
+.postSummary-followers {
+  margin-top: 15px;
+  color: #555;
+  font-size: 16px;
+  display: flex;
+  flex-direction: column;
 }
-.postSummary-posts_results{
-    color: #1111;
+.postSummary-posts_results {
+  font-size: 16px;
+  color: #111;
+  margin-top: 10px;
+  margin-left: 30px;
+}
+#postSummary-posts_results {
+  margin-left: 15px;
 }
