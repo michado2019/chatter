@@ -9,7 +9,7 @@ type PostProps = {
   view?: { menu: boolean; md: boolean; html: boolean; } | undefined;
 };
 
-const Post: React.FC<PostProps> = ({ view = { menu: true, md: false, html: true } }) => {
+const Post: React.FC<PostProps> = ({ view = { menu: true, md: true, html: false } }) => {
   const [postHtml, setPostHtml] = useState("");
   const [postText, setPostText] = useState("");
 
