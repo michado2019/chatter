@@ -5,6 +5,7 @@ import Feed from "../feed/Feed";
 import BookMarks from "../bookMarks/BookMarks";
 import ForYou from "../forYou/ForYou";
 import Analytics from "../analytics/Analytics";
+import Post from "../post/Post";
 
 const Blogs = () => {
   return (
@@ -19,6 +20,7 @@ const Blogs = () => {
           <Route path="/feed/*" element={<Feed />}>
             <Route index element={<ForYou />} />
             <Route path="/feed/*/forYou" element={<ForYou />} />
+            <Route path="/feed/*/post" element={<Post />} />
           </Route>
           <Route path="/bookMarks" element={<BookMarks />} />
           <Route path="/analytics" element={<Analytics />} />

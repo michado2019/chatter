@@ -2,7 +2,7 @@ import "./Feed.css";
 import postPenImg from "./assets/icon-park-outline_writepostPen.png";
 import { feedData } from "./feedData/FeedData";
 import { CustomNavLink } from "../../hooks/CustomNavLinks";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 const Feed = () => {
   return (
     <div className="feedWrapper">
@@ -16,14 +16,14 @@ const Feed = () => {
               </p>
             </div>
             <div className="feedContents-top_section2">
-              <button className="feedContents-post_btn">
+              <Link to="/blogs/feed/post" className="feedContents-post_btn">
                 <img
                   src={postPenImg}
                   alt="img"
                   className="feedContents-postPen_img"
                 />
                 Write
-              </button>
+              </Link>
             </div>
           </div>
           <div className="feedContents-top_section2">

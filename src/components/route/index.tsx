@@ -14,6 +14,7 @@ import Feed from "../pages/feed/Feed";
 import BookMarks from "../pages/bookMarks/BookMarks";
 import ForYou from "../pages/forYou/ForYou";
 import Analytics from "../pages/analytics/Analytics";
+import Post from "../pages/post/Post";
 
 const AppRouter = () => {
   //UseContexts
@@ -40,6 +41,7 @@ const AppRouter = () => {
           <Route index element={<Feed />} />
           <Route path="/blogs/*/feed" element={<Feed />}>
             <Route path="/blogs/*/feed/forYou" element={<ForYou />} />
+            <Route path="/blogs/*/feed/*/post" element={<Post />} />
           </Route>
           <Route path="/blogs/*/bookMarks" element={<BookMarks />} />
           <Route path="/blogs/*/analytics" element={<Analytics />} />
