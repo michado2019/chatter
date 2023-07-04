@@ -1,7 +1,77 @@
-.postWrapper{
-    margin-left: 280px;
+
+.postWrapper {
+  padding-left: 280px;
 }
-.postEditor{
-    display: flex;
-    flex-direction: column;
+.postContent {
+  background-color: #f7f5f1;
+  padding: 0 40px;
+  padding-top: 100px;
+  display: flex;
+  align-items: flex-start;
+  margin: 0 auto;
+  justify-content: space-between;
+  padding-bottom: 70px;
+}
+.postContent1 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.postPost-div1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.postPlus-icon {
+  cursor: pointer;
+  opacity: 0;
+  margin-left: -250px;
+  margin-top: -30px;
+}
+.postUpload {
+  margin-top: -20px;
+  font-size: 20px;
+}
+.postTitle {
+  font-size: 32px;
+  font: DM Sans;
+  outline: none;
+  border: none;
+  background-color: #f7f5f1;
+  margin: 40px 0;
+  color: #555;
+}
+.postPublish-btn {
+  background-color: #543ee0;
+  padding: 15px 30px;
+  border-radius: 4px;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  margin-top: -20px;
+}
+.postPublish-btn:hover{
+  background-color: #493ba0;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.postContent2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.postContent3 {
+  background-color: #fff;
+  width: 270px;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 30px;
+  box-sizing: 0.5px 0.3px 10px 0.5px #ccc;
+  height: 300px;
+}
+.postContent3-title {
+  color: #555;
+}
+.postContent3-content {
+  color: #543ee0;
 }

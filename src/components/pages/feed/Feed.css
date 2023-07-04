@@ -46,6 +46,10 @@
   justify-content: center;
   text-decoration: none;
 }
+.feedContents-post_btn:hover{
+  background-color: #493ba0;
+  transition: all 0.3s;
+}
 .feedContents-postPen_img {
   width: 20px;
   height: 20px;

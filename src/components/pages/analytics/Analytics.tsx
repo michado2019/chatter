@@ -4,7 +4,7 @@ import commentImg from "./assets/ant-design_comment-outlinedcommentImg.png";
 import loveImg from "./assets/material-symbols_favorite-outlineloveImg.png";
 import viewsImg from "./assets/ant-design_read-outlinedtimingImg.png";
 import timingImg from "./assets/ant-design_read-outlinedtimingImg.png";
-import bookMarksImg from "../blogSidebar/assets/VectorbookMarksImg.png"
+import bookMarksImg from "../blogSidebar/assets/VectorbookMarksImg.png";
 import { ArrowBackIosNew, ArrowForwardIos } from "@mui/icons-material";
 import { useState, useContext } from "react";
 import PostSummary from "../postSummary/PostSummary";
@@ -43,9 +43,6 @@ const Analytics = () => {
                   />
                   <div className="forYou-content_flex2">
                     <h2 className="forYou-userName">{each.name}</h2>
-                    <p className="forYou-job">
-                      {each.job}, {each.date}
-                    </p>
                   </div>
                 </div>
                 <div className="forYou-content_flex3">
@@ -66,7 +63,7 @@ const Analytics = () => {
                   />
                 </div>
                 <div className="forYou-post_reactions">
-                <div className="forYou-post_comment">
+                  <div className="forYou-post_comment">
                     <img
                       src={bookMarksImg}
                       alt="img"
