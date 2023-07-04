@@ -13,6 +13,9 @@ type PostData = {
   title: string;
   html: string;
   text: string;
+  love: number;
+  comment: number;
+  views: number;
 };
 
 //States
@@ -24,7 +27,9 @@ const Post: React.FC<PostProps> = ({
     title: "",
     html: "",
     text: "",
-    
+    love: 0,
+    comment: 0,
+    views: 0,
   });
   const [userPost, setUserPost] = useState<PostData>({ ...post });
 
