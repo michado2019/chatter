@@ -22,8 +22,8 @@
   justify-content: flex-start;
 }
 .forYou-userImg {
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   margin-right: 10px;
 }
@@ -34,6 +34,13 @@
   color: #111;
   line-height: 36px;
 }
+.forYou-date{
+  font: DM Sans;
+  font-weight: 500;
+  font-size: 18px;
+  color: #626262;
+  margin-top: -10px;
+}
 .forYou-post_timing {
   display: flex;
   color: #626262;
@@ -42,13 +49,24 @@
 .forYou-timingImg {
   margin-right: 5px;
 }
+.forYou-post_contentFlex{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  box-shadow: 0.3px 0.2px 7px 0.7px #ccc;
+  margin-top: 10px;
+  border-radius: 7px;
+  padding: 20px;
+}
 .forYou-post_content {
-  color: #626262;
+  color: #555;
+  font-size: 14px !important;
 }
 .forYou-post_img {
-  height: 300px;
-  width: 100%;
+  height: 200px;
+  width: 40%;
   border-radius: 4px;
+  margin-left: 10px;
 }
 .forYou-post_reactions {
   display: grid;
