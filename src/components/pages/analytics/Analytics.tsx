@@ -20,7 +20,6 @@ const Analytics = () => {
     displayName: "", // Provide a default value for displayName
   });
 
-
   //Pagination logic
   const perPage = 1;
   const pages = Math.ceil(allPosts.length / perPage);
@@ -56,6 +55,13 @@ const Analytics = () => {
       setUser(parsedUser);
     }
   }, []);
+
+  // Helper function to convert HTML text content
+  const convertToHTML = (textContent: string) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(textContent, "text/html");
+    return doc.body.childNodes[0]?.nodeValue || "";
+  };
   return (
     <div className="analyticsWrapper">
       <div className="analyticsContents">
@@ -69,6 +75,10 @@ const Analytics = () => {
         </p>
         <div className="analytics-div">
           {allPosts.slice(skip, skip + perPage).map((each, index) => {
+            //calculate timing
+            const textContent = convertToHTML(each.html);
+            const wordCount = textContent.split(" ").length;
+            const timingInMinutes = Math.ceil(wordCount / 30);
             return (
               <div className="forYou-content" key={index}>
                 <div className="forYou-content_flex1">
@@ -78,7 +88,12 @@ const Analytics = () => {
                     className="forYou-userImg"
                   />
                   <div className="forYou-content_flex2">
-                    <h2 className="forYou-userName">{user?.displayName ?? ""}</h2>
+                    <h2 className="forYou-userName">
+                      {user?.displayName ?? ""}
+                    </h2>
+                    <div className="forYou-content_dateFlex">
+                      <p className="forYou-date">{each.date}</p>
+                    </div>
                   </div>
                 </div>
                 <div className="forYou-content_flex3">
@@ -89,17 +104,18 @@ const Analytics = () => {
                       alt="img"
                       className="forYou-timingImg"
                     />{" "}
-                    {each.timing} mins read
+                    {timingInMinutes} mins read
                   </p>
-                  <p className="forYou-post_content">{each.html}</p>
-                  <img
-                    src={user?.photoURL ?? ""}
-                    alt="img"
-                    className="forYou-post_img"
-                  />
+                  <div className="forYou-post_contentFlex">
+                    <p
+                      className="forYou-post_content"
+                      dangerouslySetInnerHTML={{ __html: textContent }}
+                    ></p>
+                    <img src={each.img} alt="img" className="forYou-post_img" />
+                  </div>
                 </div>
                 <div className="forYou-post_reactions">
-                  <div className="forYou-post_comment">
+                  <div className="forYou-post_bookMark">
                     <img
                       src={bookMarksImg}
                       alt="img"
@@ -112,7 +128,7 @@ const Analytics = () => {
                       alt="img"
                       className="forYou-reactionsImg"
                     />
-                    200
+                    {each.comment}
                   </div>
                   <div className="forYou-post_love">
                     <img
@@ -120,7 +136,7 @@ const Analytics = () => {
                       alt="img"
                       className="forYou-reactionsImg"
                     />
-                    120
+                    {each.love}
                   </div>
                   <div className="forYou-post_views">
                     <img
@@ -128,7 +144,7 @@ const Analytics = () => {
                       alt="img"
                       className="forYou-reactionsImg"
                     />
-                    2000 views
+                    {each.views} views
                   </div>
                 </div>
               </div>

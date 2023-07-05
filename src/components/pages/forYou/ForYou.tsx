@@ -47,7 +47,7 @@ const ForYou = () => {
   }, []);
 
  // Helper function to convert HTML text content
-const convertToHTML = (textContent: string) => {
+  const convertToHTML = (textContent: string) => {
   const parser = new DOMParser();
   const doc = parser.parseFromString(textContent, "text/html");
   return doc.body.childNodes[0]?.nodeValue || '';
@@ -57,7 +57,9 @@ const convertToHTML = (textContent: string) => {
     <div className="forYou-wrapper">
       <div className="forYou-contents">
         {allPosts.map((each, index) => {
-            const textContent = convertToHTML(each.html);
+
+          //To calculate the timing of the post
+          const textContent = convertToHTML(each.html);
           const wordCount = textContent.split(" ").length;
           const timingInMinutes = Math.ceil(wordCount / 30);
           return (
@@ -137,5 +139,4 @@ const convertToHTML = (textContent: string) => {
     </div>
   );
 };
-
 export default ForYou;
