@@ -1,4 +1,3 @@
-import { feed } from "../forYou/ForYou";
 import "./Analytics.css";
 import commentImg from "./assets/ant-design_comment-outlinedcommentImg.png";
 import loveImg from "./assets/material-symbols_favorite-outlineloveImg.png";
@@ -6,20 +5,57 @@ import viewsImg from "./assets/ant-design_read-outlinedtimingImg.png";
 import timingImg from "./assets/ant-design_read-outlinedtimingImg.png";
 import bookMarksImg from "../blogSidebar/assets/VectorbookMarksImg.png";
 import { ArrowBackIosNew, ArrowForwardIos } from "@mui/icons-material";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import PostSummary from "../postSummary/PostSummary";
 import { SwitchContext } from "../../context/switchContext/SwitchContext";
+import { PostData } from "../pagesDataType/PagesDataType";
+import { getDocs, collection } from "firebase/firestore";
+import { db } from "../../firebase";
 const Analytics = () => {
   // States
   const [page, setPage] = useState(1);
+  const [allPosts, setAllPosts] = useState<PostData[]>([]);
+  const [user, setUser] = useState({
+    photoURL: "", // Provide a default value for photoURL
+    displayName: "", // Provide a default value for displayName
+  });
+
 
   //Pagination logic
   const perPage = 1;
-  const pages = Math.ceil(feed.length / perPage);
+  const pages = Math.ceil(allPosts.length / perPage);
   const skip = page * perPage - perPage;
 
   //useContext
   const switchContext = useContext(SwitchContext);
+
+  // useEffect to fetch data from the database
+  useEffect(() => {
+    // Fetch data from the database
+    async function getAllPosts() {
+      const dbRef = collection(db, "posts");
+      const posts = await getDocs(dbRef);
+      if (!dbRef) {
+        setAllPosts([]);
+      }
+      setAllPosts(
+        posts.docs.map((doc) => ({
+          ...(doc.data() as PostData),
+          id: doc.id,
+        }))
+      );
+    }
+    getAllPosts();
+  }, []);
+
+  // useEffect to retrieve user data
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser !== null) {
+      const parsedUser = JSON.parse(savedUser);
+      setUser(parsedUser);
+    }
+  }, []);
   return (
     <div className="analyticsWrapper">
       <div className="analyticsContents">
@@ -32,17 +68,17 @@ const Analytics = () => {
           Top posts <span>earned 2980 impressions</span>
         </p>
         <div className="analytics-div">
-          {feed.slice(skip, skip + perPage).map((each) => {
+          {allPosts.slice(skip, skip + perPage).map((each, index) => {
             return (
-              <div className="forYou-content" key={each.id}>
+              <div className="forYou-content" key={index}>
                 <div className="forYou-content_flex1">
                   <img
-                    src={each.userImg}
+                    src={user?.photoURL ?? ""}
                     alt="img"
                     className="forYou-userImg"
                   />
                   <div className="forYou-content_flex2">
-                    <h2 className="forYou-userName">{each.name}</h2>
+                    <h2 className="forYou-userName">{user?.displayName ?? ""}</h2>
                   </div>
                 </div>
                 <div className="forYou-content_flex3">
@@ -55,9 +91,9 @@ const Analytics = () => {
                     />{" "}
                     {each.timing} mins read
                   </p>
-                  <p className="forYou-post_content">{each.post}</p>
+                  <p className="forYou-post_content">{each.html}</p>
                   <img
-                    src={each.postImg}
+                    src={user?.photoURL ?? ""}
                     alt="img"
                     className="forYou-post_img"
                   />

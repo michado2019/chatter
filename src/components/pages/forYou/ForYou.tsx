@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ForYou.css";
 import commentImg from "./assets/ant-design_comment-outlinedcommentImg.png";
 import loveImg from "./assets/material-symbols_favorite-outlineloveImg.png";
@@ -10,11 +10,12 @@ import { PostData } from "../pagesDataType/PagesDataType";
 import { db } from "../../firebase";
 
 const ForYou = () => {
+
   // States
   const [allPosts, setAllPosts] = useState<PostData[]>([]);
   const [user, setUser] = useState({
-    photoURL: "", // Provide a default value for photoURL
-    displayName: "", // Provide a default value for displayName
+    photoURL: "", // A default value for photoURL
+    displayName: "", // A default value for displayName
   });
 
   // useEffect to fetch data from the database
@@ -45,11 +46,19 @@ const ForYou = () => {
     }
   }, []);
 
+ // Helper function to convert HTML text content
+const convertToHTML = (textContent: string) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(textContent, "text/html");
+  return doc.body.childNodes[0]?.nodeValue || '';
+};
+
   return (
     <div className="forYou-wrapper">
       <div className="forYou-contents">
         {allPosts.map((each, index) => {
-          const wordCount = each.html.split(" ").length;
+            const textContent = convertToHTML(each.html);
+          const wordCount = textContent.split(" ").length;
           const timingInMinutes = Math.ceil(wordCount / 30);
           return (
             <div className="forYou-content" key={index}>
@@ -77,7 +86,10 @@ const ForYou = () => {
                   {timingInMinutes} mins read
                 </p>
                 <div className="forYou-post_contentFlex">
-                  <p className="forYou-post_content">{each.html}</p>
+                  <p
+                    className="forYou-post_content"
+                    dangerouslySetInnerHTML={{ __html: textContent }}
+                  ></p>
                   <img
                     src={each.img}
                     alt="img"
