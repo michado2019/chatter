@@ -13,11 +13,12 @@ export type AllPostsType = {
 
 const ForYou = (props: AllPostsType) => {
 
+  const { allPosts } = props;
   const [user, setUser] = useState({
     photoURL: "", // A default value for photoURL
     displayName: "", // A default value for displayName
   });
-
+ const [postData, setPostData] = useState(allPosts);
   // useEffect to retrieve user data
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -37,7 +38,7 @@ const ForYou = (props: AllPostsType) => {
   return (
     <div className="forYou-wrapper">
       <div className="forYou-contents">
-        {props.allPosts.map((each, index) => {
+        {postData.map((each, index) => {
 
           //To calculate the timing of the post
           const textContent = convertToHTML(each.html);

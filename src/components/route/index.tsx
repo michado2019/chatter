@@ -25,13 +25,6 @@ const AppRouter = () => {
 //  //States
 const [allPosts, setAllPosts] = useState<PostData[]>([]);
 
-//  const [postReactions, setPostReactions] = useState<PostReactions>({
-//     love: 0,
-//     comment: 0,
-//     views: 0,
-//     bookMark: false,
-//   });
-
   //UseContexts
   const userContext = useContext(UserContext); //Context for authenticated user
 
