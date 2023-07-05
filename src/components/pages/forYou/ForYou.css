@@ -7,7 +7,7 @@
 .forYou-content {
   padding: 20px;
   border: 1px solid #d0d0d0;
-  padding-right: 30%;
+  padding-right: 15%;
   border-radius: 4px;
 }
 .forYou-content_flex1 {
@@ -47,7 +47,7 @@
   align-items: center;
 }
 .forYou-timingImg {
-  margin-right: 5px;
+  margin-right: 15px;
 }
 .forYou-post_contentFlex{
   display: flex;
