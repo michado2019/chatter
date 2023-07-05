@@ -6,8 +6,9 @@ import BookMarks from "../bookMarks/BookMarks";
 import ForYou from "../forYou/ForYou";
 import Analytics from "../analytics/Analytics";
 import Post from "../post/Post";
+import { AllPostsType } from "../forYou/ForYou";
 
-const Blogs = () => {
+const Blogs = (props: AllPostsType) => {
   return (
     <div className="blogsWrapper">
       <div className="blogsContents">
@@ -15,11 +16,11 @@ const Blogs = () => {
         <BlogSidebar />
         <Routes>
           <Route path="/" element={<Feed />}>
-            <Route index element={<ForYou />} />
+            <Route index element={<ForYou allPosts={props.allPosts}/>} />
           </Route>
           <Route path="/feed/*" element={<Feed />}>
-            <Route index element={<ForYou />} />
-            <Route path="/feed/*/forYou" element={<ForYou />} />
+            <Route index element={<ForYou  allPosts={props.allPosts}/>} />
+            <Route path="/feed/*/forYou" element={<ForYou allPosts={props.allPosts}/>} />
           </Route>
           <Route path="/bookMarks" element={<BookMarks />} />
           <Route path="/analytics" element={<Analytics />} />

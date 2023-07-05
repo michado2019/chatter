@@ -28,8 +28,10 @@ const Post: React.FC<PostProps> = ({
     text: "",
     love: 0,
     comment: 0,
+    bookMark: false,
     views: 0,
-    date: new Date().toLocaleDateString()
+    date: new Date().toLocaleDateString(),
+    allPosts: [],
   });
   const [userPost, setUserPost] = useState<PostData>({ ...post });
 

@@ -5,37 +5,18 @@ import loveImg from "./assets/material-symbols_favorite-outlineloveImg.png";
 import viewsImg from "./assets/ant-design_read-outlinedtimingImg.png";
 import timingImg from "./assets/ant-design_read-outlinedtimingImg.png";
 import bookMarksImg from "../blogSidebar/assets/VectorbookMarksImg.png";
-import { getDocs, collection } from "firebase/firestore";
 import { PostData } from "../pagesDataType/PagesDataType";
-import { db } from "../../firebase";
 
-const ForYou = () => {
+export type AllPostsType = {
+  allPosts: PostData[];
+};
 
-  // States
-  const [allPosts, setAllPosts] = useState<PostData[]>([]);
+const ForYou = (props: AllPostsType) => {
+
   const [user, setUser] = useState({
     photoURL: "", // A default value for photoURL
     displayName: "", // A default value for displayName
   });
-
-  // useEffect to fetch data from the database
-  useEffect(() => {
-    // Fetch data from the database
-    async function getAllPosts() {
-      const dbRef = collection(db, "posts");
-      const posts = await getDocs(dbRef);
-      if (!dbRef) {
-        setAllPosts([]);
-      }
-      setAllPosts(
-        posts.docs.map((doc) => ({
-          ...(doc.data() as PostData),
-          id: doc.id,
-        }))
-      );
-    }
-    getAllPosts();
-  }, []);
 
   // useEffect to retrieve user data
   useEffect(() => {
@@ -56,7 +37,7 @@ const ForYou = () => {
   return (
     <div className="forYou-wrapper">
       <div className="forYou-contents">
-        {allPosts.map((each, index) => {
+        {props.allPosts.map((each, index) => {
 
           //To calculate the timing of the post
           const textContent = convertToHTML(each.html);

@@ -1,3 +1,4 @@
+
 export type PostData = {
     img: string;
     title: string;
@@ -6,5 +7,7 @@ export type PostData = {
     love: number;
     comment: number;
     views: number;
-    date: string
+    bookMark: false,
+    date: string;
+    allPosts: PostData[];
   };
