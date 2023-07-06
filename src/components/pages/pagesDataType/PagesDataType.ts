@@ -10,4 +10,5 @@ export type PostData = {
     bookMark: false,
     date: string;
     allPosts: PostData[];
+    id: number | string;
   };
