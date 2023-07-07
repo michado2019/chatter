@@ -60,7 +60,7 @@ const [allPosts, setAllPosts] = useState<PostData[]>([]);
         />
         <Route path="/about-us" element={<About />} />
         <Route path="/contact-us" element={<Contact />} />
-        <Route path="/postDetails/:id" element={<PostDetails allPosts={allPosts}/>} />
+        <Route path="/blogs/postDetails/:id" element={<PostDetails allPosts={allPosts}/>} />
         <Route
           path="/blogs/*"
           element={

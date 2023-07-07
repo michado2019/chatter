@@ -16,7 +16,6 @@ export type AllPostsType = {
 };
 
 const ForYou = (props: AllPostsType) => {
-
   const { allPosts } = props;
   const [user, setUser] = useState({
     photoURL: "", // A default value for photoURL
@@ -25,42 +24,42 @@ const ForYou = (props: AllPostsType) => {
   const [postData, setPostData] = useState(allPosts);
   const [isClicked, setIsClicked] = useState(true);
 
-    const handleLove = async (id: number | string) => {
-      const updatedPostData = postData.map((each) => {
-        if (each.id === id) {
-          if (isClicked) {
-            return {
-              ...each,
-              love: each.love - 1,
-            };
-          } else {
-            return {
-              ...each,
-              love: each.love + 1,
-            };
-          }
+  const handleLove = async (id: number | string) => {
+    const updatedPostData = postData.map((each) => {
+      if (each.id === id) {
+        if (isClicked) {
+          return {
+            ...each,
+            love: each.love - 1,
+          };
+        } else {
+          return {
+            ...each,
+            love: each.love + 1,
+          };
         }
-        return each;
-      });
-    
-      setPostData(updatedPostData);
-      setIsClicked(!isClicked);
-
-      //Update posts in the database
-    
-      try {
-        const postRef = doc(db, "posts", id.toString());
-        const foundPost = updatedPostData.find((each) => each.id === id);
-        if (foundPost) {
-          await updateDoc(postRef, {
-            love: isClicked ? foundPost.love : foundPost.love,
-          });
-        }
-      } catch (error) {
-        console.log("Error updating love field:", error);
       }
-    };
-    
+      return each;
+    });
+
+    setPostData(updatedPostData);
+    setIsClicked(!isClicked);
+
+    //Update posts in the database
+
+    try {
+      const postRef = doc(db, "posts", id.toString());
+      const foundPost = updatedPostData.find((each) => each.id === id);
+      if (foundPost) {
+        await updateDoc(postRef, {
+          love: isClicked ? foundPost.love : foundPost.love,
+        });
+      }
+    } catch (error) {
+      console.log("Error updating love field:", error);
+    }
+  };
+
   // useEffect to retrieve user data
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -106,18 +105,24 @@ const ForYou = (props: AllPostsType) => {
                   <img src={timingImg} alt="img" className="forYou-timingImg" />{" "}
                   {timingInMinutes} mins read
                 </p>
-                <Link to={`/postDetails/${each.id}`} className="forYou-post_more">
-                <div className="forYou-post_contentFlex">
-                  <div>
-                  <p
-                    className="forYou-post_content"
-                    dangerouslySetInnerHTML={{ __html: textContent.slice(0, 200)}}
-                  ></p><button
-                  className="forYou-post_content_button"
-                  >more</button>
+                <Link
+                  to={`/blogs/postDetails/${each.id}`}
+                  className="forYou-post_more"
+                >
+                  <div className="forYou-post_contentFlex">
+                    <div>
+                      <p
+                        className="forYou-post_content"
+                        dangerouslySetInnerHTML={{
+                          __html: textContent.slice(0, 250),
+                        }}
+                      ></p>
+                      <button className="forYou-post_content_button">
+                        more
+                      </button>
+                    </div>
+                    <img src={each.img} alt="img" className="forYou-post_img" />
                   </div>
-                  <img src={each.img} alt="img" className="forYou-post_img" />
-                </div>
                 </Link>
               </div>
               <div className="forYou-post_reactions">
