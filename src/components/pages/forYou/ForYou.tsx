@@ -21,7 +21,7 @@ const ForYou = (props: AllPostsType) => {
     displayName: "", // A default value for displayName
   });
   const [postData, setPostData] = useState(allPosts);
-  const [isClicked, setIsClicked] = useState(false);
+  const [isClicked, setIsClicked] = useState(true);
 
     const handleLove = async (id: number | string) => {
       const updatedPostData = postData.map((each) => {
