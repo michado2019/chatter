@@ -9,12 +9,14 @@ import { PostData } from "../pagesDataType/PagesDataType";
 import { Favorite } from "@mui/icons-material";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { Link } from "react-router-dom";
 
 export type AllPostsType = {
   allPosts: PostData[];
 };
 
 const ForYou = (props: AllPostsType) => {
+
   const { allPosts } = props;
   const [user, setUser] = useState({
     photoURL: "", // A default value for photoURL
@@ -104,13 +106,19 @@ const ForYou = (props: AllPostsType) => {
                   <img src={timingImg} alt="img" className="forYou-timingImg" />{" "}
                   {timingInMinutes} mins read
                 </p>
+                <Link to={`/postDetails/${each.id}`} className="forYou-post_more">
                 <div className="forYou-post_contentFlex">
+                  <div>
                   <p
                     className="forYou-post_content"
-                    dangerouslySetInnerHTML={{ __html: textContent }}
-                  ></p>
+                    dangerouslySetInnerHTML={{ __html: textContent.slice(0, 200)}}
+                  ></p><button
+                  className="forYou-post_content_button"
+                  >more</button>
+                  </div>
                   <img src={each.img} alt="img" className="forYou-post_img" />
                 </div>
+                </Link>
               </div>
               <div className="forYou-post_reactions">
                 <div className="forYou-post_bookMark">

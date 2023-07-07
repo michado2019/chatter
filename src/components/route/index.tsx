@@ -19,6 +19,7 @@ import Post from "../pages/post/Post";
 import { getDocs, collection } from "firebase/firestore";
 import { PostData } from "../pages/pagesDataType/PagesDataType";
 import { db } from "../firebase";
+import PostDetails from "../pages/postDetails/PostDetails";
 
 const AppRouter = () => {
 
@@ -45,7 +46,7 @@ const [allPosts, setAllPosts] = useState<PostData[]>([]);
       );
     }
     getAllPosts();
-  }, []);
+  }, [allPosts]);
 
   return (
     <div className="appRouter-wrapper">
@@ -59,6 +60,7 @@ const [allPosts, setAllPosts] = useState<PostData[]>([]);
         />
         <Route path="/about-us" element={<About />} />
         <Route path="/contact-us" element={<Contact />} />
+        <Route path="/postDetails/:id" element={<PostDetails allPosts={allPosts}/>} />
         <Route
           path="/blogs/*"
           element={
