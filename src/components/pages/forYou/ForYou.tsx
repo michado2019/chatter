@@ -7,7 +7,7 @@ import timingImg from "./assets/ant-design_read-outlinedtimingImg.png";
 import bookMarksImg from "../blogSidebar/assets/VectorbookMarksImg.png";
 import { PostData } from "../pagesDataType/PagesDataType";
 import { Favorite } from "@mui/icons-material";
-import { doc, updateDoc } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { Link } from "react-router-dom";
 import { SwitchContext } from "../../context/switchContext/SwitchContext";
@@ -39,15 +39,16 @@ const ForYou = (props: AllPostsType) => {
     });
   };
 
-  const handleCommentSubmit = () => {
-    //Handling comment submission
-
-    console.log(commentState);
-    setCommentState(
-      {
-        ...commentState, commentMsg: ""
-      }
-    )
+  const handleCommentSubmit = async () => {
+    //Handling comment submission to the database
+    if (commentState.commentMsg !== "") {
+      const dbRef = collection(db, "postComments"); //db ref
+      await addDoc(dbRef, commentState);
+      setCommentState({
+        ...commentState,
+        commentMsg: "",
+      });
+    }
   };
 
   // Handle comment box display
@@ -156,16 +157,17 @@ const ForYou = (props: AllPostsType) => {
                   </div>
                 </Link>
               </div>
-              <div className="forYou-comment"  style={{
-                    display:
-                      eachCommentId === each.id && switchContext?.state === true
-                        ? "none"
-                        : "block",
-                    transition: "all 0.3s",
-                  }}>
-                <div
-                  className="forYou-comment_form"
-                >
+              <div
+                className="forYou-comment"
+                style={{
+                  display:
+                    eachCommentId === each.id && switchContext?.state === true
+                      ? "none"
+                      : "block",
+                  transition: "all 0.3s",
+                }}
+              >
+                <div className="forYou-comment_form">
                   <img
                     src={user.photoURL}
                     alt="img"
