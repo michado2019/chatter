@@ -7,6 +7,7 @@ import ForYou from "../forYou/ForYou";
 import Analytics from "../analytics/Analytics";
 import Post from "../post/Post";
 import { AllPostsType } from "../forYou/ForYou";
+import PostDetails from "../postDetails/PostDetails";
 
 const Blogs = (props: AllPostsType) => {
   return (
@@ -16,13 +17,11 @@ const Blogs = (props: AllPostsType) => {
         <BlogSidebar />
         <Routes>
           <Route path="/" element={<Feed />}>
-            <Route index element={<ForYou allPosts={props.allPosts}/>} />
-          </Route>
-          <Route path="/feed/*" element={<Feed />}>
             <Route index element={<ForYou  allPosts={props.allPosts}/>} />
             <Route path="/feed/*/forYou" element={<ForYou allPosts={props.allPosts}/>} />
           </Route>
           <Route path="/bookMarks" element={<BookMarks />} />
+          <Route path="/postDetails/:id" element={<PostDetails allPosts={props.allPosts}/>} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/post" element={<Post />} />
         </Routes>

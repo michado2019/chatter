@@ -78,7 +78,6 @@ const Post: React.FC<PostProps> = ({
   }));
 }
 
-
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const { name, value } = e.target;
