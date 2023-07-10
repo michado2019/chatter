@@ -135,7 +135,7 @@ const ForYou = (props: AllPostsType) => {
                   {timingInMinutes} mins read
                 </p>
                 <Link
-                  to={`/postDetails/${each.id}`}
+                  to={`/blogs/postDetails/${each.id}`}
                   className="forYou-post_more"
                 >
                   <div className="forYou-post_contentFlex">
@@ -162,8 +162,8 @@ const ForYou = (props: AllPostsType) => {
                 style={{
                   display:
                     eachCommentId === each.id && switchContext?.state === true
-                      ? "none"
-                      : "block",
+                      ? "block"
+                      : "none",
                   transition: "all 0.3s",
                 }}
               >

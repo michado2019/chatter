@@ -8,13 +8,6 @@ import BlogSidebar from "../blogSidebar/BlogSidebar";
 const PostDetails = (props: AllPostsType) => {
   const { allPosts } = props;
   const { id } = useParams<{ id: string }>();
-console.log(id);
-  const [selectedPost, setSelectedPost] = useState<PostData | null>(null);
-
-  useEffect(() => {
-    const post = allPosts.find((post) => post.id === id) || null;
-    setSelectedPost(post);
-  }, [allPosts, id]);
 
   return (
     <div className="postDetails-wrapper">
@@ -22,7 +15,15 @@ console.log(id);
       <div className="postDetails-contents">
         <BlogSidebar />
         <div className="postDetails">
-           <h2>{selectedPost?.title}</h2>
+          {
+            allPosts.filter((post) => post.id === id).map((post) => {
+              return(
+                <div className="postDetail" key={post.id}>
+                {post.title}
+                </div>
+              )
+            })
+          }
         </div>
         </div>
       </div>

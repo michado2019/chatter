@@ -16,7 +16,8 @@ const Blogs = (props: AllPostsType) => {
         <BlogNavbar />
         <BlogSidebar />
         <Routes>
-          <Route path="/" element={<Feed />}>
+        <Route path="/" element={<Feed />}>
+          <Route path="/feed/*" element={<ForYou allPosts={props.allPosts}/>} />
             <Route index element={<ForYou  allPosts={props.allPosts}/>} />
             <Route path="/feed/*/forYou" element={<ForYou allPosts={props.allPosts}/>} />
           </Route>
