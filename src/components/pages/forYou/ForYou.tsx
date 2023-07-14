@@ -99,18 +99,55 @@ const ForYou = (props: AllPostsType) => {
                   <img src={each.img} alt="img" className="forYou-post_img" />
                 </div>
               </div>
+              <div
+                className="forYou-comment"
+                style={{
+                  display:
+                    eachCommentId === each.id && switchContext?.state === true
+                      ? "block"
+                      : "none",
+                  transition: "all 0.3s",
+                }}
+              >
+                <div className="forYou-comment_form">
+                  <img
+                    src={user.photoURL}
+                    alt="img"
+                    className="forYou-comment_userImg"
+                  />
+                  <textarea
+                    ref={commentRef}
+                    className="forYou-comment_textarea"
+                    name="textarea"
+                    onChange={handleChange}
+                    value={commentState.commentMsg}
+                    placeholder="Add a comment...."
+                  />
+                </div>
+                <button
+                  style={{
+                    display:
+                      commentState.commentMsg.length > 0 ? "block" : "none",
+                  }}
+                  className="forYou-comment_btn"
+                  onClick={handleCommentSubmit}
+                >
+                  Post
+                </button>
+              </div>
               <div className="forYou-post_reactions">
                 <div className="forYou-post_bookMark">
                   <img
                     src={bookMarksImg}
-                    alt="img"
+                    alt="Bookmark"
                     className="forYou-reactionsImg"
                   />
                 </div>
                 <div className="forYou-post_comment">
                   <img
+                    onClick={() => handleCommentBox(each.id)}
                     src={commentImg}
-                    alt="img"
+                    alt="Comment"
                     className="forYou-reactionsImg"
                   />
                   {each.comment.length}
