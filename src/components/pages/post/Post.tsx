@@ -33,6 +33,7 @@ const Post: React.FC<PostProps> = ({
     date: new Date().toLocaleDateString(),
     allPosts: [],
     id: 0,
+    isLiked: false
   });
   const [userPost, setUserPost] = useState<PostData>({ ...post });
 

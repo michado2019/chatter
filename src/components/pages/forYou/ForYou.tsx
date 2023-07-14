@@ -21,44 +21,31 @@ const ForYou = (props: AllPostsType) => {
     displayName: "", // A default value for displayName
   });
   const [postData, setPostData] = useState(allPosts);
-  const [isClicked, setIsClicked] = useState(true);
-
-    const handleLove = async (id: number | string) => {
-      const updatedPostData = postData.map((each) => {
-        if (each.id === id) {
-          if (isClicked) {
-            return {
-              ...each,
-              love: each.love - 1,
-            };
-          } else {
-            return {
-              ...each,
-              love: each.love + 1,
-            };
-          }
-        }
-        return each;
-      });
-    
-      setPostData(updatedPostData);
-      setIsClicked(!isClicked);
-
-      //Update posts in the database
-    
-      try {
-        const postRef = doc(db, "posts", id.toString());
-        const foundPost = updatedPostData.find((each) => each.id === id);
-        if (foundPost) {
-          await updateDoc(postRef, {
-            love: isClicked ? foundPost.love : foundPost.love,
-          });
-        }
-      } catch (error) {
-        console.log("Error updating love field:", error);
+ 
+  //Handle favorite
+  const handleFavorite = (id: string | number) => {
+    const newPostData = postData.map((each) => {
+      if (each.id === id) {
+        return {
+          ...each,
+          isLiked: !each.isLiked,
+          love: each.isLiked ? each.love - 1 : each.love + 1,
+        };
       }
-    };
-    
+      return each;
+    }
+    );
+    setPostData(newPostData);
+
+    // Update the database
+    const docRef = doc(db, "posts", id.toString());
+    updateDoc(docRef, {
+      love: newPostData.find((each) => each.id === id)?.love,
+      isLiked: newPostData.find((each) => each.id === id)?.isLiked,
+    });
+  };
+
+  
   // useEffect to retrieve user data
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -129,20 +116,21 @@ const ForYou = (props: AllPostsType) => {
                   {each.comment}
                 </div>
                 <div className="forYou-post_love">
-                  {isClicked ? (
+                  {
+                    // If the post is liked, the color of the heart icon will be red
+                    each.isLiked ? 
                     <Favorite
                       className="forYou-reactionsImg"
-                      onClick={() => handleLove(each.id)}
+                      onClick={() => handleFavorite(each.id)}
                       style={{ color: "red" }}
-                    />
-                  ) : (
+                    />:
                     <img
                       src={loveImg}
                       alt="img"
+                      onClick={() => handleFavorite(each.id)}
                       className="forYou-reactionsImg"
-                      onClick={() => handleLove(each.id)}
                     />
-                  )}
+                  }
                   {each.love}
                 </div>
                 <div className="forYou-post_views">

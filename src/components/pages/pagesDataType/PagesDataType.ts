@@ -11,4 +11,5 @@ export type PostData = {
     date: string;
     allPosts: PostData[];
     id: number | string;
+    isLiked: boolean;
   };
