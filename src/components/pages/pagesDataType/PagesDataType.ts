@@ -5,7 +5,7 @@ export type PostData = {
     html: string;
     text: string;
     love: number;
-    comment: number;
+    comment: [];
     views: number;
     bookMark: false,
     date: string;

@@ -113,7 +113,7 @@ const ForYou = (props: AllPostsType) => {
                     alt="img"
                     className="forYou-reactionsImg"
                   />
-                  {each.comment}
+                  {each.comment.length}
                 </div>
                 <div className="forYou-post_love">
                   {

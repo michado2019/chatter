@@ -27,7 +27,7 @@ const Post: React.FC<PostProps> = ({
     html: "",
     text: "",
     love: 0,
-    comment: 0,
+    comment: [],
     bookMark: false,
     views: 0,
     date: new Date().toLocaleDateString(),
