@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./ForYou.css";
 import commentImg from "./assets/ant-design_comment-outlinedcommentImg.png";
 import loveImg from "./assets/material-symbols_favorite-outlineloveImg.png";
@@ -9,19 +9,47 @@ import { PostData } from "../pagesDataType/PagesDataType";
 import { Favorite } from "@mui/icons-material";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
+import { SwitchContext } from "../../context/switchContext/SwitchContext";
+import uniqid from "uniqid"
 
 export type AllPostsType = {
   allPosts: PostData[];
 };
 
 const ForYou = (props: AllPostsType) => {
+  //useContext
+  const switchContext = useContext(SwitchContext);
+
   const { allPosts } = props;
   const [user, setUser] = useState({
     photoURL: "", // A default value for photoURL
     displayName: "", // A default value for displayName
   });
   const [postData, setPostData] = useState(allPosts);
- 
+  const [commentId, setCommentId] = useState<string>(uniqid());
+  const [textarea, setTextarea] = useState({
+    id: "",
+    commentMsg: "",
+  });
+
+  //Handle comment
+  const handleChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+    id: string
+    ) => {
+    setCommentId(uniqid())
+    setTextarea({
+      ...textarea,
+      commentMsg: e.target.value,
+      id: id
+    });
+  };
+  
+  //Handle post comment
+  const handlePostComment = () => {
+    console.log(textarea);
+  }
+  
   //Handle favorite
   const handleFavorite = (id: string | number) => {
     const newPostData = postData.map((each) => {
@@ -33,8 +61,7 @@ const ForYou = (props: AllPostsType) => {
         };
       }
       return each;
-    }
-    );
+    });
     setPostData(newPostData);
 
     // Update the database
@@ -45,7 +72,6 @@ const ForYou = (props: AllPostsType) => {
     });
   };
 
-  
   // useEffect to retrieve user data
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -101,13 +127,7 @@ const ForYou = (props: AllPostsType) => {
               </div>
               <div
                 className="forYou-comment"
-                style={{
-                  display:
-                    eachCommentId === each.id && switchContext?.state === true
-                      ? "block"
-                      : "none",
-                  transition: "all 0.3s",
-                }}
+                style={{ display: switchContext?.state ? "flex" : "none" }}
               >
                 <div className="forYou-comment_form">
                   <img
@@ -116,22 +136,14 @@ const ForYou = (props: AllPostsType) => {
                     className="forYou-comment_userImg"
                   />
                   <textarea
-                    ref={commentRef}
                     className="forYou-comment_textarea"
                     name="textarea"
-                    onChange={handleChange}
-                    value={commentState.commentMsg}
                     placeholder="Add a comment...."
+                    onChange={(e) => handleChange(e, commentId)}
+                    value={textarea.commentMsg}
                   />
                 </div>
-                <button
-                  style={{
-                    display:
-                      commentState.commentMsg.length > 0 ? "block" : "none",
-                  }}
-                  className="forYou-comment_btn"
-                  onClick={handleCommentSubmit}
-                >
+                <button className="forYou-comment_btn" style={{display: textarea.commentMsg.length>0?"block":"none"}} onClick={handlePostComment}>
                   Post
                 </button>
               </div>
@@ -145,28 +157,30 @@ const ForYou = (props: AllPostsType) => {
                 </div>
                 <div className="forYou-post_comment">
                   <img
-                    onClick={() => handleCommentBox(each.id)}
                     src={commentImg}
                     alt="Comment"
                     className="forYou-reactionsImg"
+                    onClick={() => switchContext?.setState((prev) => !prev)}
                   />
                   {each.comment.length}
                 </div>
                 <div className="forYou-post_love">
                   {
                     // If the post is liked, the color of the heart icon will be red
-                    each.isLiked ? 
-                    <Favorite
-                      className="forYou-reactionsImg"
-                      onClick={() => handleFavorite(each.id)}
-                      style={{ color: "red" }}
-                    />:
-                    <img
-                      src={loveImg}
-                      alt="img"
-                      onClick={() => handleFavorite(each.id)}
-                      className="forYou-reactionsImg"
-                    />
+                    each.isLiked ? (
+                      <Favorite
+                        className="forYou-reactionsImg"
+                        onClick={() => handleFavorite(each.id)}
+                        style={{ color: "red" }}
+                      />
+                    ) : (
+                      <img
+                        src={loveImg}
+                        alt="img"
+                        onClick={() => handleFavorite(each.id)}
+                        className="forYou-reactionsImg"
+                      />
+                    )
                   }
                   {each.love}
                 </div>
