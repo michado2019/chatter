@@ -10,7 +10,7 @@ import { Favorite } from "@mui/icons-material";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import { SwitchContext } from "../../context/switchContext/SwitchContext";
-import uniqid from "uniqid"
+import uniqid from "uniqid";
 
 export type AllPostsType = {
   allPosts: PostData[];
@@ -36,20 +36,35 @@ const ForYou = (props: AllPostsType) => {
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
     id: string
-    ) => {
-    setCommentId(uniqid())
+  ) => {
+    setCommentId(uniqid());
     setTextarea({
       ...textarea,
       commentMsg: e.target.value,
-      id: id
+      id: id,
     });
   };
-  
+
   //Handle post comment
-  const handlePostComment = () => {
-    console.log(textarea);
-  }
-  
+  const handlePostComment = (id: string | number) => {
+    const newPostData = postData.map((each) => {
+      if (each.id === id) {
+        return {
+          ...each,
+          comment: [...each.comment, textarea]
+        };
+      }
+      return each;
+    });
+    setPostData(newPostData as PostData[]);
+
+    // Update the database
+    const docRef = doc(db, "posts", id.toString());
+    updateDoc(docRef, {
+      comment: newPostData.find((each) => each.id === id)?.comment,
+    });
+  };
+
   //Handle favorite
   const handleFavorite = (id: string | number) => {
     const newPostData = postData.map((each) => {
@@ -143,7 +158,13 @@ const ForYou = (props: AllPostsType) => {
                     value={textarea.commentMsg}
                   />
                 </div>
-                <button className="forYou-comment_btn" style={{display: textarea.commentMsg.length>0?"block":"none"}} onClick={handlePostComment}>
+                <button
+                  className="forYou-comment_btn"
+                  style={{
+                    display: textarea.commentMsg.length > 0 ? "block" : "none",
+                  }}
+                  onClick={() => handlePostComment(each.id)}
+                >
                   Post
                 </button>
               </div>
