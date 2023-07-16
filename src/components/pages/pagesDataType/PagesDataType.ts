@@ -12,4 +12,6 @@ export type PostData = {
     allPosts: PostData[];
     id: number | string;
     isLiked: boolean;
+    userImg: string;
+    userName: string;
   };

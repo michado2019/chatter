@@ -6,6 +6,8 @@ import "./Post.css";
 import { DbContext } from "../../context/dbContext/DbContext";
 import { collection, addDoc } from "firebase/firestore";
 import { PostData } from "../pagesDataType/PagesDataType";
+import { UserContext } from "../../context/userContext/UserContext";
+
 type PostProps = {
   view?: { menu: boolean; md: boolean; html: boolean } | undefined;
 };
@@ -13,14 +15,15 @@ type PostProps = {
 const Post: React.FC<PostProps> = ({
   view = { menu: true, md: true, html: false },
 }) => {
-  //useContext
+  // useContext
   const db = useContext(DbContext);
+  const userContext = useContext(UserContext);
 
-  //States
-  const [preview, setPreview] = useState(false); //preview state
+  // States
+  const [preview, setPreview] = useState(false); // preview state
   const [img, setImg] = useState({
     img: "",
-  }); //img state
+  }); // img state
   const [post, setPost] = useState<PostData>({
     img: "",
     title: "",
@@ -33,11 +36,13 @@ const Post: React.FC<PostProps> = ({
     date: new Date().toLocaleDateString(),
     allPosts: [],
     id: 0,
-    isLiked: false
+    isLiked: false,
+    userImg: userContext?.user?.photoURL || "",
+    userName: userContext?.user?.displayName || "",
   });
   const [userPost, setUserPost] = useState<PostData>({ ...post });
 
-  //Editor' functions
+  // Editor's functions
   const mdParser = new MarkdownIt({
     html: false,
     xhtmlOut: false,
@@ -50,15 +55,15 @@ const Post: React.FC<PostProps> = ({
     },
   });
 
-  //Handle image upload
+  // Handle image upload
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]; // Null check for event.target.files
-  
+
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
         const fileContent = e.target?.result;
-  
+
         setImg((prevImg) => ({
           ...prevImg,
           img: fileContent as string,
@@ -67,18 +72,19 @@ const Post: React.FC<PostProps> = ({
       reader.readAsDataURL(file as Blob);
     }
   };
-  
-  
- function handleEditorChange({ html, text }: { html: string; text: string }) {
-  const sanitizedHtml = html.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  setPost((prevPost) => ({
-    ...prevPost,
-    html: sanitizedHtml,
-    text: text,
-    img: img.img,
-  }));
-}
 
+  function handleEditorChange({ html, text }: { html: string; text: string }) {
+    const sanitizedHtml = html.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    setPost((prevPost) => ({
+      ...prevPost,
+      html: sanitizedHtml,
+      text: text,
+      img: img.img,
+      userName: userContext?.user?.displayName || "", // Empty string as a fallback
+      userImg: userContext?.user?.photoURL || "" // Empty string as a fallback
+    }));
+  }
+  
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -98,14 +104,17 @@ const Post: React.FC<PostProps> = ({
   const handlePreview = () => {
     setPreview(!preview);
   };
+
   const handlePublish = () => {
     if (
       post.html !== "" &&
       img.img !== "" &&
       post.text !== "" &&
-      post.title !== ""
+      post.title !== "" &&
+      post.userImg !== "" &&
+      post.userName !== ""
     ) {
-      const dbRef = collection(db, "posts"); //db ref
+      const dbRef = collection(db, "posts"); // db ref
       const addData = async () => {
         await addDoc(dbRef, post);
       };
@@ -113,9 +122,8 @@ const Post: React.FC<PostProps> = ({
     }
     console.log(post);
   };
-  
 
-  //useEffect
+  // useEffect
   useEffect(() => {
     setUserPost(post);
   }, [post]);
@@ -128,13 +136,12 @@ const Post: React.FC<PostProps> = ({
             <div className="postPost-div1">
               <p className="postUpload">Add cover image</p>
               <input
-  type="file"
-  alt="img"
-  className="postPlus-icon"
-  onChange={handleFileChange}
-  name="img"
-/>
-
+                type="file"
+                alt="img"
+                className="postPlus-icon"
+                onChange={handleFileChange}
+                name="img"
+              />
             </div>
             <div className="postPost-div2">
               <input
@@ -156,6 +163,24 @@ const Post: React.FC<PostProps> = ({
                 view={view}
               />
             </div>
+            <div className="postPost-div3">
+              <input
+                type="text"
+                className="postUserImg"
+                placeholder="User Image"
+                onChange={handleChange}
+                name="userImg"
+                value={post.userImg}
+              />
+              <input
+                type="text"
+                className="postUserName"
+                placeholder="User Name"
+                onChange={handleChange}
+                name="userName"
+                value={post.userName}
+              />
+            </div>
           </div>
         </form>
         <div className="postContent2">
@@ -169,31 +194,35 @@ const Post: React.FC<PostProps> = ({
                   {userPost.html !== "" &&
                   img.img !== "" &&
                   userPost.text !== "" &&
-                  userPost.title !== "" ? (
-                    
+                  userPost.title !== "" &&
+                  userPost.userImg !== "" &&
+                  userPost.userName !== "" ? (
                     <button
-                        onClick={handlePublish}
-                        className="postContent4-btn"
-                      >
-                        Publish
-                      </button>
+                      onClick={handlePublish}
+                      className="postContent4-btn"
+                    >
+                      Publish
+                    </button>
                   ) : (
-                    
                     <div className="postContent4-btn_div">
-                    <button
+                      <button
                         className="postPreview-btn"
                         onClick={handlePreview}
                       >
                         Preview
                       </button>
-                    <button className="postContent-btn" disabled>
-                      Publish
-                    </button>
-                      </div>
+                      <button className="postContent-btn" disabled>
+                        Publish
+                      </button>
+                    </div>
                   )}
 
                   <div style={{ display: preview ? "block" : "none" }}>
-                    <img src={img.img} alt="img" className="postContent4-img" />
+                    <img
+                      src={img.img}
+                      alt="img"
+                      className="postContent4-img"
+                    />
                     <h6 className="postContent4-title">{userPost.title}</h6>
                     <p className="postContent4-content">{userPost.html}</p>
                   </div>
@@ -211,4 +240,5 @@ const Post: React.FC<PostProps> = ({
     </div>
   );
 };
+
 export default Post;

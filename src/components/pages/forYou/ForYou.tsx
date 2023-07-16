@@ -103,10 +103,20 @@ const ForYou = (props: AllPostsType) => {
     return doc.body.childNodes[0]?.nodeValue || "";
   };
 
+  // Comparator function to compare dates
+  const compareDates = (a: PostData, b: PostData) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    return dateA - dateB;
+  };
+
+  // Sort postData array by date
+  const sortedPosts = postData.sort(compareDates);
+
   return (
     <div className="forYou-wrapper">
       <div className="forYou-contents">
-        {postData.map((each, index) => {
+        {sortedPosts.map((each, index) => {
           // To calculate the timing of the post
           const textContent = convertToHTML(each.html);
           const wordCount = textContent.split(" ").length;
@@ -115,12 +125,12 @@ const ForYou = (props: AllPostsType) => {
             <div className="forYou-content" key={index}>
               <div className="forYou-content_flex1">
                 <img
-                  src={user?.photoURL ?? ""}
+                  src={each.userImg}
                   alt="img"
                   className="forYou-userImg"
                 />
                 <div className="forYou-content_flex2">
-                  <h2 className="forYou-userName">{user?.displayName ?? ""}</h2>
+                  <h2 className="forYou-userName">{each.userName}</h2>
                   <div className="forYou-content_dateFlex">
                     <p className="forYou-date">{each.date}</p>
                   </div>
