@@ -2,16 +2,19 @@ import { CancelOutlined, MenuOutlined, Search } from "@mui/icons-material";
 import "./BlogNavbar.css";
 import bellImg from "./assets/Vectorbell.png";
 import { UserContext } from "../../context/userContext/UserContext";
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { Link } from "react-router-dom";
 import postPenImg from "../../../components/pages/feed/assets/icon-park-outline_writepostPen.png";
-import { SwitchContext } from "../../context/switchContext/SwitchContext";
 
-const BlogNavbar = () => {
+type BlogNavbarType = {
+  display: boolean;
+  setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+};
+const BlogNavbar = (props: BlogNavbarType) => {
+  const { display, setDisplay } = props;
   //useContext
   const userContext = useContext(UserContext);
-  const switchContext = useContext(SwitchContext); //switch context to toggle the blog sidebar
 
   //States
   const [userDisplay, setUserDisplay] = useState(false);
@@ -48,7 +51,7 @@ const BlogNavbar = () => {
         CHATTER
       </Link>
       <div className="blogNavbar-contents">
-        <div className="blogNavbar-input_search">
+        <div className="blogNavbar-input_search" style={{display: display?"none":"block"}}>
           <input
             type="text"
             placeholder="Search chatter"
@@ -86,15 +89,15 @@ const BlogNavbar = () => {
           </div>
         </div>
         <div className="navbarMenu-div">
-          {switchContext?.state ? (
+          {display ? (
             <CancelOutlined
               className="navbarMenu"
-              onClick={() => switchContext?.setState((prev) => !prev)}
+              onClick={() => setDisplay((prev) => !prev)}
             />
           ) : (
             <MenuOutlined
               className="navbarMenu"
-              onClick={() => switchContext?.setState((prev) => !prev)}
+              onClick={() => setDisplay((prev) => !prev)}
             />
           )}
         </div>
