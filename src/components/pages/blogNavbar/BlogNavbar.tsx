@@ -2,17 +2,18 @@ import { CancelOutlined, MenuOutlined, Search } from "@mui/icons-material";
 import "./BlogNavbar.css";
 import bellImg from "./assets/Vectorbell.png";
 import { UserContext } from "../../context/userContext/UserContext";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
 import { Link } from "react-router-dom";
-import postPenImg from "../../../components/pages/feed/assets/icon-park-outline_writepostPen.png";
 
 type BlogNavbarType = {
   display: boolean;
   setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+  toggler: boolean
+  setToggler: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const BlogNavbar = (props: BlogNavbarType) => {
-  const { display, setDisplay } = props;
+  const { display, setDisplay, toggler, setToggler } = props;
   //useContext
   const userContext = useContext(UserContext);
 
@@ -47,11 +48,15 @@ const BlogNavbar = (props: BlogNavbarType) => {
   }, []);
   return (
     <div className="blogNavbar-wrapper">
-      <Link to="/blogs" className="blogNavbar-blog_logo">
+      <Link to="/" className="blogNavbar-blog_logo">
         CHATTER
       </Link>
       <div className="blogNavbar-contents">
-        <div className="blogNavbar-input_search" style={{display: display?"none":"block"}}>
+        <Search 
+        className="blogNavbar-search_toggler"
+        onClick={() => setToggler((prev) => !prev)}
+        />
+        <div className="blogNavbar-input_search"  style={{display: toggler?"none":"block"}}>
           <input
             type="text"
             placeholder="Search chatter"
@@ -62,12 +67,7 @@ const BlogNavbar = (props: BlogNavbarType) => {
         <div className="blogNavbar-user_div">
           <div className="feedContents-top_section2">
             <Link to="/blogs/post" className="blogNavbar-post_btn">
-              <img
-                src={postPenImg}
-                alt="img"
-                className="blogNavbar-postPen_img"
-              />
-              <span>Write</span>
+              Create post
             </Link>
           </div>
           <img src={bellImg} alt="img" className="blogNavbar-content_bell" />

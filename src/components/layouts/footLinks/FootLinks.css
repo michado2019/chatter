@@ -1,36 +1,45 @@
-.footLinks-wrapper{
-    border: 1px solid #d0d0d0;
-    height: 60px;
-    position: sticky;
-    bottom: 0;
-    left: 0;
-    background-color: #fff;
-    padding: 0 10px;
-    display: none;
+.footLinks-wrapper {
+  border: 1px solid #d0d0d0;
+  height: 60px;
+  position: sticky;
+  bottom: 0;
+  left: 0;
+  background-color: #fff;
+  padding: 0 10px;
+  display: none;
 }
-.footLinks-contents{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+.footLinks-contents {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
-.footLinks-links{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.footLinks-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.footLinks-link{
-    text-decoration: none;
-    color: #543ee0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-top: 20px;
+.footLinks-link {
+  text-decoration: none;
+  color: #543ee0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+  width: 25px !important;
+  height: 25px !important;
 }
-.footLinks-icons{
-    margin-right: 10px;
+.footLinks-icons {
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 4px;
 }
-@media (max-width: 768px) {
-    .footLinks-wrapper{
-        display: block;
-    }
+.footLinks-icons:hover {
+  background-color: #ffedcc;
+  transition: all 0.3s;
+}
+@media (max-width: 940px) {
+  .footLinks-wrapper {
+    display: block;
+  }
 }

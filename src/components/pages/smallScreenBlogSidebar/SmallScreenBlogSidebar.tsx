@@ -1,6 +1,9 @@
-import "./BlogSidebar.css";
+import "./SmallScreenBlogSidebar.css";
 import { Link, NavLink } from "react-router-dom";
-import { blogSidebarDataOne, personalData } from "./blogSidebarData";
+import {
+  blogSidebarDataOne,
+  personalData,
+} from "../blogSidebar/blogSidebarData";
 import feedImg from "./assets/VectorfeedImg.png";
 import bookMarksImg from "./assets/VectorbookMarksImg.png";
 import teamBlogsImg from "./assets/VectorteamImg.png";
@@ -8,12 +11,16 @@ import draftsImg from "./assets/VectordraftsImg.png";
 import analyticsImg from "./assets/VectoranalyticsImg.png";
 import bellImg from "./assets/Vectorbell.png";
 import accountImg from "./assets/VectorteamImg.png";
-import { trendingTags } from "./blogSidebarData";
+import { trendingTags } from "../blogSidebar/blogSidebarData";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../context/userContext/UserContext";
 import { getAuth, signOut } from "firebase/auth";
-
-const BlogSidebar = () => {
+type BlogNavbarType = {
+  display: boolean;
+  setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+};
+const SmallScreenBlogSidebar = (props: BlogNavbarType) => {
+  const { display, setDisplay } = props;
   //States
   const [skip, setSkip] = useState(3);
   const [isSkip, setIsSkip] = useState(false);
@@ -72,7 +79,10 @@ const BlogSidebar = () => {
     }
   }, []);
   return (
-    <div className="blogSidebar-wrapper">
+    <div
+      className="smallScreenBlogSidebar"
+      style={{ marginLeft: display ? "0" : "-3000px", transition: "all 0.3s" }}
+    >
       <div className="blogSidebar-contents">
         <Link to="/blogs" className="blogLogo">
           CHATTER
@@ -85,7 +95,10 @@ const BlogSidebar = () => {
             {title[0]}
           </h2>
           <div className="blogSidebar-content">
-            <div className="blogSidebar-content_flex">
+            <div
+              className="blogSidebar-content_flex"
+              onClick={() => setDisplay((prev) => !prev)}
+            >
               <img
                 src={feedImg}
                 alt="img"
@@ -101,7 +114,10 @@ const BlogSidebar = () => {
                 {blogSidebarDataOne[0].link}
               </NavLink>
             </div>
-            <div className="blogSidebar-content_flex">
+            <div
+              className="blogSidebar-content_flex"
+              onClick={() => setDisplay((prev) => !prev)}
+            >
               <img
                 src={bookMarksImg}
                 alt="img"
@@ -117,7 +133,10 @@ const BlogSidebar = () => {
                 {blogSidebarDataOne[1].link}
               </NavLink>
             </div>
-            <div className="blogSidebar-content_flex">
+            <div
+              className="blogSidebar-content_flex"
+              onClick={() => setDisplay((prev) => !prev)}
+            >
               <img
                 src={teamBlogsImg}
                 alt="img"
@@ -133,7 +152,10 @@ const BlogSidebar = () => {
                 {blogSidebarDataOne[2].link}
               </NavLink>
             </div>
-            <div className="blogSidebar-content_flex">
+            <div
+              className="blogSidebar-content_flex"
+              onClick={() => setDisplay((prev) => !prev)}
+            >
               <img
                 src={draftsImg}
                 alt="img"
@@ -149,7 +171,10 @@ const BlogSidebar = () => {
                 {blogSidebarDataOne[3].link}
               </NavLink>
             </div>
-            <div className="blogSidebar-content_flex">
+            <div
+              className="blogSidebar-content_flex"
+              onClick={() => setDisplay((prev) => !prev)}
+            >
               <img
                 src={analyticsImg}
                 alt="img"
@@ -171,7 +196,11 @@ const BlogSidebar = () => {
           <h2 className="blogSidebar-section_title">{title[1]}</h2>
           {trendingTags.slice(0, skip).map((each) => {
             return (
-              <div className="blogSidebar-trending_tags" key={each.id}>
+              <div
+                className="blogSidebar-trending_tags"
+                key={each.id}
+                onClick={() => setDisplay((prev) => !prev)}
+              >
                 <NavLink
                   to={`/blogs/trendingTags/${each.id}/${each.path}`}
                   className="blogSidebar-contents_link2"
@@ -191,7 +220,10 @@ const BlogSidebar = () => {
         <div className="blogSidebar-section">
           <h2 className="blogSidebar-section_title">{title[2]}</h2>
           <div className="blogSidebar-personal">
-            <div className="blogSidebar-content_flex">
+            <div
+              className="blogSidebar-content_flex"
+              onClick={() => setDisplay((prev) => !prev)}
+            >
               <img
                 src={accountImg}
                 alt="img"
@@ -207,7 +239,10 @@ const BlogSidebar = () => {
                 {personalData[0].link}
               </NavLink>
             </div>
-            <div className="blogSidebar-content_flex">
+            <div
+              className="blogSidebar-content_flex"
+              onClick={() => setDisplay((prev) => !prev)}
+            >
               <img
                 src={bellImg}
                 alt="img"
@@ -232,4 +267,5 @@ const BlogSidebar = () => {
     </div>
   );
 };
-export default BlogSidebar;
+
+export default SmallScreenBlogSidebar;

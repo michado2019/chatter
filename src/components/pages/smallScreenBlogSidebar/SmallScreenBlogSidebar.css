@@ -1,0 +1,14 @@
+.smallScreenBlogSidebar {
+  width: 280px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+@media (max-width: 320px) {
+  .smallScreenBlogSidebar {
+    width: 260px;
+  }
+}

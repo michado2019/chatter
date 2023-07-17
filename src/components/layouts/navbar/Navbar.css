@@ -125,7 +125,8 @@
     display: none;
   }
   .navbarMenu-div {
-    display: block;
+    display: flex;
+    align-items: center;
   }
 }
 @media (max-width: 480px) {

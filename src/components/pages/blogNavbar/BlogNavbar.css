@@ -25,9 +25,17 @@
 .blogNavbar-contents {
   display: flex;
 }
+.blogNavbar-search_toggler {
+  display: none !important;
+  width: 30px !important;
+  height: 30px !important;
+  color: #543ee0 !important;
+  cursor: pointer;
+}
 .blogNavbar-input_search {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .blogNavbar-search {
   border: 1px solid #d0d0d0;
@@ -40,42 +48,33 @@
 .blogNavbar-search_icon {
   margin-right: auto;
   position: absolute;
-  right: 520px;
+  right: 530px;
   color: #555 !important;
 }
 .blogNavbar-user_div {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .blogNavbar-post_btn {
-  color: #543ee0 !important;
+  color: #543ee0;
   padding: 5px 15px;
   border-radius: 5px;
   margin-right: 25px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  font-size: 20px;
+  font-size: 14px;
   justify-content: center;
   text-decoration: none;
   border: 1px solid #543ee0;
-  background-color: #493ba0;
+  background-color: #fff;
   margin-left: 70px;
 }
 .blogNavbar-post_btn:hover {
   color: #fff;
-  background-color: #493ba0;
+  background-color: #543ee0;
   transition: all 0.3s;
-}
-.blogNavbar-post_btn span {
-  font-size: 16px;
-  color: #fff;
-}
-.blogNavbar-postPen_img {
-  width: 20px;
-  color: #543ee0 !important;
-  height: 20px;
-  margin-right: 5px;
 }
 .blogNavbar-content_bell {
   width: 20px;
@@ -99,26 +98,37 @@
     border-top: none;
     padding: 0 10px;
   }
+  .blogNavbar-input_search {
+    margin-top: 5px;
+  }
   .blogNavbar-blog_logo {
     display: block;
   }
   .blogNavbar-search_icon {
-    right: 535px;
-  }
-}
-@media (max-width: 768px) {
-  .blogNavbar-wrapper {
-    justify-content: center;
+    right: 325px;
   }
   .blogNavbar-user_div {
     display: none;
   }
+}
+@media (max-width: 768px) {
   .blogNavbar-search_icon {
     right: 320px;
   }
 }
 @media (max-width: 575px) {
-  .blogNavbar-input_search{
+  .blogNavbar-search_toggler {
+    display: block !important;
+    padding: 4px;
+    border-radius: 4px;
+    width: 25px !important;
+    height: 25px !important;
+  }
+  .blogNavbar-search_toggler:hover {
+    background-color: #ffedcc;
+    transition: all 0.3s;
+  }
+  .blogNavbar-input_search {
     position: absolute;
     right: 70px;
     top: 56px;
@@ -131,7 +141,7 @@
   }
 }
 @media (max-width: 345px) {
-  .blogNavbar-input_search{
+  .blogNavbar-input_search {
     right: 9px;
   }
   .blogNavbar-search {
@@ -142,7 +152,7 @@
   }
 }
 @media (max-width: 320px) {
-  .blogNavbar-input_search{
+  .blogNavbar-input_search {
     right: 9px;
   }
   .blogNavbar-search {
