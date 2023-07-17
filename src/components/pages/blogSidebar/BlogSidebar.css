@@ -1,6 +1,6 @@
 .blogSidebar-wrapper {
   width: 280px;
-  position: fixed;
+  position: absolute;
   left: 0;
   top: 0;
   height: 100%;
@@ -103,4 +103,9 @@
   margin-left: 15px;
   margin-top: 10px;
   cursor: pointer;
+}
+@media (max-width: 940px) {
+  .blogSidebar-wrapper {
+    display: none;
+  }
 }

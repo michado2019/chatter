@@ -13,7 +13,6 @@ function App() {
     <div className="App">
       <SmallScreenNav navbarLinks={navbarLinks} />
       <AppRouter />
-      {userContext?.user === null && <Footer />}
     </div>
   );
 }

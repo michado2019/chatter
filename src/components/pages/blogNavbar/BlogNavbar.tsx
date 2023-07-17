@@ -1,13 +1,17 @@
-import { Search } from "@mui/icons-material";
+import { CancelOutlined, MenuOutlined, Search } from "@mui/icons-material";
 import "./BlogNavbar.css";
 import bellImg from "./assets/Vectorbell.png";
 import { UserContext } from "../../context/userContext/UserContext";
 import { useContext, useEffect, useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
+import { Link } from "react-router-dom";
+import postPenImg from "../../../components/pages/feed/assets/icon-park-outline_writepostPen.png";
+import { SwitchContext } from "../../context/switchContext/SwitchContext";
 
 const BlogNavbar = () => {
   //useContext
   const userContext = useContext(UserContext);
+  const switchContext = useContext(SwitchContext); //switch context to toggle the blog sidebar
 
   //States
   const [userDisplay, setUserDisplay] = useState(false);
@@ -40,22 +44,31 @@ const BlogNavbar = () => {
   }, []);
   return (
     <div className="blogNavbar-wrapper">
+      <Link to="/blogs" className="blogNavbar-blog_logo">
+        CHATTER
+      </Link>
       <div className="blogNavbar-contents">
-        <input
-          type="text"
-          placeholder="Search chatter"
-          className="blogNavbar-search"
-        />
-        <Search className="blogNavbar-search_icon" />
+        <div className="blogNavbar-input_search">
+          <input
+            type="text"
+            placeholder="Search chatter"
+            className="blogNavbar-search"
+          />
+          <Search className="blogNavbar-search_icon" />
+        </div>
         <div className="blogNavbar-user_div">
+          <div className="feedContents-top_section2">
+            <Link to="/blogs/post" className="blogNavbar-post_btn">
+              <img
+                src={postPenImg}
+                alt="img"
+                className="blogNavbar-postPen_img"
+              />
+              <span>Write</span>
+            </Link>
+          </div>
           <img src={bellImg} alt="img" className="blogNavbar-content_bell" />
-          <div
-            className="navbarUser-flex"
-            style={{
-              display: userContext?.user === null ? "none" : "",
-              marginBottom: userDisplay ? "-40px" : "0",
-            }}
-          >
+          <div className="navbarUser-flex">
             <img
               src={user?.photoURL || defaultAvatarSrc} // Use the default image source if photoUrl is falsy
               alt="User"
@@ -71,6 +84,19 @@ const BlogNavbar = () => {
               Sign out
             </button>
           </div>
+        </div>
+        <div className="navbarMenu-div">
+          {switchContext?.state ? (
+            <CancelOutlined
+              className="navbarMenu"
+              onClick={() => switchContext?.setState((prev) => !prev)}
+            />
+          ) : (
+            <MenuOutlined
+              className="navbarMenu"
+              onClick={() => switchContext?.setState((prev) => !prev)}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -19,11 +19,11 @@ import Post from "../pages/post/Post";
 import { getDocs, collection } from "firebase/firestore";
 import { PostData } from "../pages/pagesDataType/PagesDataType";
 import { db } from "../firebase";
+import Notifications from "../pages/notifications/Notifications";
 
 const AppRouter = () => {
-
-//  //States
-const [allPosts, setAllPosts] = useState<PostData[]>([]);
+  //  //States
+  const [allPosts, setAllPosts] = useState<PostData[]>([]);
 
   //UseContexts
   const userContext = useContext(UserContext); //Context for authenticated user
@@ -59,18 +59,17 @@ const [allPosts, setAllPosts] = useState<PostData[]>([]);
         />
         <Route path="/about-us" element={<About />} />
         <Route path="/contact-us" element={<Contact />} />
-        <Route
-          path="/blogs/*"
-          element={
-            userContext?.user !== null ? <Blogs allPosts={allPosts}/> : <Navigate to="/sign-in" />
-          }
-        >
+        <Route path="/blogs/*" element={<Blogs allPosts={allPosts} />}>
           <Route index element={<Feed />} />
           <Route path="/blogs/*/feed" element={<Feed />}>
-            <Route path="/blogs/*/feed/forYou" element={<ForYou allPosts={allPosts} />} />
+            <Route
+              path="/blogs/*/feed/forYou"
+              element={<ForYou allPosts={allPosts} />}
+            />
           </Route>
           <Route path="/blogs/*/bookMarks" element={<BookMarks />} />
           <Route path="/blogs/*/analytics" element={<Analytics />} />
+          <Route path="/blogs/*/notifications" element={<Notifications />} />
           <Route path="/blogs/*/post" element={<Post />} />
         </Route>
         <Route path="/sign-in" element={<SignIn />}>

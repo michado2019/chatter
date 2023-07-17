@@ -7,6 +7,8 @@ import ForYou from "../forYou/ForYou";
 import Analytics from "../analytics/Analytics";
 import Post from "../post/Post";
 import { AllPostsType } from "../forYou/ForYou";
+import FootLinks from "../../layouts/footLinks/FootLinks";
+import Notifications from "../notifications/Notifications";
 
 const Blogs = (props: AllPostsType) => {
   return (
@@ -24,8 +26,10 @@ const Blogs = (props: AllPostsType) => {
           </Route>
           <Route path="/bookMarks" element={<BookMarks />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/notifications" element={<Notifications />} />
           <Route path="/post" element={<Post />} />
         </Routes>
+        <FootLinks />
       </div>
     </div>
   );

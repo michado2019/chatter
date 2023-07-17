@@ -1,8 +1,7 @@
 import "./Feed.css";
-import postPenImg from "./assets/icon-park-outline_writepostPen.png";
 import { feedData } from "./feedData/FeedData";
 import { CustomNavLink } from "../../hooks/CustomNavLinks";
-import { Link, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 const Feed = () => {
 
   return (
@@ -15,16 +14,6 @@ const Feed = () => {
               <p className="feedContents-top_section1_details">
                 Explore different content you’d love
               </p>
-            </div>
-            <div className="feedContents-top_section2">
-              <Link to="/blogs/post" className="feedContents-post_btn">
-                <img
-                  src={postPenImg}
-                  alt="img"
-                  className="feedContents-postPen_img"
-                />
-                Write
-              </Link>
             </div>
           </div>
           <div className="feedContents-top_section2">

@@ -103,6 +103,7 @@
   border-radius: 7px;
   cursor: pointer;
   color: #543ee0 !important;
+  margin-left: 15px;
 }
 .navbarMenu:hover {
   background-color: #ffedcc;

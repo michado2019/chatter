@@ -1,0 +1,8 @@
+.notificationsWrapper{
+    margin-left: 280px;
+}
+@media (max-width: 940px) {
+    .notificationsWrapper{
+        margin-left: 0;
+    }
+}
