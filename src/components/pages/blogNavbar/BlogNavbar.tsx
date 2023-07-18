@@ -9,11 +9,9 @@ import { Link } from "react-router-dom";
 type BlogNavbarType = {
   display: boolean;
   setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
-  toggler: boolean
-  setToggler: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const BlogNavbar = (props: BlogNavbarType) => {
-  const { display, setDisplay, toggler, setToggler } = props;
+  const { display, setDisplay } = props;
   //useContext
   const userContext = useContext(UserContext);
 
@@ -52,11 +50,7 @@ const BlogNavbar = (props: BlogNavbarType) => {
         CHATTER
       </Link>
       <div className="blogNavbar-contents">
-        <Search 
-        className="blogNavbar-search_toggler"
-        onClick={() => setToggler((prev) => !prev)}
-        />
-        <div className="blogNavbar-input_search"  style={{display: toggler?"none":"block"}}>
+        <div className="blogNavbar-input_search">
           <input
             type="text"
             placeholder="Search chatter"

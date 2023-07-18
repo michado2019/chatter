@@ -25,13 +25,6 @@
 .blogNavbar-contents {
   display: flex;
 }
-.blogNavbar-search_toggler {
-  display: none !important;
-  width: 30px !important;
-  height: 30px !important;
-  color: #543ee0 !important;
-  cursor: pointer;
-}
 .blogNavbar-input_search {
   display: flex;
   align-items: center;
@@ -138,6 +131,11 @@
   }
   .blogNavbar-search_icon {
     right: 210px;
+  }
+}
+@media (max-width: 480px) {
+  .blogNavbar-input_search {
+    display: block;
   }
 }
 @media (max-width: 345px) {

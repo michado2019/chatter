@@ -10,6 +10,7 @@ import { Favorite } from "@mui/icons-material";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import uniqid from "uniqid";
+import Loading from "../loadingPage/Loading";
 
 export type AllPostsType = {
   allPosts: PostData[];
@@ -91,7 +92,8 @@ const ForYou = (props: AllPostsType) => {
       const parsedUser = JSON.parse(savedUser);
       setUser(parsedUser);
     }
-  }, []);
+    setPostData(allPosts);
+  }, [allPosts]);
 
   // Helper function to convert HTML text content
   const convertToHTML = (textContent: string) => {
@@ -110,116 +112,134 @@ const ForYou = (props: AllPostsType) => {
   // Sort postData array by date
   const sortedPosts = postData.sort(compareDates);
 
+  // If there is no post available, display this message
+  if (postData.length === 0)
+    return (
+      <div className="forYou-wrapper">
+        <Loading />
+      </div>
+    );
   return (
     <div className="forYou-wrapper">
       <div className="forYou-contents">
-        {sortedPosts.map((each, index) => {
-          // To calculate the timing of the post
-          const textContent = convertToHTML(each.html);
-          const wordCount = textContent.split(" ").length;
-          const timingInMinutes = Math.ceil(wordCount / 30);
-          return (
-            <div className="forYou-content" key={index}>
-              <div className="forYou-content_flex1">
-                <img src={each.userImg} alt="img" className="forYou-userImg" />
-                <div className="forYou-content_flex2">
-                  <h2 className="forYou-userName">{each.userName}</h2>
-                  <div className="forYou-content_dateFlex">
-                    <p className="forYou-date">{each.date}</p>
+        <div>
+          {sortedPosts.map((each, index) => {
+            // To calculate the timing of the post
+            const textContent = convertToHTML(each.html);
+            const wordCount = textContent.split(" ").length;
+            const timingInMinutes = Math.ceil(wordCount / 30);
+            return (
+              <div className="forYou-content" key={index}>
+                <div className="forYou-content_flex1">
+                  <img
+                    src={each.userImg}
+                    alt="img"
+                    className="forYou-userImg"
+                  />
+                  <div className="forYou-content_flex2">
+                    <h2 className="forYou-userName">{each.userName}</h2>
+                    <div className="forYou-content_dateFlex">
+                      <p className="forYou-date">{each.date}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="forYou-content_flex3">
+                  <h2 className="forYou-post_title">{each.title}</h2>
+                  <p className="forYou-post_timing">
+                    <img
+                      src={timingImg}
+                      alt="img"
+                      className="forYou-timingImg"
+                    />{" "}
+                    {timingInMinutes} mins read
+                  </p>
+                  <div className="forYou-post_contentFlex">
+                    <p
+                      className="forYou-post_content"
+                      dangerouslySetInnerHTML={{ __html: textContent }}
+                    ></p>
+                    <img src={each.img} alt="img" className="forYou-post_img" />
+                  </div>
+                </div>
+                <div
+                  className="forYou-comment"
+                  style={{ display: display ? "flex" : "none" }}
+                >
+                  <div className="forYou-comment_form">
+                    <img
+                      src={user.photoURL}
+                      alt="img"
+                      className="forYou-comment_userImg"
+                    />
+                    <textarea
+                      className="forYou-comment_textarea"
+                      name="textarea"
+                      placeholder="Add a comment...."
+                      onChange={(e) => handleChange(e, commentId)}
+                      value={textarea.commentMsg}
+                    />
+                  </div>
+                  <button
+                    className="forYou-comment_btn"
+                    style={{
+                      display:
+                        textarea.commentMsg.length > 0 ? "block" : "none",
+                    }}
+                    onClick={() => handlePostComment(each.id)}
+                  >
+                    Post
+                  </button>
+                </div>
+                <div className="forYou-post_reactions">
+                  <div className="forYou-post_bookMark">
+                    <img
+                      src={bookMarksImg}
+                      alt="Bookmark"
+                      className="forYou-reactionsImg"
+                    />
+                  </div>
+                  <div className="forYou-post_comment">
+                    <img
+                      src={commentImg}
+                      alt="Comment"
+                      className="forYou-reactionsImg"
+                      onClick={() => setDisplay((prev) => !prev)}
+                    />
+                    {each.comment.length}
+                  </div>
+                  <div className="forYou-post_love">
+                    {
+                      // If the post is liked, the color of the heart icon will be red
+                      each.isLiked ? (
+                        <Favorite
+                          className="forYou-reactionsImg"
+                          onClick={() => handleFavorite(each.id)}
+                          style={{ color: "red" }}
+                        />
+                      ) : (
+                        <img
+                          src={loveImg}
+                          alt="img"
+                          onClick={() => handleFavorite(each.id)}
+                          className="forYou-reactionsImg"
+                        />
+                      )
+                    }
+                    {each.love}
+                  </div>
+                  <div className="forYou-post_views">
+                    <img
+                      src={viewsImg}
+                      alt="img"
+                      className="forYou-reactionsImg"
+                    />
+                    {each.views}
                   </div>
                 </div>
               </div>
-              <div className="forYou-content_flex3">
-                <h2 className="forYou-post_title">{each.title}</h2>
-                <p className="forYou-post_timing">
-                  <img src={timingImg} alt="img" className="forYou-timingImg" />{" "}
-                  {timingInMinutes} mins read
-                </p>
-                <div className="forYou-post_contentFlex">
-                  <p
-                    className="forYou-post_content"
-                    dangerouslySetInnerHTML={{ __html: textContent }}
-                  ></p>
-                  <img src={each.img} alt="img" className="forYou-post_img" />
-                </div>
-              </div>
-              <div
-                className="forYou-comment"
-                style={{ display: display ? "flex" : "none" }}
-              >
-                <div className="forYou-comment_form">
-                  <img
-                    src={user.photoURL}
-                    alt="img"
-                    className="forYou-comment_userImg"
-                  />
-                  <textarea
-                    className="forYou-comment_textarea"
-                    name="textarea"
-                    placeholder="Add a comment...."
-                    onChange={(e) => handleChange(e, commentId)}
-                    value={textarea.commentMsg}
-                  />
-                </div>
-                <button
-                  className="forYou-comment_btn"
-                  style={{
-                    display: textarea.commentMsg.length > 0 ? "block" : "none",
-                  }}
-                  onClick={() => handlePostComment(each.id)}
-                >
-                  Post
-                </button>
-              </div>
-              <div className="forYou-post_reactions">
-                <div className="forYou-post_bookMark">
-                  <img
-                    src={bookMarksImg}
-                    alt="Bookmark"
-                    className="forYou-reactionsImg"
-                  />
-                </div>
-                <div className="forYou-post_comment">
-                  <img
-                    src={commentImg}
-                    alt="Comment"
-                    className="forYou-reactionsImg"
-                    onClick={() => setDisplay((prev) => !prev)}
-                  />
-                  {each.comment.length}
-                </div>
-                <div className="forYou-post_love">
-                  {
-                    // If the post is liked, the color of the heart icon will be red
-                    each.isLiked ? (
-                      <Favorite
-                        className="forYou-reactionsImg"
-                        onClick={() => handleFavorite(each.id)}
-                        style={{ color: "red" }}
-                      />
-                    ) : (
-                      <img
-                        src={loveImg}
-                        alt="img"
-                        onClick={() => handleFavorite(each.id)}
-                        className="forYou-reactionsImg"
-                      />
-                    )
-                  }
-                  {each.love}
-                </div>
-                <div className="forYou-post_views">
-                  <img
-                    src={viewsImg}
-                    alt="img"
-                    className="forYou-reactionsImg"
-                  />
-                  {each.views}
-                </div>
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );

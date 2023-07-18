@@ -15,15 +15,12 @@ import SmallScreenBlogSidebar from "../smallScreenBlogSidebar/SmallScreenBlogSid
 const Blogs = (props: AllPostsType) => {
   //States
   const [display, setDisplay] = useState(false); //Toggle blog sidebar
-  const [toggler, setToggler] = useState(false); //Toggle blog filter search
   return (
     <div className="blogsWrapper">
       <div className="blogsContents">
           <BlogNavbar
             display={display}
             setDisplay={setDisplay}
-            toggler={toggler}
-            setToggler={setToggler}
           />
         <BlogSidebar />
         <SmallScreenBlogSidebar display={display} setDisplay={setDisplay} />

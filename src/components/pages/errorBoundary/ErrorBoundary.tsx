@@ -13,7 +13,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = {
-      hasError: false
+      hasError: false,
     };
   }
 
@@ -28,6 +28,9 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
         <div className="error-boundary">
           <h2>Oops! Something went wrong.</h2>
           <p>We apologize for the inconvenience. Please try again later.</p>
+          <a href="/" className="errorBoundary-link">
+            Go back to homepage
+          </a>
         </div>
       );
     }
