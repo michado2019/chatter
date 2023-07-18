@@ -1,0 +1,36 @@
+.errorPage-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #543ee0;
+}
+
+.errorPage-content {
+  text-align: center;
+}
+
+.errorPage-heading {
+  color: #ffedcc;
+  font-size: 6rem;
+  margin-bottom: 1rem;
+}
+
+.errorPage-message {
+  color: #fff;
+  font-size: 2rem;
+}
+.errorPage-link {
+  color: #543ee0;
+  font-size: 1.5rem;
+  text-decoration: none;
+  background-color: #ffedcc;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+.errorPage-link:hover {
+  background-color: #543ee0;
+  border: 1px solid #ffedcc;
+  color: #fff;
+  transition: all 0.3s;
+}

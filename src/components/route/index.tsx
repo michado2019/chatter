@@ -20,6 +20,7 @@ import { getDocs, collection } from "firebase/firestore";
 import { PostData } from "../pages/pagesDataType/PagesDataType";
 import { db } from "../firebase";
 import Notifications from "../pages/notifications/Notifications";
+import ErrorPage from "../pages/errorPage/ErrorPage";
 
 const AppRouter = () => {
   //  //States
@@ -91,6 +92,7 @@ const AppRouter = () => {
           <Route path="/sign-up/register" element={<Register />} />
           <Route path="/sign-up/login" element={<Login />} />
         </Route>
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>
   );
