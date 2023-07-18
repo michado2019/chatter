@@ -1,0 +1,16 @@
+.error-boundary {
+    background-color: #543ee0;
+    color: #fff;
+    padding: 20px;
+    border-radius: 4px;
+  }
+  
+  .error-boundary h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .error-boundary p {
+    font-size: 16px;
+  }
+  
