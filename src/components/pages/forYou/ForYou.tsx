@@ -4,10 +4,9 @@ import commentImg from "./assets/ant-design_comment-outlinedcommentImg.png";
 import loveImg from "./assets/material-symbols_favorite-outlineloveImg.png";
 import viewsImg from "./assets/ant-design_read-outlinedtimingImg.png";
 import timingImg from "./assets/ant-design_read-outlinedtimingImg.png";
-import bookMarksImg from "../blogSidebar/assets/VectorbookMarksImg.png";
 import { PostData } from "../pagesDataType/PagesDataType";
-import { Favorite } from "@mui/icons-material";
-import { doc, updateDoc } from "firebase/firestore";
+import { Favorite, BookmarkAddOutlined } from "@mui/icons-material";
+import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from "../../firebase";
 import uniqid from "uniqid";
 import Loading from "../loadingPage/Loading";
@@ -18,19 +17,61 @@ export type AllPostsType = {
 
 const ForYou = (props: AllPostsType) => {
   const { allPosts } = props;
+
+  //States
   const [user, setUser] = useState({
-    photoURL: "", // A default value for photoURL
-    displayName: "", // A default value for displayName
+    photoURL: "",
+    displayName: "",
+    uid: "",
   });
   const [postData, setPostData] = useState(allPosts);
-  const [display, setDisplay] = useState(false);
+  const [displayedCommentId, setDisplayedCommentId] = useState<string | null>(
+    null
+  );
   const [commentId, setCommentId] = useState<string>(uniqid());
   const [textarea, setTextarea] = useState({
     id: "",
     commentMsg: "",
   });
+  const initialBookmarkedPosts = localStorage.getItem("bookmarkedPosts");
+  const [bookmarkedPosts, setBookmarkedPosts] = useState<string[]>(
+    initialBookmarkedPosts ? JSON.parse(initialBookmarkedPosts) : []
+  );
+  const [isLoading, setIsLoading] = useState(true); // Loading state
 
-  //Handle comment
+  //Handlers
+  const handleBookmark = (id: string | number) => {
+    if (bookmarkedPosts.includes(id.toString())) {
+      // If the post is already bookmarked, remove it from the bookmarkedPosts array
+      const updatedBookmarks = bookmarkedPosts.filter(
+        (postId) => postId !== id.toString()
+      );
+      setBookmarkedPosts(updatedBookmarks);
+
+      // Update the database
+      const docRef = doc(db, "posts", id.toString());
+      updateDoc(docRef, {
+        bookmarks: arrayRemove(user.uid), 
+      });
+    } else {
+      // If the post is not bookmarked, add it to the bookmarkedPosts array
+      setBookmarkedPosts([...bookmarkedPosts, id.toString()]);
+
+      // Update the database
+      const docRef = doc(db, "posts", id.toString());
+      updateDoc(docRef, {
+        bookmarks: arrayUnion(user.uid), 
+      });
+    }
+  };
+
+  //Handle display
+  const handleDisplay = (id: string | number) => {
+    setDisplayedCommentId((prevId) =>
+      prevId === id.toString() ? null : id.toString()
+    );
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
     id: string
@@ -43,7 +84,6 @@ const ForYou = (props: AllPostsType) => {
     });
   };
 
-  //Handle post comment
   const handlePostComment = (id: string | number) => {
     const newPostData = postData.map((each) => {
       if (each.id === id) {
@@ -56,14 +96,12 @@ const ForYou = (props: AllPostsType) => {
     });
     setPostData(newPostData as PostData[]);
 
-    // Update the database
     const docRef = doc(db, "posts", id.toString());
     updateDoc(docRef, {
       comment: newPostData.find((each) => each.id === id)?.comment,
     });
   };
 
-  //Handle favorite
   const handleFavorite = (id: string | number) => {
     const newPostData = postData.map((each) => {
       if (each.id === id) {
@@ -77,7 +115,6 @@ const ForYou = (props: AllPostsType) => {
     });
     setPostData(newPostData);
 
-    // Update the database
     const docRef = doc(db, "posts", id.toString());
     updateDoc(docRef, {
       love: newPostData.find((each) => each.id === id)?.love,
@@ -85,7 +122,6 @@ const ForYou = (props: AllPostsType) => {
     });
   };
 
-  // useEffect to retrieve user data
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
     if (savedUser !== null) {
@@ -93,38 +129,45 @@ const ForYou = (props: AllPostsType) => {
       setUser(parsedUser);
     }
     setPostData(allPosts);
+    setIsLoading(false); // Set loading state to false after data is loaded
   }, [allPosts]);
 
-  // Helper function to convert HTML text content
+  // Update the local storage whenever bookmarkedPosts change
+  useEffect(() => {
+    localStorage.setItem("bookmarkedPosts", JSON.stringify(bookmarkedPosts));
+  }, [bookmarkedPosts]);
+
   const convertToHTML = (textContent: string) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(textContent, "text/html");
     return doc.body.childNodes[0]?.nodeValue || "";
   };
 
-  // Comparator function to compare dates
   const compareDates = (a: PostData, b: PostData) => {
     const dateA = new Date(a.date).getTime();
     const dateB = new Date(b.date).getTime();
     return dateA - dateB;
   };
 
-  // Sort postData array by date
   const sortedPosts = postData.sort(compareDates);
 
-  // If there is no post available, display this message
-  if (postData.length === 0)
+  if (isLoading) {
+    return <Loading />; // Render a loading component while data is being fetched
+  }
+
+  if (postData.length === 0) {
     return (
       <div className="forYou-wrapper">
-        <Loading />
+        <p>No post yet!</p>
       </div>
     );
+  }
+
   return (
     <div className="forYou-wrapper">
       <div className="forYou-contents">
         <div>
           {sortedPosts.map((each, index) => {
-            // To calculate the timing of the post
             const textContent = convertToHTML(each.html);
             const wordCount = textContent.split(" ").length;
             const timingInMinutes = Math.ceil(wordCount / 30);
@@ -163,7 +206,12 @@ const ForYou = (props: AllPostsType) => {
                 </div>
                 <div
                   className="forYou-comment"
-                  style={{ display: display ? "flex" : "none" }}
+                  style={{
+                    display:
+                      displayedCommentId === each.id.toString()
+                        ? "flex"
+                        : "none",
+                  }}
                 >
                   <div className="forYou-comment_form">
                     <img
@@ -192,10 +240,15 @@ const ForYou = (props: AllPostsType) => {
                 </div>
                 <div className="forYou-post_reactions">
                   <div className="forYou-post_bookMark">
-                    <img
-                      src={bookMarksImg}
-                      alt="Bookmark"
+                    <BookmarkAddOutlined
                       className="forYou-reactionsImg"
+                      onClick={() => handleBookmark(each.id)}
+                      style={{
+                        color: bookmarkedPosts.includes(each.id.toString())
+                          ? "red"
+                          : "inherit",
+                        transition: "all 0.3s",
+                      }}
                     />
                   </div>
                   <div className="forYou-post_comment">
@@ -203,28 +256,25 @@ const ForYou = (props: AllPostsType) => {
                       src={commentImg}
                       alt="Comment"
                       className="forYou-reactionsImg"
-                      onClick={() => setDisplay((prev) => !prev)}
+                      onClick={() => handleDisplay(each.id)}
                     />
                     {each.comment.length}
                   </div>
                   <div className="forYou-post_love">
-                    {
-                      // If the post is liked, the color of the heart icon will be red
-                      each.isLiked ? (
-                        <Favorite
-                          className="forYou-reactionsImg"
-                          onClick={() => handleFavorite(each.id)}
-                          style={{ color: "red" }}
-                        />
-                      ) : (
-                        <img
-                          src={loveImg}
-                          alt="img"
-                          onClick={() => handleFavorite(each.id)}
-                          className="forYou-reactionsImg"
-                        />
-                      )
-                    }
+                    {each.isLiked ? (
+                      <Favorite
+                        className="forYou-reactionsImg"
+                        onClick={() => handleFavorite(each.id)}
+                        style={{ color: "red" }}
+                      />
+                    ) : (
+                      <img
+                        src={loveImg}
+                        alt="img"
+                        onClick={() => handleFavorite(each.id)}
+                        className="forYou-reactionsImg"
+                      />
+                    )}
                     {each.love}
                   </div>
                   <div className="forYou-post_views">
