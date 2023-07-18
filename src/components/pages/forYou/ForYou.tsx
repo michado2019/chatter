@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ForYou.css";
 import commentImg from "./assets/ant-design_comment-outlinedcommentImg.png";
 import loveImg from "./assets/material-symbols_favorite-outlineloveImg.png";
@@ -9,7 +9,6 @@ import { PostData } from "../pagesDataType/PagesDataType";
 import { Favorite } from "@mui/icons-material";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
-import { SwitchContext } from "../../context/switchContext/SwitchContext";
 import uniqid from "uniqid";
 
 export type AllPostsType = {
@@ -17,15 +16,13 @@ export type AllPostsType = {
 };
 
 const ForYou = (props: AllPostsType) => {
-  //useContext
-  const switchContext = useContext(SwitchContext);
-
   const { allPosts } = props;
   const [user, setUser] = useState({
     photoURL: "", // A default value for photoURL
     displayName: "", // A default value for displayName
   });
   const [postData, setPostData] = useState(allPosts);
+  const [display, setDisplay] = useState(false);
   const [commentId, setCommentId] = useState<string>(uniqid());
   const [textarea, setTextarea] = useState({
     id: "",
@@ -51,7 +48,7 @@ const ForYou = (props: AllPostsType) => {
       if (each.id === id) {
         return {
           ...each,
-          comment: [...each.comment, textarea]
+          comment: [...each.comment, textarea],
         };
       }
       return each;
@@ -124,11 +121,7 @@ const ForYou = (props: AllPostsType) => {
           return (
             <div className="forYou-content" key={index}>
               <div className="forYou-content_flex1">
-                <img
-                  src={each.userImg}
-                  alt="img"
-                  className="forYou-userImg"
-                />
+                <img src={each.userImg} alt="img" className="forYou-userImg" />
                 <div className="forYou-content_flex2">
                   <h2 className="forYou-userName">{each.userName}</h2>
                   <div className="forYou-content_dateFlex">
@@ -152,7 +145,7 @@ const ForYou = (props: AllPostsType) => {
               </div>
               <div
                 className="forYou-comment"
-                style={{ display: switchContext?.state ? "flex" : "none" }}
+                style={{ display: display ? "flex" : "none" }}
               >
                 <div className="forYou-comment_form">
                   <img
@@ -191,7 +184,7 @@ const ForYou = (props: AllPostsType) => {
                     src={commentImg}
                     alt="Comment"
                     className="forYou-reactionsImg"
-                    onClick={() => switchContext?.setState((prev) => !prev)}
+                    onClick={() => setDisplay((prev) => !prev)}
                   />
                   {each.comment.length}
                 </div>

@@ -59,7 +59,16 @@ const AppRouter = () => {
         />
         <Route path="/about-us" element={<About />} />
         <Route path="/contact-us" element={<Contact />} />
-        <Route path="/blogs/*" element={<Blogs allPosts={allPosts} />}>
+        <Route
+          path="/blogs/*"
+          element={
+            userContext?.user === null ? (
+              <Navigate to="/sign-in" />
+              ) : (
+              <Blogs allPosts={allPosts} />
+            )
+          }
+        >
           <Route index element={<Feed />} />
           <Route path="/blogs/*/feed" element={<Feed />}>
             <Route

@@ -84,7 +84,11 @@ const SmallScreenBlogSidebar = (props: BlogNavbarType) => {
       style={{ marginLeft: display ? "0" : "-3000px", transition: "all 0.3s" }}
     >
       <div className="blogSidebar-contents">
-        <Link to="/blogs" className="blogLogo">
+        <Link
+          to="/blogs"
+          className="blogLogo"
+          onClick={() => setDisplay((prev) => !prev)}
+        >
           CHATTER
         </Link>
         <div className="blogSidebar-section">
@@ -259,9 +263,11 @@ const SmallScreenBlogSidebar = (props: BlogNavbarType) => {
               </NavLink>
             </div>
           </div>
-          <button className="blogSidebar-logout_btn" onClick={handleSignout}>
-            Logout
-          </button>
+          <div onClick={() => setDisplay((prev) => !prev)}>
+            <button className="blogSidebar-logout_btn" onClick={handleSignout}>
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </div>
