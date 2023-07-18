@@ -214,7 +214,7 @@ const ForYou = (props: AllPostsType) => {
                     alt="img"
                     className="forYou-reactionsImg"
                   />
-                  {each.views} views
+                  {each.views}
                 </div>
               </div>
             </div>
