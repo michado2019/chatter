@@ -1,5 +1,5 @@
 import "./SmallScreenBlogSidebar.css";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
   blogSidebarDataOne,
   personalData,
@@ -84,13 +84,6 @@ const SmallScreenBlogSidebar = (props: BlogNavbarType) => {
       style={{ marginLeft: display ? "0" : "-3000px", transition: "all 0.3s" }}
     >
       <div className="blogSidebar-contents">
-        <Link
-          to="/blogs"
-          className="blogLogo"
-          onClick={() => setDisplay((prev) => !prev)}
-        >
-          CHATTER
-        </Link>
         <div className="blogSidebar-section">
           <h2
             className="blogSidebar-section_title"

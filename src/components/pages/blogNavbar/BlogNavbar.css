@@ -4,6 +4,10 @@
   display: flex;
   align-items: center;
   padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  left: 0;
 }
 
 .blogNavbar-blog_logo {

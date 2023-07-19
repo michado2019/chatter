@@ -74,9 +74,6 @@ const BlogSidebar = () => {
   return (
     <div className="blogSidebar-wrapper">
       <div className="blogSidebar-contents">
-        <Link to="/blogs" className="blogLogo">
-          CHATTER
-        </Link>
         <div className="blogSidebar-section">
           <h2
             className="blogSidebar-section_title"
