@@ -31,7 +31,7 @@ const Post: React.FC<PostProps> = ({
     text: "",
     love: 0,
     comment: [],
-    bookMark: false,
+    bookMark: [],
     views: 0,
     date: new Date().toLocaleDateString(),
     allPosts: [],
@@ -39,6 +39,7 @@ const Post: React.FC<PostProps> = ({
     isLiked: false,
     userImg: userContext?.user?.photoURL || "",
     userName: userContext?.user?.displayName || "",
+    uid: "",
   });
   const [userPost, setUserPost] = useState<PostData>({ ...post });
 

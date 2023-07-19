@@ -77,7 +77,7 @@ const AppRouter = () => {
               element={<ForYou allPosts={allPosts} />}
             />
           </Route>
-          <Route path="/blogs/*/bookMarks" element={<BookMarks />} />
+          <Route path="/blogs/*/bookMarks" element={<BookMarks allPosts={allPosts}/>} />
           <Route path="/blogs/*/analytics" element={<Analytics />} />
           <Route path="/blogs/*/notifications" element={<Notifications />} />
           <Route path="/blogs/*/post" element={<Post />} />

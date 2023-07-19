@@ -35,7 +35,7 @@ const Blogs = (props: AllPostsType) => {
                 element={<ForYou allPosts={props.allPosts} />}
               />
             </Route>
-            <Route path="/bookMarks" element={<BookMarks />} />
+            <Route path="/bookMarks" element={<BookMarks allPosts={props.allPosts}/>} />
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/post" element={<Post />} />

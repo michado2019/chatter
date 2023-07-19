@@ -51,7 +51,7 @@ const ForYou = (props: AllPostsType) => {
       // Update the database
       const docRef = doc(db, "posts", id.toString());
       updateDoc(docRef, {
-        bookmarks: arrayRemove(user.uid), 
+        bookMark: arrayRemove(user.uid),
       });
     } else {
       // If the post is not bookmarked, add it to the bookmarkedPosts array
@@ -60,7 +60,7 @@ const ForYou = (props: AllPostsType) => {
       // Update the database
       const docRef = doc(db, "posts", id.toString());
       updateDoc(docRef, {
-        bookmarks: arrayUnion(user.uid), 
+        bookMark: arrayUnion(user.uid),
       });
     }
   };
@@ -72,6 +72,7 @@ const ForYou = (props: AllPostsType) => {
     );
   };
 
+  //Handle change
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
     id: string
@@ -136,7 +137,6 @@ const ForYou = (props: AllPostsType) => {
   useEffect(() => {
     localStorage.setItem("bookmarkedPosts", JSON.stringify(bookmarkedPosts));
   }, [bookmarkedPosts]);
-
   const convertToHTML = (textContent: string) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(textContent, "text/html");
@@ -157,7 +157,7 @@ const ForYou = (props: AllPostsType) => {
 
   if (postData.length === 0) {
     return (
-      <div className="forYou-wrapper">
+      <div className="forYou-no_post">
         <p>No post yet!</p>
       </div>
     );

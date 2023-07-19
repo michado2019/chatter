@@ -8,6 +8,7 @@
   padding: 10px 50px;
   border: 1px solid #d0d0d0;
   display: flex;
+  min-height: 70vh;
   flex-direction: column;
 }
 .feedContents-top_section1 {
