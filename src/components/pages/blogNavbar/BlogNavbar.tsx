@@ -10,16 +10,17 @@ type BlogNavbarType = {
   display: boolean;
   setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
 const BlogNavbar = (props: BlogNavbarType) => {
   const { display, setDisplay } = props;
-  //useContext
+  // useContext
   const userContext = useContext(UserContext);
 
-  //States
+  // States
   const [userDisplay, setUserDisplay] = useState(false);
   const [user, setUser] = useState(userContext?.user);
 
-  //Handle signout
+  // Handle signout
   const handleSignout = () => {
     const auth = getAuth();
     signOut(auth)
@@ -34,9 +35,9 @@ const BlogNavbar = (props: BlogNavbarType) => {
       });
   };
 
-  const defaultAvatarSrc = ""; //Default image
+  const defaultAvatarSrc = ""; // Default image
 
-  //useEffect
+  // useEffect
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
     if (savedUser !== null) {
@@ -44,6 +45,7 @@ const BlogNavbar = (props: BlogNavbarType) => {
       setUser(parsedUser);
     }
   }, []);
+
   return (
     <div className="blogNavbar-wrapper">
       <Link to="/" className="blogNavbar-blog_logo">
@@ -65,16 +67,16 @@ const BlogNavbar = (props: BlogNavbarType) => {
             </Link>
           </div>
           <img src={bellImg} alt="img" className="blogNavbar-content_bell" />
-          <div className="navbarUser-flex">
+          <div className="blogNavbarUser-flex">
             <img
-              src={user?.photoURL || defaultAvatarSrc} // Use the default image source if photoUrl is falsy
+              src={user?.photoURL || defaultAvatarSrc}
               alt="User"
-              className="navbarUser_avatar"
+              className="blogNavbarUser_avatar"
               onClick={() => setUserDisplay((prev) => !prev)}
             />
             <button
-              className="navbarLinksTwo-link"
-              id="navbarSignout"
+              className="blogNavbarLinksTwo-link"
+              id="blogNavbarSignout"
               onClick={handleSignout}
               style={{ display: userDisplay ? "block" : "none" }}
             >
@@ -82,21 +84,22 @@ const BlogNavbar = (props: BlogNavbarType) => {
             </button>
           </div>
         </div>
-        <div className="navbarMenu-div">
-          {display ? (
-            <CancelOutlined
-              className="navbarMenu"
-              onClick={() => setDisplay((prev) => !prev)}
-            />
-          ) : (
-            <MenuOutlined
-              className="navbarMenu"
-              onClick={() => setDisplay((prev) => !prev)}
-            />
-          )}
-        </div>
+      </div>
+      <div className="blogNavbarMenu-div">
+        {display ? (
+          <CancelOutlined
+            className="blogNavbarMenu"
+            onClick={() => setDisplay((prev) => !prev)}
+          />
+        ) : (
+          <MenuOutlined
+            className="blogNavbarMenu"
+            onClick={() => setDisplay((prev) => !prev)}
+          />
+        )}
       </div>
     </div>
   );
 };
+
 export default BlogNavbar;
