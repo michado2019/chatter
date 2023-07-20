@@ -56,3 +56,11 @@
   margin-top: 15px;
   cursor: pointer;
 }
+
+/*Media Queries*/
+@media (max-width:940px) {
+  .analyticsWrapper {
+    margin-left: 0;
+    padding: 20px 10px;
+  }
+}

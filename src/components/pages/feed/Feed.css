@@ -10,6 +10,7 @@
   display: flex;
   min-height: 70vh;
   flex-direction: column;
+  border-radius: 5px;
 }
 .feedContents-top_section1 {
   display: flex;

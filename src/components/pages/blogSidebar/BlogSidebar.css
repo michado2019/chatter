@@ -2,7 +2,6 @@
   width: 280px;
   position: fixed;
   left: 0;
-  top: 0;
   height: 100%;
   overflow-y: scroll;
   background-color: #fff;
@@ -19,7 +18,11 @@
   border-radius: 20px;
 }
 .blogSidebar-contents {
-  padding: 10px 40px;
+  margin-top: 40px;
+  padding: 0 40px;
+}
+#blogSidebar-contents {
+  margin-top: 40px;
 }
 .blogLogo {
   font-family: "DM Sans";
@@ -39,14 +42,14 @@
 .blogSidebar-section_title {
   font: DM Sans;
   font-weight: 400;
-  size: 18px;
+  font-size: 18px;
   line-height: 27px;
   color: #000000;
 }
 #blogSidebar-section_title {
   font: DM Sans;
   font-weight: 400;
-  size: 18px;
+  font-size: 18px;
   line-height: 27px;
   color: #000000;
   margin-top: 2px;
@@ -72,6 +75,10 @@
   line-height: 27px;
   color: #000000;
 }
+.blogSidebar-contents_link:hover, .blogSidebar-contents_link2:hover{
+  color: #543ee0 !important;
+  transition: all 0.3s;
+}
 .blogSidebar-personal,
 .blogSidebar-trending_tags {
   margin-top: 5px;
@@ -81,7 +88,7 @@
   margin-left: 20px;
   font: DM Sans;
   font-weight: 400;
-  size: 18px;
+  font-size: 18px;
   line-height: 27px;
   color: #000000;
 }
@@ -113,11 +120,5 @@
 @media (max-width: 390px) {
   .blogSidebar-contents {
     padding: 10px 10px;
-  }
-  .blogSidebar-section_title {
-    font-size: 16px;
-  }
-  .blogSidebar-contents_link {
-    font-size: 14px;
   }
 }

@@ -1,6 +1,10 @@
-import { CancelOutlined, MenuOutlined, Search } from "@mui/icons-material";
+import {
+  ArrowDropDown,
+  CancelOutlined,
+  MenuOutlined,
+  Search,
+} from "@mui/icons-material";
 import "./BlogNavbar.css";
-import bellImg from "./assets/Vectorbell.png";
 import { UserContext } from "../../context/userContext/UserContext";
 import { useContext, useEffect, useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
@@ -10,7 +14,6 @@ type BlogNavbarType = {
   display: boolean;
   setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
 };
-
 const BlogNavbar = (props: BlogNavbarType) => {
   const { display, setDisplay } = props;
   // useContext
@@ -18,6 +21,7 @@ const BlogNavbar = (props: BlogNavbarType) => {
 
   // States
   const [userDisplay, setUserDisplay] = useState(false);
+  const [greetings, setGreetings] = useState("");
   const [user, setUser] = useState(userContext?.user);
 
   // Handle signout
@@ -46,8 +50,37 @@ const BlogNavbar = (props: BlogNavbarType) => {
     }
   }, []);
 
+  const time = new Date().getHours();
+
+  //useEffect to get time of the day
+  useEffect(() => {
+    function getTimeOfTheDay() {
+      if (time < 12) {
+        setGreetings("Morning");
+      } else if (time > 12 && time < 5) {
+        setGreetings("Afternoon");
+      } else {
+        setGreetings("Evening");
+      }
+    }
+    getTimeOfTheDay();
+  }, [time]);
+
   return (
     <div className="blogNavbar-wrapper">
+      <div className="smallScreenBlogSidebarMenu-div">
+        {display ? (
+          <CancelOutlined
+            className="smallScreenBlogSidebarMenu"
+            onClick={() => setDisplay((prev) => !prev)}
+          />
+        ) : (
+          <MenuOutlined
+            className="smallScreenBlogSidebarMenu"
+            onClick={() => setDisplay((prev) => !prev)}
+          />
+        )}
+      </div>
       <Link to="/" className="blogNavbar-blog_logo">
         CHATTER
       </Link>
@@ -66,37 +99,51 @@ const BlogNavbar = (props: BlogNavbarType) => {
               Create post
             </Link>
           </div>
-          <img src={bellImg} alt="img" className="blogNavbar-content_bell" />
           <div className="blogNavbarUser-flex">
-            <img
-              src={user?.photoURL || defaultAvatarSrc}
-              alt="User"
-              className="blogNavbarUser_avatar"
-              onClick={() => setUserDisplay((prev) => !prev)}
-            />
-            <button
-              className="blogNavbarLinksTwo-link"
-              id="blogNavbarSignout"
-              onClick={handleSignout}
-              style={{ display: userDisplay ? "block" : "none" }}
+            <div className="blogNavbar-img_arrow">
+              <img
+                src={user?.photoURL || defaultAvatarSrc}
+                alt="User"
+                className="blogNavbarUser_avatar"
+                onClick={() => setUserDisplay((prev) => !prev)}
+              />
+              <ArrowDropDown className="blogNavbarUser_avatarArrow" />
+            </div>
+            <div
+              className="blogNavbarUser-acct_div"
+              style={{ display: userDisplay ? "flex" : "none" }}
             >
-              Sign out
-            </button>
+              <CancelOutlined
+                className="smallScreenBlogSidebarMenu"
+                id="smallScreenBlogSidebarMenu"
+                onClick={() => setUserDisplay((prev) => !prev)}
+              />
+              <div className="blogNavbarUser-acct_details">
+                <img
+                  src={user?.photoURL || defaultAvatarSrc}
+                  alt="User"
+                  className="blogNavbarUser_avatar"
+                  id="blogNavbarUser_avatar"
+                />
+                <div>
+                  <span>Good </span>
+                  <span>{greetings}, </span>
+                  <span className="blogNavbarUser_name">
+                    {user?.displayName}
+                  </span>
+                </div>
+              </div>
+              <div>{user?.email}</div>
+              <button
+                className="blogNavbarLinksTwo-link"
+                id="blogNavbarSignout"
+                onClick={handleSignout}
+              >
+                Sign out
+              </button>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="blogNavbarMenu-div">
-        {display ? (
-          <CancelOutlined
-            className="blogNavbarMenu"
-            onClick={() => setDisplay((prev) => !prev)}
-          />
-        ) : (
-          <MenuOutlined
-            className="blogNavbarMenu"
-            onClick={() => setDisplay((prev) => !prev)}
-          />
-        )}
       </div>
     </div>
   );

@@ -19,8 +19,7 @@ const Blogs = (props: AllPostsType) => {
     <div className="blogsWrapper">
       <div className="blogsContents">
           <BlogNavbar
-            display={display}
-            setDisplay={setDisplay}
+          display={display} setDisplay={setDisplay}
           />
         <BlogSidebar />
         <SmallScreenBlogSidebar display={display} setDisplay={setDisplay} />

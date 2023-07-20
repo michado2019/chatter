@@ -1,5 +1,5 @@
 import "./BlogSidebar.css";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { blogSidebarDataOne, personalData } from "./blogSidebarData";
 import feedImg from "./assets/VectorfeedImg.png";
 import bookMarksImg from "./assets/VectorbookMarksImg.png";
@@ -73,7 +73,7 @@ const BlogSidebar = () => {
   }, []);
   return (
     <div className="blogSidebar-wrapper">
-      <div className="blogSidebar-contents">
+      <div className="blogSidebar-contents" id="blogSidebar-contents">
         <div className="blogSidebar-section">
           <h2
             className="blogSidebar-section_title"
@@ -221,9 +221,12 @@ const BlogSidebar = () => {
               </NavLink>
             </div>
           </div>
-          <button className="blogSidebar-logout_btn" onClick={handleSignout}>
-            Logout
-          </button>
+          <div className="blogSidebar-logout_div">
+            <h2 className="userNameAlp">{user?.displayName?.slice(0, 2)}</h2>
+            <button className="blogSidebar-logout_btn" onClick={handleSignout}>
+              Logout
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -2,13 +2,58 @@
   width: 280px;
   position: fixed;
   left: 0;
-  top: 0;
+  top: 52.5px;
   height: 100%;
   background-color: #fff;
   border: 1px solid #ddd;
 }
+.smallScreenBlogSidebarMenu {
+  font-size: 1.5rem;
+  color: #fff !important;
+  cursor: pointer;
+  width: 25px !important;
+  display: none !important;
+  height: 25px !important;
+}
+.blogSidebar-section {
+  margin-top: 10px;
+}
+#blogNavbar-post_btn {
+  margin-bottom: 10px;
+  display: none;
+}
+.blogSidebar-logout_div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.userNameAlp{
+  background-color: #493ba0;
+  color: #fff;
+  padding: 2px 5px;
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+@media (max-width: 940px) {
+  .smallScreenBlogSidebarMenu {
+    display: block !important;
+  }
+  .smallScreenBlogSidebarMenu:hover {
+    background-color: #ffedcc;
+    color: #493ba0 !important;
+    padding: 1px;
+    border-radius: 4px;
+    transition: all 0.3s ease-in-out;
+  }
+  #blogNavbar-post_btn {
+    display: block;
+  }
+}
 @media (max-width: 320px) {
   .smallScreenBlogSidebar {
     width: 260px;
+  }
+  .smallScreenBlogSidebarMenu {
+    margin-right: 15px;
   }
 }

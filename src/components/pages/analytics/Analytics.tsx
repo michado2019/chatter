@@ -11,21 +11,22 @@ import { SwitchContext } from "../../context/switchContext/SwitchContext";
 import { PostData } from "../pagesDataType/PagesDataType";
 import { getDocs, collection } from "firebase/firestore";
 import { db } from "../../firebase";
+
 const Analytics = () => {
   // States
   const [page, setPage] = useState(1);
   const [allPosts, setAllPosts] = useState<PostData[]>([]);
   const [user, setUser] = useState({
-    photoURL: "", // Provide a default value for photoURL
-    displayName: "", // Provide a default value for displayName
+    photoURL: "",
+    displayName: "",
   });
 
-  //Pagination logic
+  // Pagination logic
   const perPage = 1;
   const pages = Math.ceil(allPosts.length / perPage);
   const skip = page * perPage - perPage;
 
-  //useContext
+  // useContext
   const switchContext = useContext(SwitchContext);
 
   // useEffect to fetch data from the database
@@ -62,23 +63,34 @@ const Analytics = () => {
     const doc = parser.parseFromString(textContent, "text/html");
     return doc.body.childNodes[0]?.nodeValue || "";
   };
+
   return (
     <div className="analyticsWrapper">
       <div className="analyticsContents">
         <h1 className="analyticsTitle">Post analytics</h1>
-        <p className="analyticsDate">
-          May 2023, <span className="analyticsDays">25days so far</span>
-        </p>
+        {allPosts.map((each) => (
+          <div key={each.id}>
+            <p className="analyticsDate">
+              {each.title}
+              <span className="analyticsDays">{each.date}</span>
+            </p>
+          </div>
+        ))}
         <h3 className="analyticsPosts-highlights">Posts highlights</h3>
         <p className="analyticsTop-posts">
           Top posts <span>earned 2980 impressions</span>
         </p>
         <div className="analytics-div">
           {allPosts.slice(skip, skip + perPage).map((each, index) => {
-            //calculate timing
+            // Calculate timing
             const textContent = convertToHTML(each.html);
             const wordCount = textContent.split(" ").length;
             const timingInMinutes = Math.ceil(wordCount / 30);
+
+            // Calculate total impressions
+            const totalImpressions =
+              each.views + each.comment.length + each.love;
+
             return (
               <div className="forYou-content" key={index}>
                 <div className="forYou-content_flex1">
@@ -111,7 +123,11 @@ const Analytics = () => {
                       className="forYou-post_content"
                       dangerouslySetInnerHTML={{ __html: textContent }}
                     ></p>
-                    <img src={each.img} alt="img" className="forYou-post_img" />
+                    <img
+                      src={each.img}
+                      alt="img"
+                      className="forYou-post_img"
+                    />
                   </div>
                 </div>
                 <div className="forYou-post_reactions">
@@ -147,6 +163,9 @@ const Analytics = () => {
                     {each.views} views
                   </div>
                 </div>
+                <div className="forYou-post_impressions">
+                  <p>{totalImpressions} impressions</p>
+                </div>
               </div>
             );
           })}
@@ -171,8 +190,8 @@ const Analytics = () => {
         </button>
         {switchContext?.state && <PostSummary />}
       </div>
-      ;
     </div>
   );
 };
+
 export default Analytics;

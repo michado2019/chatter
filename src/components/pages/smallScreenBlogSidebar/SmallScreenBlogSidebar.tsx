@@ -1,5 +1,5 @@
 import "./SmallScreenBlogSidebar.css";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import {
   blogSidebarDataOne,
   personalData,
@@ -85,12 +85,13 @@ const SmallScreenBlogSidebar = (props: BlogNavbarType) => {
     >
       <div className="blogSidebar-contents">
         <div className="blogSidebar-section">
-          <h2
-            className="blogSidebar-section_title"
-            id="blogSidebar-section_title"
+          <Link
+            to="/blogs/post"
+            className="blogNavbar-post_btn"
+            id="blogNavbar-post_btn"
           >
-            {title[0]}
-          </h2>
+            Create post
+          </Link>
           <div className="blogSidebar-content">
             <div
               className="blogSidebar-content_flex"
@@ -256,7 +257,11 @@ const SmallScreenBlogSidebar = (props: BlogNavbarType) => {
               </NavLink>
             </div>
           </div>
-          <div onClick={() => setDisplay((prev) => !prev)}>
+          <div
+            onClick={() => setDisplay((prev) => !prev)}
+            className="blogSidebar-logout_div"
+          >
+            <h2 className="userNameAlp">{user?.displayName?.slice(0, 2)}</h2>
             <button className="blogSidebar-logout_btn" onClick={handleSignout}>
               Logout
             </button>
