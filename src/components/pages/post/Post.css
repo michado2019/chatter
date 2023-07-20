@@ -40,6 +40,9 @@
   margin: 40px 0;
   color: #555;
 }
+.postUserImg, .postUserName{
+  display: none;
+}
 .postPreview-btn {
   background-color: #543ee0;
   padding: 5px 20px;
