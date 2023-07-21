@@ -1,289 +1,307 @@
 /* BookMarks.css */
 
 .bookmarkPage-wrapper {
-    background-color: #fff;
-    padding: 20px;
-    margin-left: 280px;
+  background-color: #fff;
+  padding: 20px;
+  margin-left: 280px;
+}
+
+.bookmarkPage-link {
+  color: #543ee0;
+  background-color: #ffedcc;
+  padding: 10px 30px;
+  border-radius: 5px;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.bookmarkPage-link:hover {
+  color: #ffedcc;
+  background-color: #543ee0;
+  transition: all 0.3s;
+}
+.bookmarkPage-contents {
+  margin-top: 20px;
+}
+
+.bookmarkPage-content {
+  background-color: #ffedcc;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+}
+
+.bookmarkPage-content_flex1 {
+  display: flex;
+  align-items: center;
+}
+
+.bookmarkPage-userImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.bookmarkPage-content_flex2 {
+  display: flex;
+  flex-direction: column;
+}
+
+.bookmarkPage-userName {
+  margin: 0;
+}
+
+.bookmarkPage-content_dateFlex {
+  display: flex;
+  align-items: center;
+}
+
+.bookmarkPage-date {
+  margin: 0;
+  font-size: 12px;
+  color: #543ee0;
+}
+
+.bookmarkPage-content_flex3 {
+  margin-top: 20px;
+}
+
+.bookmarkPage-post_title {
+  margin: 0;
+  font-size: 20px;
+  color: #543ee0;
+}
+
+.bookmarkPage-post_timing {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #543ee0;
+}
+
+.bookmarkPage-timingImg {
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+
+.bookmarkPage-post_contentFlex {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.bookmarkPage-post_content {
+  flex-grow: 1;
+  margin: 0;
+}
+
+.bookmarkPage-post_img {
+  width: 100%;
+  max-width: 300px;
+  margin-left: 20px;
+}
+
+.bookmarkPage-comment {
+  margin-top: 20px;
+}
+
+.bookmarkPage-comment_form {
+  display: flex;
+  align-items: center;
+}
+
+.bookmarkPage-comment_userImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.bookmarkPage-comment_textarea {
+  flex-grow: 1;
+  padding: 10px;
+  border: 1px solid #543ee0;
+  border-radius: 5px;
+}
+
+.bookmarkPage-comment_btn {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #543ee0;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.bookmarkPage-comment_btn:hover {
+  background-color: #fff;
+  color: #543ee0;
+}
+
+.bookmarkPage-post_reactions {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.bookmarkPage-reactionsImg {
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.bookmarkPage-post_comment,
+.bookmarkPage-post_love,
+.bookmarkPage-post_views {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  color: #543ee0;
+}
+
+.bookmarkPage-post_comment img {
+  margin-right: 5px;
+}
+
+.bookmarkPage-no_post {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-size: 24px;
+  color: #543ee0;
+}
+
+.bookmarkPage-no_post Link {
+  color: #fff;
+  background-color: #543ee0;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+}
+.bookmarkPage-no_post Link:hover {
+  color: #543ee0;
+  background-color: #fff;
+  transition: all 0.3s;
+}
+
+/* Media queries */
+
+@media (max-width: 940px) {
+  .bookmarkPage-wrapper {
+    margin-left: 0;
+    padding: 10px;
   }
-  
+
   .bookmarkPage-contents {
-    margin-top: 20px;
+    margin-top: 10px;
   }
-  
-  .bookmarkPage-content {
-    background-color: #ffedcc;
-    padding: 20px;
-    margin-bottom: 30px;
-    border-radius: 10px;
-  }
-  
-  .bookmarkPage-content_flex1 {
-    display: flex;
-    align-items: center;
-  }
-  
-  .bookmarkPage-userImg {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .bookmarkPage-content_flex2 {
-    display: flex;
+
+  .bookmarkPage-post_contentFlex {
     flex-direction: column;
   }
-  
-  .bookmarkPage-userName {
-    margin: 0;
-  }
-  
-  .bookmarkPage-content_dateFlex {
-    display: flex;
-    align-items: center;
-  }
-  
-  .bookmarkPage-date {
-    margin: 0;
-    font-size: 12px;
-    color: #543ee0;
-  }
-  
-  .bookmarkPage-content_flex3 {
-    margin-top: 20px;
-  }
-  
-  .bookmarkPage-post_title {
-    margin: 0;
-    font-size: 20px;
-    color: #543ee0;
-  }
-  
-  .bookmarkPage-post_timing {
-    margin-top: 5px;
-    font-size: 14px;
-    color: #543ee0;
-  }
-  
-  .bookmarkPage-timingImg {
-    width: 16px;
-    height: 16px;
-    margin-right: 5px;
-  }
-  
-  .bookmarkPage-post_contentFlex {
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-  }
-  
+
   .bookmarkPage-post_content {
-    flex-grow: 1;
-    margin: 0;
+    margin-bottom: 10px;
   }
-  
+
   .bookmarkPage-post_img {
-    width: 100%;
-    max-width: 300px;
-    margin-left: 20px;
-  }
-  
-  .bookmarkPage-comment {
+    margin-left: 0;
     margin-top: 20px;
+    max-width: 100%;
   }
-  
+
   .bookmarkPage-comment_form {
-    display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
-  .bookmarkPage-comment_userImg {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
+
   .bookmarkPage-comment_textarea {
-    flex-grow: 1;
-    padding: 10px;
-    border: 1px solid #543ee0;
-    border-radius: 5px;
+    margin-top: 10px;
+    width: 100%;
   }
-  
+
   .bookmarkPage-comment_btn {
-    margin-left: 10px;
-    padding: 5px 10px;
-    background-color: #543ee0;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 0;
   }
-  
-  .bookmarkPage-comment_btn:hover {
-    background-color: #fff;
-    color: #543ee0;
-  }
-  
+
   .bookmarkPage-post_reactions {
-    display: flex;
-    align-items: center;
-    margin-top: 20px;
+    flex-wrap: wrap;
+    margin-top: 10px;
   }
-  
-  .bookmarkPage-reactionsImg {
-    width: 24px;
-    height: 24px;
-    margin-right: 5px;
-    cursor: pointer;
-  }
-  
+
   .bookmarkPage-post_comment,
   .bookmarkPage-post_love,
   .bookmarkPage-post_views {
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-    color: #543ee0;
+    margin-bottom: 5px;
   }
-  
-  .bookmarkPage-post_comment img {
-    margin-right: 5px;
+}
+
+@media (max-width: 768px) {
+  .bookmarkPage-wrapper {
+    margin-left: 0;
+    padding: 10px;
   }
-  
+
+  .bookmarkPage-contents {
+    margin-top: 10px;
+  }
+
+  .bookmarkPage-post_img {
+    margin-left: 0;
+    margin-top: 20px;
+    max-width: 100%;
+  }
+
+  .bookmarkPage-post_reactions {
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .bookmarkPage-post_comment,
+  .bookmarkPage-post_love,
+  .bookmarkPage-post_views {
+    margin-bottom: 5px;
+  }
+
   .bookmarkPage-no_post {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    font-size: 24px;
-    color: #543ee0;
+    font-size: 20px;
   }
-  
-  .bookmarkPage-no_post Link {
-    color: #fff;
-    background-color: #543ee0;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
+}
+
+@media (max-width: 576px) {
+  .bookmarkPage-wrapper {
+    margin-left: 0;
+    padding: 10px;
   }
-  
-  /* Media queries */
-  
-  @media (max-width: 940px) {
-    .bookmarkPage-wrapper {
-      margin-left: 0;
-      padding: 10px;
-    }
-  
-    .bookmarkPage-contents {
-      margin-top: 10px;
-    }
-  
-    .bookmarkPage-post_contentFlex {
-      flex-direction: column;
-    }
-  
-    .bookmarkPage-post_content {
-      margin-bottom: 10px;
-    }
-  
-    .bookmarkPage-post_img {
-      margin-left: 0;
-      margin-top: 20px;
-      max-width: 100%;
-    }
-  
-    .bookmarkPage-comment_form {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .bookmarkPage-comment_textarea {
-      margin-top: 10px;
-      width: 100%;
-    }
-  
-    .bookmarkPage-comment_btn {
-      margin-top: 10px;
-      margin-left: 0;
-    }
-  
-    .bookmarkPage-post_reactions {
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-  
-    .bookmarkPage-post_comment,
-    .bookmarkPage-post_love,
-    .bookmarkPage-post_views {
-      margin-bottom: 5px;
-    }
+
+  .bookmarkPage-contents {
+    margin-top: 10px;
   }
-  
-  @media (max-width: 768px) {
-    .bookmarkPage-wrapper {
-      margin-left: 0;
-      padding: 10px;
-    }
-  
-    .bookmarkPage-contents {
-      margin-top: 10px;
-    }
-  
-    .bookmarkPage-post_img {
-      margin-left: 0;
-      margin-top: 20px;
-      max-width: 100%;
-    }
-  
-    .bookmarkPage-post_reactions {
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-  
-    .bookmarkPage-post_comment,
-    .bookmarkPage-post_love,
-    .bookmarkPage-post_views {
-      margin-bottom: 5px;
-    }
-  
-    .bookmarkPage-no_post {
-      font-size: 20px;
-    }
+
+  .bookmarkPage-post_img {
+    margin-left: 0;
+    margin-top: 20px;
+    max-width: 100%;
   }
-  
-  @media (max-width: 576px) {
-    .bookmarkPage-wrapper {
-      margin-left: 0;
-      padding: 10px;
-    }
-  
-    .bookmarkPage-contents {
-      margin-top: 10px;
-    }
-  
-    .bookmarkPage-post_img {
-      margin-left: 0;
-      margin-top: 20px;
-      max-width: 100%;
-    }
-  
-    .bookmarkPage-post_reactions {
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-  
-    .bookmarkPage-post_comment,
-    .bookmarkPage-post_love,
-    .bookmarkPage-post_views {
-      margin-bottom: 5px;
-    }
-  
-    .bookmarkPage-no_post {
-      font-size: 18px;
-    }
+
+  .bookmarkPage-post_reactions {
+    flex-wrap: wrap;
+    margin-top: 10px;
   }
-  
+
+  .bookmarkPage-post_comment,
+  .bookmarkPage-post_love,
+  .bookmarkPage-post_views {
+    margin-bottom: 5px;
+  }
+
+  .bookmarkPage-no_post {
+    font-size: 18px;
+  }
+}

@@ -6,8 +6,7 @@ import Contact from "../pages/contact/Contact";
 import Blogs from "../pages/blogs/Blogs";
 import SignIn from "../pages/signIn/SignIn";
 import SignUp from "../pages/signUp/SignUp";
-import { UserContext } from "../context/userContext/UserContext";
-import { useContext } from "react";
+import { useEffect, useState } from "react";
 import Login from "../pages/logIn/Login";
 import Register from "../pages/register/Register";
 import Feed from "../pages/feed/Feed";
@@ -18,12 +17,18 @@ import Post from "../pages/post/Post";
 // import { PostReactions } from "./routeData/RouteData";
 import Notifications from "../pages/notifications/Notifications";
 import ErrorPage from "../pages/errorPage/ErrorPage";
-
 const AppRouter = () => {
 
-  //UseContexts
-  const userContext = useContext(UserContext); //Context for authenticated user
+    // States
+    const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser !== null) {
+      const parsedUser = JSON.parse(savedUser);
+      setUser(parsedUser);
+    }
+  }, []);
   return (
     <div className="appRouter-wrapper">
       <Routes>
@@ -31,7 +36,7 @@ const AppRouter = () => {
         <Route
           path="/"
           element={
-            userContext?.user === null ? <Home /> : <Navigate to="/blogs" />
+            user === null ? <Home /> : <Navigate to="/blogs" />
           }
         />
         <Route path="/about-us" element={<About />} />
@@ -39,7 +44,7 @@ const AppRouter = () => {
         <Route
           path="/blogs/*"
           element={
-            userContext?.user === null ? (
+            user === null ? (
               <Navigate to="/sign-in" />
             ) : (
               <Blogs />

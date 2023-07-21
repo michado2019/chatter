@@ -19,7 +19,7 @@ import uniqid from "uniqid";
 import Loading from "../loadingPage/Loading";
 import { Link } from "react-router-dom";
 
-type User = {
+export type User = {
   photoURL: string;
   displayName: string;
   uid: string;
