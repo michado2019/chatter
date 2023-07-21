@@ -65,6 +65,9 @@
   width: 15px;
   height: 15px;
 }
+#blogSidebar-feed_link.active{
+  color: #543ee0;
+}
 .blogSidebar-contents_link {
   text-decoration: none;
   margin-left: 20px;

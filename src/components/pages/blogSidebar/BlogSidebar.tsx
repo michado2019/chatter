@@ -94,6 +94,7 @@ const BlogSidebar = () => {
                   isActive ? activeStyle : inActiveStyle
                 }
                 className="blogSidebar-contents_link"
+                id="blogSidebar-feed_link"
               >
                 {blogSidebarDataOne[0].link}
               </NavLink>

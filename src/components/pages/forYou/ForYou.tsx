@@ -155,7 +155,7 @@ const ForYou = () => {
           id: doc.id,
         }))
       );
-    setIsLoading(false); // Set loading state to false after data is loaded
+      setIsLoading(false); // Set loading state to false after data is loaded
     }
     getAllPosts();
   }, []);

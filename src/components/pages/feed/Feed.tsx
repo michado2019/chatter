@@ -3,7 +3,6 @@ import { feedData } from "./feedData/FeedData";
 import { CustomNavLink } from "../../hooks/CustomNavLinks";
 import { Outlet } from "react-router-dom";
 const Feed = () => {
-
   return (
     <div className="feedWrapper">
       <div className="feedContents">
