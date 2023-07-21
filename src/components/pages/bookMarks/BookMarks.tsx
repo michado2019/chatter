@@ -6,15 +6,18 @@ import viewsImg from "./assets/ant-design_read-outlinedtimingImg.png";
 import timingImg from "./assets/ant-design_read-outlinedtimingImg.png";
 import { PostData } from "../pagesDataType/PagesDataType";
 import { Favorite, BookmarkAddOutlined } from "@mui/icons-material";
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import {
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  collection,
+  getDocs,
+} from "firebase/firestore";
 import { db } from "../../firebase";
 import uniqid from "uniqid";
 import Loading from "../loadingPage/Loading";
 import { Link } from "react-router-dom";
-
-export type AllPostsType = {
-  allPosts: PostData[];
-};
 
 type User = {
   photoURL: string;
@@ -27,15 +30,14 @@ type Comment = {
   commentMsg: string;
 };
 
-const BookMarks = (props: AllPostsType) => {
-  const { allPosts } = props;
-
+const BookMarks = () => {
   // States
   const [user, setUser] = useState<User>({
     photoURL: "",
     displayName: "",
     uid: "",
   });
+  const [allPosts, setAllPosts] = useState<PostData[]>([]);
   const [postData, setPostData] = useState<PostData[]>(allPosts);
   const [displayedCommentId, setDisplayedCommentId] = useState<string | null>(
     null
@@ -142,13 +144,32 @@ const BookMarks = (props: AllPostsType) => {
       setUser(parsedUser);
     }
     setPostData(allPosts);
-    setIsLoading(false); // Set loading state to false after data is loaded
   }, [allPosts]);
 
   // Update the local storage whenever bookmarkedPosts change
   useEffect(() => {
     localStorage.setItem("bookmarkedPosts", JSON.stringify(bookmarkedPosts));
   }, [bookmarkedPosts]);
+
+  //Fetch all posts
+  useEffect(() => {
+    // Fetch data from the database
+    async function getAllPosts() {
+      const dbRef = collection(db, "posts");
+      const posts = await getDocs(dbRef);
+      if (!dbRef) {
+        setAllPosts([]);
+      }
+      setAllPosts(
+        posts.docs.map((doc) => ({
+          ...(doc.data() as PostData),
+          id: doc.id,
+        }))
+      );
+      setIsLoading(false); // Set loading state to false after data is loaded
+    }
+    getAllPosts();
+  }, []);
 
   const convertToHTML = (textContent: string) => {
     const parser = new DOMParser();
@@ -172,8 +193,8 @@ const BookMarks = (props: AllPostsType) => {
     return (
       <div className="bookmarkPage-no_post">
         <p>No bookmarked posts yet!</p>
-        <Link to="/blogs" className="bookmarkPage-link">
-          Go to blogs
+        <Link to="/post" className="bookmarkPage-link">
+          Create one
         </Link>
       </div>
     );

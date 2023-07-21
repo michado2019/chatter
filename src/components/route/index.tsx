@@ -7,7 +7,7 @@ import Blogs from "../pages/blogs/Blogs";
 import SignIn from "../pages/signIn/SignIn";
 import SignUp from "../pages/signUp/SignUp";
 import { UserContext } from "../context/userContext/UserContext";
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import Login from "../pages/logIn/Login";
 import Register from "../pages/register/Register";
 import Feed from "../pages/feed/Feed";
@@ -16,37 +16,13 @@ import ForYou from "../pages/forYou/ForYou";
 import Analytics from "../pages/analytics/Analytics";
 import Post from "../pages/post/Post";
 // import { PostReactions } from "./routeData/RouteData";
-import { getDocs, collection } from "firebase/firestore";
-import { PostData } from "../pages/pagesDataType/PagesDataType";
-import { db } from "../firebase";
 import Notifications from "../pages/notifications/Notifications";
 import ErrorPage from "../pages/errorPage/ErrorPage";
 
 const AppRouter = () => {
-  //  //States
-  const [allPosts, setAllPosts] = useState<PostData[]>([]);
 
   //UseContexts
   const userContext = useContext(UserContext); //Context for authenticated user
-
-  // useEffect to fetch data from the database
-  useEffect(() => {
-    // Fetch data from the database
-    async function getAllPosts() {
-      const dbRef = collection(db, "posts");
-      const posts = await getDocs(dbRef);
-      if (!dbRef) {
-        setAllPosts([]);
-      }
-      setAllPosts(
-        posts.docs.map((doc) => ({
-          ...(doc.data() as PostData),
-          id: doc.id,
-        }))
-      );
-    }
-    getAllPosts();
-  }, []);
 
   return (
     <div className="appRouter-wrapper">
@@ -65,8 +41,8 @@ const AppRouter = () => {
           element={
             userContext?.user === null ? (
               <Navigate to="/sign-in" />
-              ) : (
-              <Blogs allPosts={allPosts} />
+            ) : (
+              <Blogs />
             )
           }
         >
@@ -74,10 +50,13 @@ const AppRouter = () => {
           <Route path="/blogs/*/feed" element={<Feed />}>
             <Route
               path="/blogs/*/feed/forYou"
-              element={<ForYou allPosts={allPosts} />}
+              element={<ForYou />}
             />
           </Route>
-          <Route path="/blogs/*/bookMarks" element={<BookMarks allPosts={allPosts}/>} />
+          <Route
+            path="/blogs/*/bookMarks"
+            element={<BookMarks />}
+          />
           <Route path="/blogs/*/analytics" element={<Analytics />} />
           <Route path="/blogs/*/notifications" element={<Notifications />} />
           <Route path="/blogs/*/post" element={<Post />} />

@@ -6,24 +6,27 @@ import viewsImg from "./assets/ant-design_read-outlinedtimingImg.png";
 import timingImg from "./assets/ant-design_read-outlinedtimingImg.png";
 import { PostData } from "../pagesDataType/PagesDataType";
 import { Favorite, BookmarkAddOutlined } from "@mui/icons-material";
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import {
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  getDocs,
+  collection,
+} from "firebase/firestore";
 import { db } from "../../firebase";
 import uniqid from "uniqid";
 import Loading from "../loadingPage/Loading";
+import { Link } from "react-router-dom";
 
-export type AllPostsType = {
-  allPosts: PostData[];
-};
-
-const ForYou = (props: AllPostsType) => {
-  const { allPosts } = props;
-
+const ForYou = () => {
   //States
   const [user, setUser] = useState({
     photoURL: "",
     displayName: "",
     uid: "",
   });
+  const [allPosts, setAllPosts] = useState<PostData[]>([]);
   const [postData, setPostData] = useState(allPosts);
   const [displayedCommentId, setDisplayedCommentId] = useState<string | null>(
     null
@@ -130,13 +133,32 @@ const ForYou = (props: AllPostsType) => {
       setUser(parsedUser);
     }
     setPostData(allPosts);
-    setIsLoading(false); // Set loading state to false after data is loaded
   }, [allPosts]);
 
   // Update the local storage whenever bookmarkedPosts change
   useEffect(() => {
     localStorage.setItem("bookmarkedPosts", JSON.stringify(bookmarkedPosts));
   }, [bookmarkedPosts]);
+
+  //Fetch all posts
+  useEffect(() => {
+    // Fetch data from the database
+    async function getAllPosts() {
+      const dbRef = collection(db, "posts");
+      const posts = await getDocs(dbRef);
+      if (!dbRef) {
+        setAllPosts([]);
+      }
+      setAllPosts(
+        posts.docs.map((doc) => ({
+          ...(doc.data() as PostData),
+          id: doc.id,
+        }))
+      );
+    setIsLoading(false); // Set loading state to false after data is loaded
+    }
+    getAllPosts();
+  }, []);
 
   //Text stripping
   const convertToHTML = (textContent: string) => {
@@ -157,10 +179,13 @@ const ForYou = (props: AllPostsType) => {
     return <Loading />; // Render a loading component while data is being fetched
   }
 
-  if (postData.length === 0) {
+  if (postData.length === 0 && isLoading === false) {
     return (
       <div className="forYou-no_post">
         <p>No post yet!</p>
+        <Link to="/post" className="bookmarkPage-link">
+          Create one
+        </Link>
       </div>
     );
   }
