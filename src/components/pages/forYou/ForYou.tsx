@@ -137,6 +137,8 @@ const ForYou = (props: AllPostsType) => {
   useEffect(() => {
     localStorage.setItem("bookmarkedPosts", JSON.stringify(bookmarkedPosts));
   }, [bookmarkedPosts]);
+
+  //Text stripping
   const convertToHTML = (textContent: string) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(textContent, "text/html");

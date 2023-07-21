@@ -57,7 +57,7 @@ const BlogNavbar = (props: BlogNavbarType) => {
     function getTimeOfTheDay() {
       if (time < 12) {
         setGreetings("Morning");
-      } else if (time > 12 && time < 5) {
+      } else if (time >= 12 && time < 17) {
         setGreetings("Afternoon");
       } else {
         setGreetings("Evening");

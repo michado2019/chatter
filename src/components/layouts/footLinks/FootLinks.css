@@ -1,12 +1,13 @@
 .footLinks-wrapper {
   border: 1px solid #d0d0d0;
   height: 60px;
-  position: sticky;
+  position: fixed;
   bottom: 0;
   left: 0;
   background-color: #fff;
   padding: 0 10px;
   display: none;
+  width: 98%;
 }
 .footLinks-contents {
   display: flex;

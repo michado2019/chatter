@@ -89,6 +89,7 @@ const SmallScreenBlogSidebar = (props: BlogNavbarType) => {
             to="/blogs/post"
             className="blogNavbar-post_btn"
             id="blogNavbar-post_btn"
+            onClick={() => setDisplay((prev) => !prev)}
           >
             Create post
           </Link>

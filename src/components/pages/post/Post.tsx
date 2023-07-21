@@ -7,6 +7,7 @@ import { DbContext } from "../../context/dbContext/DbContext";
 import { collection, addDoc } from "firebase/firestore";
 import { PostData } from "../pagesDataType/PagesDataType";
 import { UserContext } from "../../context/userContext/UserContext";
+import { Cancel, CancelOutlined, Image } from "@mui/icons-material";
 
 type PostProps = {
   view?: { menu: boolean; md: boolean; html: boolean } | undefined;
@@ -21,6 +22,11 @@ const Post: React.FC<PostProps> = ({
 
   // States
   const [preview, setPreview] = useState(false); // preview state
+  const [coverImg, setCoverImg] = useState("Add a cover image");
+  const [successMsg, setSuccessMsg] = useState("");
+  const [postTimeout, setPostTimeout] = useState<NodeJS.Timeout | null>(null);
+  const [postSent, setPostSent] = useState("");
+
   const [img, setImg] = useState({
     img: "",
   }); // img state
@@ -42,7 +48,7 @@ const Post: React.FC<PostProps> = ({
     uid: "",
   });
   const [userPost, setUserPost] = useState<PostData>({ ...post });
-
+  const [sendCounter, setSendCounter] = useState<number | null>(null);
   // Editor's functions
   const mdParser = new MarkdownIt({
     html: false,
@@ -71,9 +77,13 @@ const Post: React.FC<PostProps> = ({
         }));
       };
       reader.readAsDataURL(file as Blob);
+      setCoverImg(" uploaded successfully!");
     }
   };
 
+  const handleImgCancel = () => {
+    setCoverImg("Add a cover image");
+  };
   function handleEditorChange({ html, text }: { html: string; text: string }) {
     const sanitizedHtml = html.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     setPost((prevPost) => ({
@@ -82,10 +92,9 @@ const Post: React.FC<PostProps> = ({
       text: text,
       img: img.img,
       userName: userContext?.user?.displayName || "", // Empty string as a fallback
-      userImg: userContext?.user?.photoURL || "" // Empty string as a fallback
+      userImg: userContext?.user?.photoURL || "", // Empty string as a fallback
     }));
   }
-  
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -119,9 +128,55 @@ const Post: React.FC<PostProps> = ({
       const addData = async () => {
         await addDoc(dbRef, post);
       };
-      addData();
+      if (postTimeout) {
+        clearTimeout(postTimeout); // Clear the existing timeout if it exists
+      }
+
+      setSuccessMsg("Sending post....");
+      const timeout = setTimeout(() => {
+        addData();
+        setPostTimeout(null);
+        setSuccessMsg("");
+        setPostSent("Post sent successfully");
+      }, 10000);
+
+      setPostTimeout(timeout);
+
+      setPost({
+        img: "",
+        title: "",
+        html: "",
+        text: "",
+        love: 0,
+        comment: [],
+        bookMark: [],
+        views: 0,
+        date: new Date().toLocaleDateString(),
+        allPosts: [],
+        id: 0,
+        isLiked: false,
+        userImg: userContext?.user?.photoURL || "",
+        userName: userContext?.user?.displayName || "",
+        uid: "",
+      });
+      setCoverImg("Add a cover image");
     }
-    console.log(post);
+  };
+
+  //Handle post undo
+  const handlePostUndo = () => {
+    if (postTimeout) {
+      clearTimeout(postTimeout); // Clear the existing timeout if it exists
+      setPostTimeout(null);
+      setSuccessMsg("");
+    }
+  };
+
+  //Text stripping
+  const convertToHTML = (textContent: string) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(textContent, "text/html");
+    return doc.body.childNodes[0]?.nodeValue || "";
   };
 
   // useEffect
@@ -129,21 +184,88 @@ const Post: React.FC<PostProps> = ({
     setUserPost(post);
   }, [post]);
 
+  // Effect to decrement the counter every second
+  useEffect(() => {
+    if (successMsg) {
+      setSendCounter(10);
+
+      const interval = setInterval(() => {
+        setSendCounter((prevCounter) => {
+          if (prevCounter === null) {
+            // Handle the case where prevCounter is null
+            setSuccessMsg("");
+            return null;
+          }
+          return prevCounter - 1;
+        });
+      }, 1000);
+
+      // Clear the interval when component unmounts or successMsg changes
+      return () => clearInterval(interval);
+    }
+  }, [successMsg]);
+
+  //Post sent useEffect
+  useEffect(() => {
+    if (postSent !== "") {
+      const timeout = setTimeout(() => {
+        setPostSent("");
+        clearTimeout(timeout);
+      }, 5000);
+    }
+  }, [postSent]);
   return (
     <div className="postWrapper">
+      <h2
+        className="postAlert"
+        style={{ display: successMsg === "" ? "none" : "flex" }}
+      >
+        {successMsg}
+        {sendCounter !== null && <span>{sendCounter}</span>}
+        <Cancel
+          onClick={handlePostUndo}
+          style={{
+            display: successMsg === "" ? "none" : "block",
+            marginLeft: "10px",
+            cursor: "pointer",
+          }}
+        />
+      </h2>
+      <h2
+        className="postAlert"
+        style={{ display: postSent === "" ? "none" : "block" }}
+      >
+        {postSent}
+      </h2>
+      <div className="postPost-div1">
+        <div
+          className="postUpload"
+          style={{
+            color: coverImg === "Add a cover image" ? "" : "green",
+          }}
+        >
+          <Image />
+          {coverImg}
+          <CancelOutlined
+            className="postImg-cancel"
+            style={{
+              display: coverImg === "Add a cover image" ? "none" : "block",
+            }}
+            onClick={handleImgCancel}
+          />
+          <input
+            type="file"
+            alt="img"
+            className="postPlus-icon"
+            onChange={handleFileChange}
+            name="img"
+            style={{ display: coverImg === "Add a cover image" ? "" : "none" }}
+          />
+        </div>
+      </div>
       <div className="postContent">
         <form onSubmit={handleSubmit}>
           <div className="postContent1">
-            <div className="postPost-div1">
-              <p className="postUpload">Add cover image</p>
-              <input
-                type="file"
-                alt="img"
-                className="postPlus-icon"
-                onChange={handleFileChange}
-                name="img"
-              />
-            </div>
             <div className="postPost-div2">
               <input
                 type="text"
@@ -157,7 +279,7 @@ const Post: React.FC<PostProps> = ({
                 style={{
                   height: "300px",
                   margin: "0 auto",
-                  boxShadow: "0.5px 0.3px 10px 0.5px #ccc",
+                  marginTop: "60px",
                 }}
                 renderHTML={(text) => mdParser.render(text)}
                 onChange={handleEditorChange}
@@ -192,40 +314,38 @@ const Post: React.FC<PostProps> = ({
             post.title !== "" ? (
               <div className="postContent4">
                 <div className="postContent4-div1">
-                  {userPost.html !== "" &&
-                  img.img !== "" &&
-                  userPost.text !== "" &&
-                  userPost.title !== "" &&
-                  userPost.userImg !== "" &&
-                  userPost.userName !== "" ? (
-                    <button
-                      onClick={handlePublish}
-                      className="postContent4-btn"
-                    >
-                      Publish
+                  <div className="postContent4-btn_div">
+                    <button className="postPreview-btn" onClick={handlePreview}>
+                      Preview
                     </button>
-                  ) : (
-                    <div className="postContent4-btn_div">
+                    {userPost.html !== "" &&
+                    img.img !== "" &&
+                    userPost.text !== "" &&
+                    userPost.title !== "" &&
+                    userPost.userImg !== "" &&
+                    userPost.userName !== "" ? (
                       <button
-                        className="postPreview-btn"
-                        onClick={handlePreview}
+                        onClick={handlePublish}
+                        className="postContent4-btn"
                       >
-                        Preview
+                        Publish
                       </button>
+                    ) : (
                       <button className="postContent-btn" disabled>
                         Publish
                       </button>
-                    </div>
-                  )}
+                    )}
+                  </div>
 
                   <div style={{ display: preview ? "block" : "none" }}>
-                    <img
-                      src={img.img}
-                      alt="img"
-                      className="postContent4-img"
-                    />
+                    <img src={img.img} alt="img" className="postContent4-img" />
                     <h6 className="postContent4-title">{userPost.title}</h6>
-                    <p className="postContent4-content">{userPost.html}</p>
+                    <p
+                      className="postContent4-content"
+                      dangerouslySetInnerHTML={{
+                        __html: convertToHTML(userPost.html),
+                      }}
+                    ></p>
                   </div>
                 </div>
               </div>
