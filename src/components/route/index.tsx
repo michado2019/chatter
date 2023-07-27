@@ -21,6 +21,7 @@ import { PostData } from "../pages/pagesDataType/PagesDataType";
 import { db } from "../firebase";
 import Notifications from "../pages/notifications/Notifications";
 import ErrorPage from "../pages/errorPage/ErrorPage";
+import PostDetails from "../pages/postDetails/PostDetails";
 
 const AppRouter = () => {
   //  //States
@@ -65,7 +66,7 @@ const AppRouter = () => {
           element={
             userContext?.user === null ? (
               <Navigate to="/sign-in" />
-              ) : (
+            ) : (
               <Blogs allPosts={allPosts} />
             )
           }
@@ -77,7 +78,10 @@ const AppRouter = () => {
               element={<ForYou allPosts={allPosts} />}
             />
           </Route>
-          <Route path="/blogs/*/bookMarks" element={<BookMarks allPosts={allPosts}/>} />
+          <Route
+            path="/blogs/*/bookMarks"
+            element={<BookMarks allPosts={allPosts} />}
+          />
           <Route path="/blogs/*/analytics" element={<Analytics />} />
           <Route path="/blogs/*/notifications" element={<Notifications />} />
           <Route path="/blogs/*/post" element={<Post />} />
@@ -92,6 +96,10 @@ const AppRouter = () => {
           <Route path="/sign-up/register" element={<Register />} />
           <Route path="/sign-up/login" element={<Login />} />
         </Route>
+        <Route
+          path="/postDetails/:id"
+          element={<PostDetails allPosts={allPosts} />}
+        />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>

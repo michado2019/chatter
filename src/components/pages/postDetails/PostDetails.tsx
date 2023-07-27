@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./ForYou.css";
+import "./PostDetails.css";
 import commentImg from "./assets/ant-design_comment-outlinedcommentImg.png";
 import loveImg from "./assets/material-symbols_favorite-outlineloveImg.png";
 import viewsImg from "./assets/ant-design_read-outlinedtimingImg.png";
@@ -10,16 +10,20 @@ import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from "../../firebase";
 import uniqid from "uniqid";
 import Loading from "../loadingPage/Loading";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import BlogNavbar from "../blogNavbar/BlogNavbar";
+import BlogSidebar from "../blogSidebar/BlogSidebar";
+import SmallScreenBlogSidebar from "../smallScreenBlogSidebar/SmallScreenBlogSidebar";
 
-export type AllPostsType = {
+type PostDetailsProps = {
   allPosts: PostData[];
 };
 
-const ForYou = (props: AllPostsType) => {
+const PostDetails = (props: PostDetailsProps) => {
   const { allPosts } = props;
+  const { id } = useParams<{ id: string }>();
 
-  //States
+  // States
   const [user, setUser] = useState({
     photoURL: "",
     displayName: "",
@@ -35,12 +39,14 @@ const ForYou = (props: AllPostsType) => {
     commentMsg: "",
   });
   const initialBookmarkedPosts = localStorage.getItem("bookmarkedPosts");
+
+  const [display, setDisplay] = useState(false);
   const [bookmarkedPosts, setBookmarkedPosts] = useState<string[]>(
     initialBookmarkedPosts ? JSON.parse(initialBookmarkedPosts) : []
   );
   const [isLoading, setIsLoading] = useState(true); // Loading state
 
-  //Handlers
+  // Handlers
   const handleBookmark = (id: string | number) => {
     if (bookmarkedPosts.includes(id.toString())) {
       // If the post is already bookmarked, remove it from the bookmarkedPosts array
@@ -66,18 +72,15 @@ const ForYou = (props: AllPostsType) => {
     }
   };
 
-  //Handle display
+  // Handle display
   const handleDisplay = (id: string | number) => {
     setDisplayedCommentId((prevId) =>
       prevId === id.toString() ? null : id.toString()
     );
   };
 
-  //Handle change
-  const handleChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>,
-    id: string
-  ) => {
+  // Handle change
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>, id: string) => {
     setCommentId(uniqid());
     setTextarea({
       ...textarea,
@@ -139,20 +142,12 @@ const ForYou = (props: AllPostsType) => {
     localStorage.setItem("bookmarkedPosts", JSON.stringify(bookmarkedPosts));
   }, [bookmarkedPosts]);
 
-  //Text stripping
+  // Text stripping
   const convertToHTML = (textContent: string) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(textContent, "text/html");
     return doc.body.childNodes[0]?.nodeValue || "";
   };
-
-  const compareDates = (a: PostData, b: PostData) => {
-    const dateA = new Date(a.date).getTime();
-    const dateB = new Date(b.date).getTime();
-    return dateA - dateB;
-  };
-
-  const sortedPosts = postData.sort(compareDates);
 
   if (isLoading) {
     return <Loading />; // Render a loading component while data is being fetched
@@ -167,29 +162,33 @@ const ForYou = (props: AllPostsType) => {
   }
 
   return (
-    <div className="forYou-wrapper">
-      <div className="forYou-contents">
+    <div className="postDetails-wrapper">
+      <div className="postDetails-contents">
+        <BlogNavbar display={display} setDisplay={setDisplay} />
+        <BlogSidebar />
+        <SmallScreenBlogSidebar display={display} setDisplay={setDisplay} />
         <div>
-          {sortedPosts.map((each, index) => {
-            const textContent = convertToHTML(each.html);
-            const wordCount = textContent.split(" ").length;
-            const timingInMinutes = Math.ceil(wordCount / 30);
-            return (
-              <div className="forYou-content" key={index}>
-                <div className="forYou-content_flex1">
-                  <img
-                    src={each.userImg}
-                    alt="img"
-                    className="forYou-userImg"
-                  />
-                  <div className="forYou-content_flex2">
-                    <h2 className="forYou-userName">{each.userName}</h2>
-                    <div className="forYou-content_dateFlex">
-                      <p className="forYou-date">{each.date}</p>
+          {postData
+            .filter((each) => each.id === id)
+            .map((each, index) => {
+              const textContent = convertToHTML(each.html);
+              const wordCount = textContent.split(" ").length;
+              const timingInMinutes = Math.ceil(wordCount / 30);
+              return (
+                <div className="forYou-content" key={index} id="postDetails-content">
+                  <div className="forYou-content_flex1">
+                    <img
+                      src={each.userImg}
+                      alt="img"
+                      className="forYou-userImg"
+                    />
+                    <div className="forYou-content_flex2">
+                      <h2 className="forYou-userName">{each.userName}</h2>
+                      <div className="forYou-content_dateFlex">
+                        <p className="forYou-date">{each.date}</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <Link to={`/postDetails/${each.id}`}>
                   <div className="forYou-content_flex3">
                     <h2 className="forYou-post_title">{each.title}</h2>
                     <p className="forYou-post_timing">
@@ -212,96 +211,98 @@ const ForYou = (props: AllPostsType) => {
                       />
                     </div>
                   </div>
-                </Link>
-                <div
-                  className="forYou-comment"
-                  style={{
-                    display:
-                      displayedCommentId === each.id.toString()
-                        ? "flex"
-                        : "none",
-                  }}
-                >
-                  <div className="forYou-comment_form">
-                    <img
-                      src={user.photoURL}
-                      alt="img"
-                      className="forYou-comment_userImg"
-                    />
-                    <textarea
-                      className="forYou-comment_textarea"
-                      name="textarea"
-                      placeholder="Add a comment...."
-                      onChange={(e) => handleChange(e, commentId)}
-                      value={textarea.commentMsg}
-                    />
-                  </div>
-                  <button
-                    className="forYou-comment_btn"
+                  <div
+                    className="forYou-comment"
                     style={{
                       display:
-                        textarea.commentMsg.length > 0 ? "block" : "none",
+                        displayedCommentId === each.id.toString()
+                          ? "flex"
+                          : "none",
                     }}
-                    onClick={() => handlePostComment(each.id)}
                   >
-                    Post
-                  </button>
-                </div>
-                <div className="forYou-post_reactions">
-                  <div className="forYou-post_bookMark">
-                    <BookmarkAddOutlined
-                      className="forYou-reactionsImg"
-                      onClick={() => handleBookmark(each.id)}
-                      style={{
-                        color: bookmarkedPosts.includes(each.id.toString())
-                          ? "red"
-                          : "inherit",
-                        transition: "all 0.3s",
-                      }}
-                    />
-                  </div>
-                  <div className="forYou-post_comment">
-                    <img
-                      src={commentImg}
-                      alt="Comment"
-                      className="forYou-reactionsImg"
-                      onClick={() => handleDisplay(each.id)}
-                    />
-                    {each.comment.length}
-                  </div>
-                  <div className="forYou-post_love">
-                    {each.isLiked ? (
-                      <Favorite
-                        className="forYou-reactionsImg"
-                        onClick={() => handleFavorite(each.id)}
-                        style={{ color: "red" }}
-                      />
-                    ) : (
+                    <div className="forYou-comment_form">
                       <img
-                        src={loveImg}
+                        src={user.photoURL}
                         alt="img"
-                        onClick={() => handleFavorite(each.id)}
+                        className="forYou-comment_userImg"
+                      />
+                      <textarea
+                        className="forYou-comment_textarea"
+                        name="textarea"
+                        placeholder="Add a comment...."
+                        onChange={(e) => handleChange(e, commentId)}
+                        value={textarea.commentMsg}
+                      />
+                    </div>
+                    <button
+                      className="forYou-comment_btn"
+                      style={{
+                        display:
+                          textarea.commentMsg.length > 0 ? "block" : "none",
+                      }}
+                      onClick={() => handlePostComment(each.id)}
+                    >
+                      Post
+                    </button>
+                  </div>
+                  <div className="forYou-post_reactions">
+                    <div className="forYou-post_bookMark">
+                      <BookmarkAddOutlined
+                        className="forYou-reactionsImg"
+                        onClick={() => handleBookmark(each.id)}
+                        style={{
+                          color: bookmarkedPosts.includes(each.id.toString())
+                            ? "red"
+                            : "inherit",
+                          transition: "all 0.3s",
+                        }}
+                      />
+                    </div>
+                    <div className="forYou-post_comment">
+                      <img
+                        src={commentImg}
+                        alt="Comment"
+                        className="forYou-reactionsImg"
+                        onClick={() => handleDisplay(each.id)}
+                      />
+                      {each.comment.length}
+                    </div>
+                    <div className="forYou-post_love">
+                      {each.isLiked ? (
+                        <Favorite
+                          className="forYou-reactionsImg"
+                          onClick={() => handleFavorite(each.id)}
+                          style={{ color: "red" }}
+                        />
+                      ) : (
+                        <img
+                          src={loveImg}
+                          alt="img"
+                          onClick={() => handleFavorite(each.id)}
+                          className="forYou-reactionsImg"
+                        />
+                      )}
+                      {each.love}
+                    </div>
+                    <div className="forYou-post_views">
+                      <img
+                        src={viewsImg}
+                        alt="img"
                         className="forYou-reactionsImg"
                       />
-                    )}
-                    {each.love}
-                  </div>
-                  <div className="forYou-post_views">
-                    <img
-                      src={viewsImg}
-                      alt="img"
-                      className="forYou-reactionsImg"
-                    />
-                    {each.views}
+                      {each.views}
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+        </div>
+        <div className="postDetails-more_details">
+
         </div>
       </div>
     </div>
   );
 };
 
-export default ForYou;
+export default PostDetails;
