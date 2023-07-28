@@ -29,6 +29,7 @@ type User = {
 type Comment = {
   id: string;
   commentMsg: string;
+  replies: Comment[];
 };
 
 const PostDetails = (props: PostDetailsProps) => {
@@ -49,6 +50,7 @@ const PostDetails = (props: PostDetailsProps) => {
   const [textarea, setTextarea] = useState<Comment>({
     id: "",
     commentMsg: "",
+    replies: [],
   });
   const initialBookmarkedPosts = localStorage.getItem("bookmarkedPosts");
 
@@ -94,11 +96,21 @@ const PostDetails = (props: PostDetailsProps) => {
     e: React.ChangeEvent<HTMLTextAreaElement>,
     id: string
   ) => {
-    setCommentId(uniqid());
-    setTextarea({
-      ...textarea,
-      commentMsg: e.target.value,
-      id: id,
+    setTextarea((prevTextarea) => {
+      const updatedReplies = prevTextarea.replies.map((reply) => {
+        if (reply.id === id) {
+          return {
+            ...reply,
+            commentMsg: e.target.value,
+          };
+        }
+        return reply;
+      });
+
+      return {
+        ...prevTextarea,
+        replies: updatedReplies,
+      };
     });
   };
 
@@ -118,6 +130,34 @@ const PostDetails = (props: PostDetailsProps) => {
     updateDoc(docRef, {
       comment: newPostData.find((each) => each.id === id)?.comment,
     });
+  };
+
+  const handlePostReply = (parentId: string) => {
+    const newPostData = postData.map((each) => {
+      if (each.id === parentId) {
+        const commentWithReplies = each.comment.map((comment) => {
+          if (comment.id === textarea.id) {
+            return {
+              ...comment,
+              replies: [...comment.replies, ...textarea.replies],
+            };
+          }
+          return comment;
+        });
+        return {
+          ...each,
+          comment: commentWithReplies,
+        };
+      }
+      return each;
+    });
+    setPostData(newPostData);
+
+    const docRef = doc(db, "posts", parentId);
+    updateDoc(docRef, {
+      comment: newPostData.find((each) => each.id === parentId)?.comment,
+    });
+    setTextarea({ id: "", commentMsg: "", replies: [] });
   };
 
   const handleFavorite = (id: string | number) => {
@@ -192,6 +232,49 @@ const PostDetails = (props: PostDetailsProps) => {
       </div>
     );
   }
+
+  const renderReplies = (replies: Comment[], parentId: string) => {
+    return (
+      <div className="forYou-replies">
+        {replies?.map((reply) => (
+          <div key={reply.id} className="forYou-reply">
+            <img
+              src={user.photoURL}
+              alt="img"
+              className="forYou-reply_userImg"
+            />
+            <p>{reply.commentMsg}</p>
+          </div>
+        ))}
+        <div className="forYou-comment_form">
+          <img
+            src={user.photoURL}
+            alt="img"
+            className="forYou-comment_userImg"
+          />
+          <textarea
+            className="forYou-comment_textarea"
+            name="textarea"
+            placeholder="Add a reply...."
+            onChange={(e) => handleChange(e, parentId)}
+            value={textarea.replies.find((reply) => reply.id === parentId)?.commentMsg || ''} 
+          />
+        </div>
+        <button
+          className="forYou-comment_btn"
+          style={{
+            display:
+              textarea?.replies.filter((reply) => reply.id === parentId) || "" 
+                ? "block"
+                : "none",
+          }}
+          onClick={() => handlePostReply(parentId)}
+        >
+          Post
+        </button>
+      </div>
+    );
+  };
 
   return (
     <div className="postDetails-wrapper">
@@ -282,6 +365,17 @@ const PostDetails = (props: PostDetailsProps) => {
                       Post
                     </button>
                   </div>
+                  {each.comment.map((comment) => (
+                    <div key={comment.id} className="forYou-comment">
+                      <img
+                        src={user.photoURL}
+                        alt="img"
+                        className="forYou-comment_userImg"
+                      />
+                      <p>{comment.commentMsg}</p>
+                      {renderReplies(comment.replies, comment.id)}
+                    </div>
+                  ))}
                   <div className="forYou-post_reactions">
                     <div className="forYou-post_bookMark">
                       <BookmarkAddOutlined

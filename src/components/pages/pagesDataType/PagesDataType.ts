@@ -13,10 +13,12 @@ export type PostData = {
   bookMark: string[];
   allPosts: PostData[];
   uid: string;
-  comment: Comment[]; // Update this line
+  comment: Comment[];
+  replies: Comment[]
 };
 
 export type Comment = {
   id: string;
   commentMsg: string;
+  replies: Comment[]
 };

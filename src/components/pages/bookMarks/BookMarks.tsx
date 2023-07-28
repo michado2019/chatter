@@ -25,6 +25,7 @@ type User = {
 type Comment = {
   id: string;
   commentMsg: string;
+  replies?: Comment[];
 };
 
 const BookMarks = (props: AllPostsType) => {
@@ -44,6 +45,7 @@ const BookMarks = (props: AllPostsType) => {
   const [textarea, setTextarea] = useState<Comment>({
     id: "",
     commentMsg: "",
+    replies: [],
   });
   const initialBookmarkedPosts = localStorage.getItem("bookmarkedPosts");
   const [bookmarkedPosts, setBookmarkedPosts] = useState<string[]>(
@@ -98,7 +100,7 @@ const BookMarks = (props: AllPostsType) => {
   };
 
   const handlePostComment = (id: string | number) => {
-    const newPostData = postData.map((each) => {
+    const newPostData = postData?.map((each) => {
       if (each.id === id) {
         return {
           ...each,
@@ -107,7 +109,7 @@ const BookMarks = (props: AllPostsType) => {
       }
       return each;
     });
-    setPostData(newPostData);
+    setPostData(newPostData as PostData[]);
 
     const docRef = doc(db, "posts", id.toString());
     updateDoc(docRef, {
