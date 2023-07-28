@@ -14,9 +14,21 @@ import { useParams } from "react-router-dom";
 import BlogNavbar from "../blogNavbar/BlogNavbar";
 import BlogSidebar from "../blogSidebar/BlogSidebar";
 import SmallScreenBlogSidebar from "../smallScreenBlogSidebar/SmallScreenBlogSidebar";
+import { TwitterIcon, FacebookIcon } from "react-share"; // Import social media icons
 
 type PostDetailsProps = {
   allPosts: PostData[];
+};
+
+type User = {
+  photoURL: string;
+  displayName: string;
+  uid: string;
+};
+
+type Comment = {
+  id: string;
+  commentMsg: string;
 };
 
 const PostDetails = (props: PostDetailsProps) => {
@@ -24,17 +36,17 @@ const PostDetails = (props: PostDetailsProps) => {
   const { id } = useParams<{ id: string }>();
 
   // States
-  const [user, setUser] = useState({
+  const [user, setUser] = useState<User>({
     photoURL: "",
     displayName: "",
     uid: "",
   });
-  const [postData, setPostData] = useState(allPosts);
+  const [postData, setPostData] = useState<PostData[]>([]);
   const [displayedCommentId, setDisplayedCommentId] = useState<string | null>(
     null
   );
   const [commentId, setCommentId] = useState<string>(uniqid());
-  const [textarea, setTextarea] = useState({
+  const [textarea, setTextarea] = useState<Comment>({
     id: "",
     commentMsg: "",
   });
@@ -72,15 +84,16 @@ const PostDetails = (props: PostDetailsProps) => {
     }
   };
 
-  // Handle display
   const handleDisplay = (id: string | number) => {
     setDisplayedCommentId((prevId) =>
       prevId === id.toString() ? null : id.toString()
     );
   };
 
-  // Handle change
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>, id: string) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+    id: string
+  ) => {
     setCommentId(uniqid());
     setTextarea({
       ...textarea,
@@ -99,7 +112,7 @@ const PostDetails = (props: PostDetailsProps) => {
       }
       return each;
     });
-    setPostData(newPostData as PostData[]);
+    setPostData(newPostData);
 
     const docRef = doc(db, "posts", id.toString());
     updateDoc(docRef, {
@@ -137,16 +150,35 @@ const PostDetails = (props: PostDetailsProps) => {
     setIsLoading(false); // Set loading state to false after data is loaded
   }, [allPosts]);
 
-  // Update the local storage whenever bookmarkedPosts change
   useEffect(() => {
     localStorage.setItem("bookmarkedPosts", JSON.stringify(bookmarkedPosts));
   }, [bookmarkedPosts]);
 
-  // Text stripping
   const convertToHTML = (textContent: string) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(textContent, "text/html");
     return doc.body.childNodes[0]?.nodeValue || "";
+  };
+
+  // Handler for sharing on social media
+  const handleShare = (platform: "Twitter" | "Facebook") => {
+    const text = "Check out this post!";
+    const url = window.location.href;
+
+    // Create the sharing URL based on the selected platform
+    let sharingUrl = "";
+    if (platform === "Twitter") {
+      sharingUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        text
+      )}&url=${encodeURIComponent(url)}`;
+    } else if (platform === "Facebook") {
+      sharingUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        url
+      )}`;
+    }
+
+    // Open a new window with the sharing URL
+    window.open(sharingUrl, "_blank");
   };
 
   if (isLoading) {
@@ -163,10 +195,11 @@ const PostDetails = (props: PostDetailsProps) => {
 
   return (
     <div className="postDetails-wrapper">
+      <BlogNavbar display={display} setDisplay={setDisplay} />
       <div className="postDetails-contents">
-        <BlogNavbar display={display} setDisplay={setDisplay} />
         <BlogSidebar />
         <SmallScreenBlogSidebar display={display} setDisplay={setDisplay} />
+
         <div>
           {postData
             .filter((each) => each.id === id)
@@ -175,7 +208,11 @@ const PostDetails = (props: PostDetailsProps) => {
               const wordCount = textContent.split(" ").length;
               const timingInMinutes = Math.ceil(wordCount / 30);
               return (
-                <div className="forYou-content" key={index} id="postDetails-content">
+                <div
+                  className="forYou-content"
+                  key={index}
+                  id="postDetails-content"
+                >
                   <div className="forYou-content_flex1">
                     <img
                       src={each.userImg}
@@ -292,13 +329,28 @@ const PostDetails = (props: PostDetailsProps) => {
                       />
                       {each.views}
                     </div>
+                    <div className="postDetails-more_details">
+                      <h3>Share post:</h3>
+                      <p>Author</p>
+                      <img
+                        src={user.photoURL}
+                        alt="img"
+                        className="postDetails-user_img"
+                      />
+                      <p>{user.displayName}</p>
+                      <div className="postDetails-share">
+                        <button onClick={() => handleShare("Twitter")}>
+                          <TwitterIcon />
+                        </button>
+                        <button onClick={() => handleShare("Facebook")}>
+                          <FacebookIcon />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               );
             })}
-        </div>
-        <div className="postDetails-more_details">
-
         </div>
       </div>
     </div>
