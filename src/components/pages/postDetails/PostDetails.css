@@ -184,6 +184,10 @@
   margin-right: 0.5rem;
 }
 
+.postDetail-comment_flex{
+  display: flex;
+  align-items: center;
+}
 .postDetails-share {
   margin-top: 0.5rem;
 }

@@ -321,7 +321,6 @@ const Post: React.FC<PostProps> = ({
                       Preview
                     </button>
                     {userPost.html !== "" &&
-                    img.img !== "" &&
                     userPost.text !== "" &&
                     userPost.title !== "" &&
                     userPost.userImg !== "" &&

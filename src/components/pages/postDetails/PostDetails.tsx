@@ -55,6 +55,7 @@ const PostDetails = (props: PostDetailsProps) => {
   const initialBookmarkedPosts = localStorage.getItem("bookmarkedPosts");
 
   const [display, setDisplay] = useState(false);
+  const [commentDisplay, setCommentDisplay] = useState(false);
   const [bookmarkedPosts, setBookmarkedPosts] = useState<string[]>(
     initialBookmarkedPosts ? JSON.parse(initialBookmarkedPosts) : []
   );
@@ -257,14 +258,17 @@ const PostDetails = (props: PostDetailsProps) => {
             name="textarea"
             placeholder="Add a reply...."
             onChange={(e) => handleChange(e, parentId)}
-            value={textarea.replies.find((reply) => reply.id === parentId)?.commentMsg || ''} 
+            value={
+              textarea.replies.find((reply) => reply.id === parentId)
+                ?.commentMsg || ""
+            }
           />
         </div>
         <button
           className="forYou-comment_btn"
           style={{
             display:
-              textarea?.replies.filter((reply) => reply.id === parentId) || "" 
+              textarea?.replies.filter((reply) => reply.id === parentId) || ""
                 ? "block"
                 : "none",
           }}
@@ -282,7 +286,6 @@ const PostDetails = (props: PostDetailsProps) => {
       <div className="postDetails-contents">
         <BlogSidebar />
         <SmallScreenBlogSidebar display={display} setDisplay={setDisplay} />
-
         <div>
           {postData
             .filter((each) => each.id === id)
@@ -365,15 +368,28 @@ const PostDetails = (props: PostDetailsProps) => {
                       Post
                     </button>
                   </div>
+                      <h5 onClick={() => setCommentDisplay((prev) => !prev)} style={{cursor: "pointer"}}>
+                        View comment(s)
+                      </h5>
                   {each.comment.map((comment) => (
                     <div key={comment.id} className="forYou-comment">
-                      <img
-                        src={user.photoURL}
-                        alt="img"
-                        className="forYou-comment_userImg"
-                      />
-                      <p>{comment.commentMsg}</p>
-                      {renderReplies(comment.replies, comment.id)}
+                      <div
+                        className="postDetail-comment_flex"
+                        style={{ display: commentDisplay ? "flex" : "none" }}
+                      >
+                        <img
+                          src={each.userImg}
+                          alt="img"
+                          className="forYou-comment_userImg"
+                        />
+                        <p>{each.userName}</p>
+                      </div>
+                      <p 
+                        style={{ display: commentDisplay ? "flex" : "none" }}
+                        >{comment.commentMsg}</p>
+                     <div
+                        style={{ display: commentDisplay ? "flex" : "none" }}
+                        >{renderReplies(comment.replies, comment.id)}</div>
                     </div>
                   ))}
                   <div className="forYou-post_reactions">
@@ -427,11 +443,11 @@ const PostDetails = (props: PostDetailsProps) => {
                       <h3>Share post:</h3>
                       <p>Author</p>
                       <img
-                        src={user.photoURL}
+                        src={each.userImg}
                         alt="img"
                         className="postDetails-user_img"
                       />
-                      <p>{user.displayName}</p>
+                      <p>{each.userName}</p>
                       <div className="postDetails-share">
                         <button onClick={() => handleShare("Twitter")}>
                           <TwitterIcon />
