@@ -1,36 +1,75 @@
 import React, { useEffect, useState } from "react";
-import "./PostDetails.css";
-import commentImg from "./assets/ant-design_comment-outlinedcommentImg.png";
-import loveImg from "./assets/material-symbols_favorite-outlineloveImg.png";
-import viewsImg from "./assets/ant-design_read-outlinedtimingImg.png";
-import timingImg from "./assets/ant-design_read-outlinedtimingImg.png";
-import { PostData } from "../pagesDataType/PagesDataType";
+import { useParams } from "react-router-dom";
 import { Favorite, BookmarkAddOutlined } from "@mui/icons-material";
 import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from "../../firebase";
 import uniqid from "uniqid";
 import Loading from "../loadingPage/Loading";
-import { useParams } from "react-router-dom";
+import commentImg from "./assets/ant-design_comment-outlinedcommentImg.png";
+import loveImg from "./assets/material-symbols_favorite-outlineloveImg.png";
+import viewsImg from "./assets/ant-design_read-outlinedtimingImg.png";
+import timingImg from "./assets/ant-design_read-outlinedtimingImg.png";
+import { PostData } from "../pagesDataType/PagesDataType";
 import BlogNavbar from "../blogNavbar/BlogNavbar";
 import BlogSidebar from "../blogSidebar/BlogSidebar";
 import SmallScreenBlogSidebar from "../smallScreenBlogSidebar/SmallScreenBlogSidebar";
-import { TwitterIcon, FacebookIcon } from "react-share"; // Import social media icons
+import TwitterIcon from "react-share/lib/TwitterIcon";
+import FacebookIcon from "react-share/lib/FacebookIcon";
+import "./PostDetails.css";
 
-type PostDetailsProps = {
+type AllPostsType = {
   allPosts: PostData[];
 };
 
-type User = {
-  photoURL: string;
-  displayName: string;
-  uid: string;
-};
-
-const PostDetails = (props: PostDetailsProps) => {
+const PostDetails = (props: AllPostsType) => {
   const { allPosts } = props;
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams();
 
- 
+  //States
+  const [user, setUser] = useState({
+    photoURL: "",
+    displayName: "",
+    uid: "",
+  });
+  const [postData, setPostData] = useState(allPosts);
+  const [display, setDisplay] = useState(false); //Toggle blog sidebar
+  const [displayedCommentId, setDisplayedCommentId] = useState<string | null>(
+    null
+  );
+  const [commentId, setCommentId] = useState<string>(uniqid());
+  const [textarea, setTextarea] = useState({
+    id: "",
+    commentMsg: "",
+  });
+  const initialBookmarkedPosts = localStorage.getItem("bookmarkedPosts");
+  const [bookmarkedPosts, setBookmarkedPosts] = useState<string[]>(
+    initialBookmarkedPosts ? JSON.parse(initialBookmarkedPosts) : []
+  );
+  const [isLoading, setIsLoading] = useState(true); // Loading state
+
+  //useEffect
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser !== null) {
+      const parsedUser = JSON.parse(savedUser);
+      setUser(parsedUser);
+    }
+    setPostData(allPosts);
+    setIsLoading(false); // Set loading state to false after data is loaded
+  }, [allPosts]);
+
+  useEffect(() => {
+    localStorage.setItem("bookmarkedPosts", JSON.stringify(bookmarkedPosts));
+  }, [bookmarkedPosts]);
+
+  if (!allPosts) {
+    return (
+      <div className="postDetails-not_found">
+        <p>Post not found!</p>
+      </div>
+    );
+  }
+
   // Handler for sharing on social media
   const handleShare = (platform: "Twitter" | "Facebook") => {
     const text = "Check out this post!";
@@ -51,32 +90,6 @@ const PostDetails = (props: PostDetailsProps) => {
     // Open a new window with the sharing URL
     window.open(sharingUrl, "_blank");
   };
-
-  //ForYou part
-  //States
-  const [user, setUser] = useState<User>({
-    photoURL: "",
-    displayName: "",
-    uid: "",
-  });
-  const [postData, setPostData] = useState(allPosts);
-  const [displayedCommentId, setDisplayedCommentId] = useState<string | null>(
-    null
-  );
-  const [display, setDisplay] = useState(false);
-  const [commentId, setCommentId] = useState<string>(uniqid());
-  const [textarea, setTextarea] = useState({
-    id: "",
-    commentMsg: "",
-  });
-  const [commentDisplay, setCommentDisplay] = useState(false);
-  const initialBookmarkedPosts = localStorage.getItem("bookmarkedPosts");
-  const [bookmarkedPosts, setBookmarkedPosts] = useState<string[]>(
-    initialBookmarkedPosts ? JSON.parse(initialBookmarkedPosts) : []
-  );
-  const [isLoading, setIsLoading] = useState(true); // Loading state
-
-  //Handlers
   const handleBookmark = (id: string | number) => {
     if (bookmarkedPosts.includes(id.toString())) {
       // If the post is already bookmarked, remove it from the bookmarkedPosts array
@@ -102,15 +115,12 @@ const PostDetails = (props: PostDetailsProps) => {
     }
   };
 
-  //Handle display
   const handleDisplay = (id: string | number) => {
     setDisplayedCommentId((prevId) =>
       prevId === id.toString() ? null : id.toString()
     );
-    console.log(displayedCommentId)
   };
 
-  //Handle change
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
     id: string
@@ -161,22 +171,6 @@ const PostDetails = (props: PostDetailsProps) => {
     });
   };
 
-  useEffect(() => {
-    const savedUser = localStorage.getItem("user");
-    if (savedUser !== null) {
-      const parsedUser = JSON.parse(savedUser);
-      setUser(parsedUser);
-    }
-    setPostData(allPosts);
-    setIsLoading(false); // Set loading state to false after data is loaded
-  }, [allPosts]);
-
-  // Update the local storage whenever bookmarkedPosts change
-  useEffect(() => {
-    localStorage.setItem("bookmarkedPosts", JSON.stringify(bookmarkedPosts));
-  }, [bookmarkedPosts]);
-
-  //Text stripping
   const convertToHTML = (textContent: string) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(textContent, "text/html");
@@ -201,19 +195,17 @@ const PostDetails = (props: PostDetailsProps) => {
       <div className="postDetails-contents">
         <BlogSidebar />
         <SmallScreenBlogSidebar display={display} setDisplay={setDisplay} />
-        <div>
-          {postData
+      </div>
+      <div className="forYou-contents">
+          {allPosts
             .filter((each) => each.id === id)
             .map((each, index) => {
               const textContent = convertToHTML(each.html);
               const wordCount = textContent.split(" ").length;
               const timingInMinutes = Math.ceil(wordCount / 30);
+
               return (
-                <div
-                  className="forYou-content"
-                  key={index}
-                  id="postDetails-content"
-                >
+                <div className="forYou-content" key={index}  id="postDetails-content">
                   <div className="forYou-content_flex1">
                     <img
                       src={each.userImg}
@@ -283,30 +275,6 @@ const PostDetails = (props: PostDetailsProps) => {
                       Post
                     </button>
                   </div>
-                      <h5 onClick={() => setCommentDisplay((prev) => !prev)} style={{cursor: "pointer"}}>
-                        View comment(s)
-                      </h5>
-                  {each.comment.map((comment) => (
-                    <div key={uniqid()} className="forYou-comment">
-                      <div
-                        className="postDetail-comment_flex"
-                        style={{ display: commentDisplay ? "flex" : "none" }}
-                      >
-                        <img
-                          src={each.userImg}
-                          alt="img"
-                          className="forYou-comment_userImg"
-                        />
-                        <p>{each.userName}</p>
-                      </div>
-                      <p 
-                        style={{ display: commentDisplay ? "flex" : "none" }}
-                        >{comment.commentMsg}</p>
-                     <div
-                        style={{ display: commentDisplay ? "flex" : "none" }}
-                        >Replies</div>
-                    </div>
-                  ))}
                   <div className="forYou-post_reactions">
                     <div className="forYou-post_bookMark">
                       <BookmarkAddOutlined
@@ -354,29 +322,28 @@ const PostDetails = (props: PostDetailsProps) => {
                       />
                       {each.views}
                     </div>
-                    <div className="postDetails-more_details">
-                      <h3>Share post:</h3>
-                      <p>Author</p>
-                      <img
-                        src={each.userImg}
-                        alt="img"
-                        className="postDetails-user_img"
-                      />
-                      <p>{each.userName}</p>
-                      <div className="postDetails-share">
-                        <button onClick={() => handleShare("Twitter")}>
-                          <TwitterIcon />
-                        </button>
-                        <button onClick={() => handleShare("Facebook")}>
-                          <FacebookIcon />
-                        </button>
-                      </div>
+                  </div>
+                  <div className="postDetails-more_details">
+                    <h3>Share post:</h3>
+                    <p>Author</p>
+                    <img
+                      src={each.userImg}
+                      alt="img"
+                      className="postDetails-user_img"
+                    />
+                    <p>{each.userName}</p>
+                    <div className="postDetails-share">
+                      <button onClick={() => handleShare("Twitter")}>
+                        <TwitterIcon />
+                      </button>
+                      <button onClick={() => handleShare("Facebook")}>
+                        <FacebookIcon />
+                      </button>
                     </div>
                   </div>
                 </div>
               );
             })}
-        </div>
       </div>
     </div>
   );
