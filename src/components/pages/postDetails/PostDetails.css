@@ -128,16 +128,6 @@
   font-size: 0.9rem;
 }
 
-.forYou-comment_btn {
-  border: none;
-  background-color: #1976d2;
-  color: #ffffff;
-  border-radius: 8px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  font-size: 0.9rem;
-}
-
 .forYou-post_reactions {
   display: flex;
   align-items: center;

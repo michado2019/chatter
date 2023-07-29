@@ -372,7 +372,7 @@ const PostDetails = (props: PostDetailsProps) => {
                         View comment(s)
                       </h5>
                   {each.comment.map((comment) => (
-                    <div key={comment.id} className="forYou-comment">
+                    <div key={uniqid()} className="forYou-comment">
                       <div
                         className="postDetail-comment_flex"
                         style={{ display: commentDisplay ? "flex" : "none" }}
