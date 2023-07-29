@@ -20,5 +20,4 @@ export type PostData = {
 export type Comment = {
   id: string;
   commentMsg: string;
-  replies: Comment[]
 };

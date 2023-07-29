@@ -26,42 +26,57 @@ type User = {
   uid: string;
 };
 
-type Comment = {
-  id: string;
-  commentMsg: string;
-  replies: Comment[];
-};
-
 const PostDetails = (props: PostDetailsProps) => {
   const { allPosts } = props;
   const { id } = useParams<{ id: string }>();
 
-  // States
+ 
+  // Handler for sharing on social media
+  const handleShare = (platform: "Twitter" | "Facebook") => {
+    const text = "Check out this post!";
+    const url = window.location.href;
+
+    // Create the sharing URL based on the selected platform
+    let sharingUrl = "";
+    if (platform === "Twitter") {
+      sharingUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        text
+      )}&url=${encodeURIComponent(url)}`;
+    } else if (platform === "Facebook") {
+      sharingUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        url
+      )}`;
+    }
+
+    // Open a new window with the sharing URL
+    window.open(sharingUrl, "_blank");
+  };
+
+  //ForYou part
+  //States
   const [user, setUser] = useState<User>({
     photoURL: "",
     displayName: "",
     uid: "",
   });
-  const [postData, setPostData] = useState<PostData[]>([]);
+  const [postData, setPostData] = useState(allPosts);
   const [displayedCommentId, setDisplayedCommentId] = useState<string | null>(
     null
   );
+  const [display, setDisplay] = useState(false);
   const [commentId, setCommentId] = useState<string>(uniqid());
-  const [textarea, setTextarea] = useState<Comment>({
+  const [textarea, setTextarea] = useState({
     id: "",
     commentMsg: "",
-    replies: [],
   });
-  const initialBookmarkedPosts = localStorage.getItem("bookmarkedPosts");
-
-  const [display, setDisplay] = useState(false);
   const [commentDisplay, setCommentDisplay] = useState(false);
+  const initialBookmarkedPosts = localStorage.getItem("bookmarkedPosts");
   const [bookmarkedPosts, setBookmarkedPosts] = useState<string[]>(
     initialBookmarkedPosts ? JSON.parse(initialBookmarkedPosts) : []
   );
   const [isLoading, setIsLoading] = useState(true); // Loading state
 
-  // Handlers
+  //Handlers
   const handleBookmark = (id: string | number) => {
     if (bookmarkedPosts.includes(id.toString())) {
       // If the post is already bookmarked, remove it from the bookmarkedPosts array
@@ -87,31 +102,24 @@ const PostDetails = (props: PostDetailsProps) => {
     }
   };
 
+  //Handle display
   const handleDisplay = (id: string | number) => {
     setDisplayedCommentId((prevId) =>
       prevId === id.toString() ? null : id.toString()
     );
+    console.log(displayedCommentId)
   };
 
+  //Handle change
   const handleChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>,
     id: string
   ) => {
-    setTextarea((prevTextarea) => {
-      const updatedReplies = prevTextarea.replies.map((reply) => {
-        if (reply.id === id) {
-          return {
-            ...reply,
-            commentMsg: e.target.value,
-          };
-        }
-        return reply;
-      });
-
-      return {
-        ...prevTextarea,
-        replies: updatedReplies,
-      };
+    setCommentId(uniqid());
+    setTextarea({
+      ...textarea,
+      commentMsg: e.target.value,
+      id: id,
     });
   };
 
@@ -125,40 +133,12 @@ const PostDetails = (props: PostDetailsProps) => {
       }
       return each;
     });
-    setPostData(newPostData);
+    setPostData(newPostData as PostData[]);
 
     const docRef = doc(db, "posts", id.toString());
     updateDoc(docRef, {
       comment: newPostData.find((each) => each.id === id)?.comment,
     });
-  };
-
-  const handlePostReply = (parentId: string) => {
-    const newPostData = postData.map((each) => {
-      if (each.id === parentId) {
-        const commentWithReplies = each.comment.map((comment) => {
-          if (comment.id === textarea.id) {
-            return {
-              ...comment,
-              replies: [...comment.replies, ...textarea.replies],
-            };
-          }
-          return comment;
-        });
-        return {
-          ...each,
-          comment: commentWithReplies,
-        };
-      }
-      return each;
-    });
-    setPostData(newPostData);
-
-    const docRef = doc(db, "posts", parentId);
-    updateDoc(docRef, {
-      comment: newPostData.find((each) => each.id === parentId)?.comment,
-    });
-    setTextarea({ id: "", commentMsg: "", replies: [] });
   };
 
   const handleFavorite = (id: string | number) => {
@@ -191,35 +171,16 @@ const PostDetails = (props: PostDetailsProps) => {
     setIsLoading(false); // Set loading state to false after data is loaded
   }, [allPosts]);
 
+  // Update the local storage whenever bookmarkedPosts change
   useEffect(() => {
     localStorage.setItem("bookmarkedPosts", JSON.stringify(bookmarkedPosts));
   }, [bookmarkedPosts]);
 
+  //Text stripping
   const convertToHTML = (textContent: string) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(textContent, "text/html");
     return doc.body.childNodes[0]?.nodeValue || "";
-  };
-
-  // Handler for sharing on social media
-  const handleShare = (platform: "Twitter" | "Facebook") => {
-    const text = "Check out this post!";
-    const url = window.location.href;
-
-    // Create the sharing URL based on the selected platform
-    let sharingUrl = "";
-    if (platform === "Twitter") {
-      sharingUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-        text
-      )}&url=${encodeURIComponent(url)}`;
-    } else if (platform === "Facebook") {
-      sharingUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-        url
-      )}`;
-    }
-
-    // Open a new window with the sharing URL
-    window.open(sharingUrl, "_blank");
   };
 
   if (isLoading) {
@@ -233,52 +194,6 @@ const PostDetails = (props: PostDetailsProps) => {
       </div>
     );
   }
-
-  const renderReplies = (replies: Comment[], parentId: string) => {
-    return (
-      <div className="forYou-replies">
-        {replies?.map((reply) => (
-          <div key={reply.id} className="forYou-reply">
-            <img
-              src={user.photoURL}
-              alt="img"
-              className="forYou-reply_userImg"
-            />
-            <p>{reply.commentMsg}</p>
-          </div>
-        ))}
-        <div className="forYou-comment_form">
-          <img
-            src={user.photoURL}
-            alt="img"
-            className="forYou-comment_userImg"
-          />
-          <textarea
-            className="forYou-comment_textarea"
-            name="textarea"
-            placeholder="Add a reply...."
-            onChange={(e) => handleChange(e, parentId)}
-            value={
-              textarea.replies.find((reply) => reply.id === parentId)
-                ?.commentMsg || ""
-            }
-          />
-        </div>
-        <button
-          className="forYou-comment_btn"
-          style={{
-            display:
-              textarea?.replies.filter((reply) => reply.id === parentId) || ""
-                ? "block"
-                : "none",
-          }}
-          onClick={() => handlePostReply(parentId)}
-        >
-          Post
-        </button>
-      </div>
-    );
-  };
 
   return (
     <div className="postDetails-wrapper">
@@ -389,7 +304,7 @@ const PostDetails = (props: PostDetailsProps) => {
                         >{comment.commentMsg}</p>
                      <div
                         style={{ display: commentDisplay ? "flex" : "none" }}
-                        >{renderReplies(comment.replies, comment.id)}</div>
+                        >Replies</div>
                     </div>
                   ))}
                   <div className="forYou-post_reactions">
