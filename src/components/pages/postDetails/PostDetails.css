@@ -1,5 +1,10 @@
 #postDetails-content {
   margin-left: 280px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 70px 40px;
 }
 
 /* PostDetails.css */
@@ -8,12 +13,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 300px;
+  height: 265px;
+  margin-left: 40px;
 }
 .postDetails-contents {
   display: flex;
-  width: 100%;
   margin-left: 280px;
-  max-width: 1200px;
 }
 
 /* ForYou Content */
@@ -187,7 +193,7 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
-  margin-right: 1rem;
+  margin: 1rem;
 }
 
 .postDetails-share svg {
@@ -197,8 +203,28 @@
 }
 
 /* Small Screen Styles */
+@media screen and (max-width: 940px) {
+  #postDetails-content {
+   margin-left: 0;
+  }
+}
 @media screen and (max-width: 768px) {
   .postDetails-contents {
     flex-direction: column;
+  }
+  
+  #postDetails-content{
+    flex-direction: column;
+  }
+
+  .postDetails-more_details{
+    margin-left: -1rem;
+    width: 100%;
+    border: none;
+  }
+}
+@media (max-width: 576px) {
+  #postDetails-post_img{
+    margin-left: 0;
   }
 }

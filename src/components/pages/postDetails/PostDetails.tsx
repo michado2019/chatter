@@ -206,6 +206,7 @@ const PostDetails = (props: AllPostsType) => {
 
               return (
                 <div className="forYou-content" key={index}  id="postDetails-content">
+                  <div>
                   <div className="forYou-content_flex1">
                     <img
                       src={each.userImg}
@@ -238,6 +239,7 @@ const PostDetails = (props: AllPostsType) => {
                         src={each.img}
                         alt="img"
                         className="forYou-post_img"
+                        id="postDetails-post_img"
                       />
                     </div>
                   </div>
@@ -322,6 +324,7 @@ const PostDetails = (props: AllPostsType) => {
                       />
                       {each.views}
                     </div>
+                  </div>
                   </div>
                   <div className="postDetails-more_details">
                     <h3>Share post:</h3>
