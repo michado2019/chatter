@@ -46,7 +46,8 @@ const Post: React.FC<PostProps> = ({
     userImg: userContext?.user?.photoURL || "",
     userName: userContext?.user?.displayName || "",
     uid: "",
-    replies: []
+    replies: [],
+    comments: [],
   });
   const [userPost, setUserPost] = useState<PostData>({ ...post });
   const [sendCounter, setSendCounter] = useState<number | null>(null);
@@ -159,7 +160,8 @@ const Post: React.FC<PostProps> = ({
         userImg: userContext?.user?.photoURL || "",
         userName: userContext?.user?.displayName || "",
         uid: "",
-        replies: []
+        replies: [],
+        comments: [],
       });
       setCoverImg("Add a cover image");
     }
