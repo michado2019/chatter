@@ -189,7 +189,7 @@ const ForYou = (props: AllPostsType) => {
                     </div>
                   </div>
                 </div>
-                <Link to={`/postDetails/${each.id}`}>
+                <Link to={`/postDetails/${each.id}`} className="forYou-details_link">
                   <div className="forYou-content_flex3">
                     <h2 className="forYou-post_title">{each.title}</h2>
                     <p className="forYou-post_timing">

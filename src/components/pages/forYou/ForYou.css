@@ -57,6 +57,9 @@
   margin: 0;
 }
 
+.forYou-details_link{
+  text-decoration: none;
+}
 .forYou-content_flex3 {
   margin-bottom: 10px;
 }
