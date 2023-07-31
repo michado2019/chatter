@@ -136,9 +136,16 @@ const PostDetails = (props: AllPostsType) => {
   const handlePostComment = (id: string | number) => {
     const newPostData = postData.map((each) => {
       if (each.id === id) {
+        const comment = {
+          ...textarea,
+          writer: {
+            displayName: user.displayName,
+            photoURL: user.photoURL,
+          },
+        };
         return {
           ...each,
-          comment: [...each.comment, textarea],
+          comment: [...each.comment, comment],
         };
       }
       return each;
@@ -197,16 +204,20 @@ const PostDetails = (props: AllPostsType) => {
         <SmallScreenBlogSidebar display={display} setDisplay={setDisplay} />
       </div>
       <div className="forYou-contents">
-          {allPosts
-            .filter((each) => each.id === id)
-            .map((each, index) => {
-              const textContent = convertToHTML(each.html);
-              const wordCount = textContent.split(" ").length;
-              const timingInMinutes = Math.ceil(wordCount / 30);
+        {allPosts
+          .filter((each) => each.id === id)
+          .map((each, index) => {
+            const textContent = convertToHTML(each.html);
+            const wordCount = textContent.split(" ").length;
+            const timingInMinutes = Math.ceil(wordCount / 30);
 
-              return (
-                <div className="forYou-content" key={index}  id="postDetails-content">
-                  <div>
+            return (
+              <div
+                className="forYou-content"
+                key={index}
+                id="postDetails-content"
+              >
+                <div>
                   <div className="forYou-content_flex1">
                     <img
                       src={each.userImg}
@@ -270,12 +281,52 @@ const PostDetails = (props: AllPostsType) => {
                       className="forYou-comment_btn"
                       style={{
                         display:
-                          textarea.commentMsg.length > 0 ? "block" : "none",
+                          textarea.commentMsg?.length > 0 ? "block" : "none",
                       }}
                       onClick={() => handlePostComment(each.id)}
                     >
                       Post
                     </button>
+
+                    {/* Display comments */}
+                    {each.comment?.map((comment) => (
+                      <div key={comment.id} className="postDetails-reply">
+                        <div className="postDetails-reply_flex">
+                          <div className="postDetails-reply_flex2">
+                            <img
+                              src={comment.commentImg}
+                              alt="img"
+                              className="postDetails-comment_userImg"
+                            />
+                            <div>
+                              <p className="postDetails-comment_userName">
+                                {comment.commentName}
+                              </p>
+                              <p className="postDetails-comment_date">
+                                {comment.commentDate}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="postDetails-comment_writerInfo">
+                          <p className="forYou-comment_msg">
+                            {comment?.commentMsg}
+                          </p>
+                        </div>
+                        <div className="postDetails-replies_div">
+                          <p className="postDetails-comment_content">
+                            {comment.replies?.length}
+                          </p>
+                          {comment.replies?.map((each) => {
+                            return (
+                              <div>
+                                <p>{each.replies?.length}</p>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                   <div className="forYou-post_reactions">
                     <div className="forYou-post_bookMark">
@@ -297,7 +348,12 @@ const PostDetails = (props: AllPostsType) => {
                         className="forYou-reactionsImg"
                         onClick={() => handleDisplay(each.id)}
                       />
-                      {each.comment.length}
+                      <div
+                        className="forYou-reactionsImg"
+                        onClick={() => handleDisplay(each.id)}
+                      >
+                        Show comment(s)
+                      </div>
                     </div>
                     <div className="forYou-post_love">
                       {each.isLiked ? (
@@ -325,28 +381,28 @@ const PostDetails = (props: AllPostsType) => {
                       {each.views}
                     </div>
                   </div>
-                  </div>
-                  <div className="postDetails-more_details">
-                    <h3>Share post:</h3>
-                    <p>Author</p>
-                    <img
-                      src={each.userImg}
-                      alt="img"
-                      className="postDetails-user_img"
-                    />
-                    <p>{each.userName}</p>
-                    <div className="postDetails-share">
-                      <button onClick={() => handleShare("Twitter")}>
-                        <TwitterIcon />
-                      </button>
-                      <button onClick={() => handleShare("Facebook")}>
-                        <FacebookIcon />
-                      </button>
-                    </div>
+                </div>
+                <div className="postDetails-more_details">
+                  <h3>Share post:</h3>
+                  <p>Author</p>
+                  <img
+                    src={each.userImg}
+                    alt="img"
+                    className="postDetails-user_img"
+                  />
+                  <p>{each.userName}</p>
+                  <div className="postDetails-share">
+                    <button onClick={() => handleShare("Twitter")}>
+                      <TwitterIcon />
+                    </button>
+                    <button onClick={() => handleShare("Facebook")}>
+                      <FacebookIcon />
+                    </button>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
       </div>
     </div>
   );

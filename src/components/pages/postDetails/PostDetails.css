@@ -131,6 +131,7 @@
   flex: 1;
   resize: none;
   border: 1px solid #e0e0e0;
+  background-color: #ffedcc;
   border-radius: 8px;
   padding: 0.5rem;
   font-size: 0.9rem;
@@ -181,11 +182,69 @@
   border-radius: 50%;
   margin-right: 0.5rem;
 }
+/* CSS for postDetails-reply div */
+.postDetails-reply {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px;
+  background-color: #ffedcc;
+  margin: 10px 0;
+}
+
+.postDetails-comment_userImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.postDetails-comment_writerInfo {
+  display: flex;
+  align-items: center;
+}
+
+.postDetails-comment_userName {
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.postDetails-comment_date {
+  font-size: 12px;
+  color: #666;
+}
+
+.postDetails-comment_msg {
+  margin: 5px 0;
+}
+
+.postDetails-replies_div {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.postDetails-comment_content {
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 5px;
+}
 
 .postDetail-comment_flex{
   display: flex;
   align-items: center;
 }
+
+.postDetails-reply_flex2{
+  display: flex;
+  flex-direction: row !important;
+  align-items: center;
+}
+.postDetails-comment_date{
+  margin-top: -7px;
+  color: #999;
+}
+
 .postDetails-share {
   margin-top: 0.5rem;
 }
@@ -218,6 +277,42 @@
     flex-direction: column;
   }
 
+  .forYou-content_flex1,
+    .forYou-content_flex2,
+    .forYou-comment_form {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .forYou-content_flex1 img,
+    .forYou-content_flex2 img,
+    .forYou-comment_userImg {
+      margin-bottom: 10px;
+    }
+  
+    .postDetails-reply {
+      padding: 5px;
+    }
+  
+    .postDetails-reply_flex{
+      display: flex;
+      align-items: center;
+    }
+   
+    .postDetails-comment_userImg {
+      width: 30px;
+      height: 30px;
+      margin-right: 15px;
+    }
+  
+    .postDetails-comment_writerInfo {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .postDetails-comment_date {
+      margin-top: 5px;
+    }
   .postDetails-more_details{
     margin-left: -2rem;
     width: 100%;

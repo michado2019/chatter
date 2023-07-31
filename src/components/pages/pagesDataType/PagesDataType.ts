@@ -14,6 +14,9 @@ export type PostData = {
   allPosts: PostData[];
   uid: string;
   comment: Comment[];
+  commentImg: string,
+  commentName: string,
+  commentDate: string,
   replies: Comment[]
   comments: Comment[]
 };
@@ -21,5 +24,8 @@ export type PostData = {
 export type Comment = {
   id: string;
   commentMsg: string;
+  commentImg: string,
+  commentName: string,
+  commentDate: string,
   replies: Comment[]
 };

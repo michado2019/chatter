@@ -33,6 +33,9 @@ const ForYou = (props: AllPostsType) => {
   const [textarea, setTextarea] = useState({
     id: "",
     commentMsg: "",
+    commentImg: "",
+    commentName: "",
+    commentDate: "",
   });
   const initialBookmarkedPosts = localStorage.getItem("bookmarkedPosts");
   const [bookmarkedPosts, setBookmarkedPosts] = useState<string[]>(
@@ -83,6 +86,9 @@ const ForYou = (props: AllPostsType) => {
       ...textarea,
       commentMsg: e.target.value,
       id: id,
+      commentImg: user.photoURL,
+      commentName: user.displayName,
+      commentDate: new Date().toLocaleDateString(),
     });
   };
 
@@ -189,7 +195,10 @@ const ForYou = (props: AllPostsType) => {
                     </div>
                   </div>
                 </div>
-                <Link to={`/postDetails/${each.id}`} className="forYou-details_link">
+                <Link
+                  to={`/postDetails/${each.id}`}
+                  className="forYou-details_link"
+                >
                   <div className="forYou-content_flex3">
                     <h2 className="forYou-post_title">{each.title}</h2>
                     <p className="forYou-post_timing">
@@ -267,7 +276,12 @@ const ForYou = (props: AllPostsType) => {
                       className="forYou-reactionsImg"
                       onClick={() => handleDisplay(each.id)}
                     />
-                    {each.comment.length}
+                    <div
+                      className="forYou-reactionsImg"
+                      onClick={() => handleDisplay(each.id)}
+                    >
+                      {each.comment.length}
+                    </div>
                   </div>
                   <div className="forYou-post_love">
                     {each.isLiked ? (
