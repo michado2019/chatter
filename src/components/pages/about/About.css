@@ -35,7 +35,7 @@
 }
 
 .team-member {
-  flex-basis: 30%;
+  flex-basis: 25%;
   margin-bottom: 20px;
 }
 
@@ -75,8 +75,8 @@
 }
 
 .team-member {
-  background-color: #ffedcc;
+  background-color: #fff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
