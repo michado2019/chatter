@@ -1,277 +1,123 @@
+/* ChatterUser.css */
+
+/* Variables */
+:root {
+  --color-primary: #543ee0;
+  --color-background: #ffedcc;
+  --color-text: #000;
+  --color-link: #fff;
+}
+
+/* General styles */
 .chatterUser-wrapper {
-  margin-top: 40%;
+  background-color: var(--color-background);
 }
+
 .chatterUser-content {
-  display: flex;
-  align-items: center;
-  background-color: #ffedcc;
-  justify-content: center;
-  height: 60vh;
-  padding: 40px 0;
+  max-width: 1200px;
+  margin: 0 auto;
 }
+
+/* First content section styles */
 .chatterUser-contents {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  padding: 0 5%;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 20px;
 }
+
+#chatterUser-contents1 {
+  height: fit-content;
+  min-height: 400px;
+}
+
+#chatterUser-contents2 {
+  height: fit-content;
+  background-color: #fff;
+  min-height: 400px;
+}
+
 .chatterUser-Img {
-  width: 250px;
-  height: 250px;
-  border-radius: 50%;
-  margin-right: 50px;
+  width: 200px;
+  height: auto;
+  border-radius: 7px;
 }
-.chatterUser-link {
-  padding: 15px 16px;
-  width: 157px;
-  background: #543ee0;
-  border-radius: 8px;
-}
+
 .chatterUser-content2 {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex: 1;
+  padding: 20px;
 }
+
 .chatterUser-comment {
-  font-family: "DM Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 27px;
-  color: #111111;
+  color: var(--color-text);
+  font-style: italic;
 }
-.chatterUser {
-  font-family: "DM Sans";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 36px;
-  color: #111111;
-}
-.chatterUser-comment2 {
-  font-family: "DM Sans";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 48px;
-  line-height: 72px;
-  color: #111111;
-}
-.chatterUser2 {
-  font-family: "DM Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 27px;
-}
+
 .chatterUser-name {
-  font-weight: 700;
+  font-weight: bold;
 }
+
 .chatterUser-link {
-  font-family: "DM Sans";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  text-align: center;
-  color: #fff;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: var(--color-primary);
+  color: var(--color-link);
   text-decoration: none;
+  border-radius: 4px;
+  margin-top: 10px;
 }
-.chatterUser-link:hover {
-  background-color: #493ba0;
-  transition: all 0.3s;
-}
+
+/* Second content section styles */
 .chatterUser-imgDiv1 {
   display: flex;
-  align-items: center;
+  flex-direction: column-reverse;
   justify-content: space-between;
+  align-items: center;
 }
+
 .chatterUser-imgDiv2 {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
 }
+
 .chatterUser-Img2 {
-  width: 169px;
-  height: 169px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  margin: 30px;
-  margin-right: 50px;
+  margin-right: 10px;
 }
-@media (max-width: 1115px) {
-  .chatterUser-wrapper {
-    margin-top: 50%;
-  }
-  .chatterUser-comment2 {
-    font-size: 32px;
-    line-height: 42px;
-    color: #111111;
-  }
+
+.chatterUser-comment2 {
+  color: var(--color-primary);
 }
-@media (max-width: 945px) {
-  .chatterUser-wrapper {
-    margin-top: 60%;
-  }
+
+.chatterUser2 {
+  color: var(--color-text);
 }
-@media (max-width: 940px) {
-  .chatterUser-contents {
-    align-items: center;
-    justify-content: center;
-  }
-  .chatterUser-Img {
-    width: 180px;
-    height: 180px;
-  }
-  .chatterUser-Img2 {
-    width: 100px;
-    height: 100px;
-  }
-  #chatterUser-link {
-    margin-bottom: 50px;
-  }
+
+#chatterUser-link {
+  background-color: var(--color-primary);
 }
-@media (max-width: 768px) {
-  .chatterUser-wrapper {
-    margin-top: 160%;
-  }
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
   .chatterUser-contents {
     flex-direction: column;
   }
-  .chatterUser-content {
-    height: 85vh;
-  }
-}
-@media (max-width: 700px) {
-  .chatterUser-wrapper {
-    margin-top: 175%;
-  }
-}
-@media (max-width: 660px) {
-  .chatterUser-wrapper {
-    margin-top: 190%;
-  }
-}
-@media (max-width: 635px) {
-  .chatterUser-wrapper {
-    margin-top: 205%;
-  }
-}
-@media (max-width: 620px) {
-  .chatterUser-wrapper {
-    margin-top: 225%;
-  }
-}
-@media (max-width: 551px) {
-  .chatterUser-wrapper {
-    margin-top: 245%;
-  }
-}
-@media (max-width: 510px) {
-  .chatterUser-wrapper {
-    margin-top: 265%;
-  }
-}
-@media (max-width: 480px) {
-  .chatterUser-wrapper {
-    margin-top: 340%;
-  }
-  .chatterUser-content {
-    height: 110vh;
-  }
-  .chatterUser-content2 {
-    padding: 40px 10%;
-    align-items: center;
-    justify-content: center;
-  }
-  .chatterUser-comment,
-  .chatterUser-comment2 {
-    text-align: center;
-  }
-  .chatterUser {
-    text-align: center;
-  }
-  .chatterUser-Img {
-    margin-right: 0;
-  }
-  .chatterUser-imgDiv2 {
-    margin-top: 40px;
-  }
-  .chatterUser-Img2 {
-    margin: 5px;
-    width: 120px;
-    height: 120px;
-  }
-}
-@media (max-width: 460px) {
-  .chatterUser-wrapper {
-    margin-top: 365%;
-  }
-}
-@media (max-width: 440px) {
-  .chatterUser-wrapper {
-    margin-top: 390%;
-  }
-}
-@media (max-width: 420px) {
-  .chatterUser-wrapper {
-    margin-top: 415%;
-  }
-}
-@media (max-width: 400px) {
-  .chatterUser-wrapper {
-    margin-top: 440%;
-  }
-}
-@media (max-width: 385px) {
-  .chatterUser-wrapper {
-    margin-top: 465%;
-  }
-}
-@media (max-width: 375px) {
-  .chatterUser-wrapper {
-    margin-top: 425%;
-  }
-}
-@media (max-width: 367px) {
-  .chatterUser-wrapper {
-    margin-top: 465%;
-  }
-}
-@media (max-width: 350px) {
-  .chatterUser-wrapper {
-    margin-top: 490%;
-  }
-}
-@media (max-width: 341px) {
-  .chatterUser-wrapper {
-    margin-top: 510%;
-  }
+
+  
+#chatterUser-contents1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-@media (max-width: 335px) {
-  .chatterUser-wrapper {
-    margin-top: 550%;
-  }
+#chatterUser-contents2 {
+  flex-direction: column;
 }
-@media (max-width: 319px) {
-  .chatterUser-wrapper {
-    margin-top: 585%;
+
+  .chatterUser-content2 {
+    margin-top: 20px;
   }
-  .chatterUser-Img {
-    width: 130px;
-  }
-}
-@media (max-width: 310px) {
-  .chatterUser-wrapper {
-    margin-top: 615%;
-  }
-}
-@media (max-width: 300px) {
-  .chatterUser-wrapper {
-    margin-top: 665%;
-  }
-}
-@media (max-width: 283px) {
-  .chatterUser-wrapper {
-    margin-top: 700%;
-  }
+
 }

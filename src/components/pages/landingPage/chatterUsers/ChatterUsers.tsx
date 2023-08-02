@@ -8,7 +8,7 @@ const ChatterUsers = () => {
   return (
     <div className="chatterUser-wrapper">
       <div className="chatterUser-content">
-      <div className="chatterUser-contents">
+      <div className="chatterUser-contents" id="chatterUser-contents1">
         <img src={chatterUserImg} alt="img" className="chatterUser-Img" />
         <div className="chatterUser-content2">
           <p className="chatterUser-comment">
@@ -22,7 +22,7 @@ const ChatterUsers = () => {
         </div>
       </div>
       </div>
-      <div className="chatterUser-contents">
+      <div className="chatterUser-contents" id="chatterUser-contents2">
         <div className="chatterUser-imgDiv1">
           <div className="chatterUser-imgDiv2">
         <img src={user1} alt="img" className="chatterUser-Img2" />

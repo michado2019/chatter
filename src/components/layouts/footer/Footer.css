@@ -1,103 +1,66 @@
+/* Footer.css */
+
+/* General styles */
 .footerWrapper {
-  height: 40vh;
   background-color: #ffedcc;
-  padding: 1px 0;
+  color: #111;
+  padding: 20px;
 }
+
 .footerContents {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-around;
-  margin-top: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
+
 .footerLogo {
-  font-family: "DM Sans";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 32px;
-  line-height: 72px;
   color: #543ee0;
-  cursor: pointer;
+  font-size: 24px;
   text-decoration: none;
+  font-weight: bold;
 }
+
 .footerContents2 {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  margin-top: 30px;
 }
+
 .footerDiv {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  margin: 0 70px;
+  flex-basis: calc(33.33% - 20px);
 }
+
 .footerTitle {
-  font-family: "DM Sans";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 36px;
-  color: #111;
+  font-size: 20px;
+  margin-bottom: 15px;
 }
+
 .footerLink {
-  font-family: "DM Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 27px;
-  color: #111;
+  color: #484848;
   text-decoration: none;
+  display: block;
+  margin-bottom: 10px;
 }
-.footerLink:hover {
-    color: #555;
-    transition: all 0.3s;
-  }
-@media (max-width: 1100px) {
-  .footerDiv {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    margin: 0 20px;
-  }
-}
-@media (max-width: 768px) {
-  .footerWrapper{
-    height: 50vh;
-    padding: 1px 3%;
-  }
-  .footerContents{
-    flex-direction: column;
-  }
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
   .footerContents2 {
-    margin-left: -10px;
+    flex-direction: column;
   }
-  .footerLogo{
-    padding-left: 1%;
-  }
-}
-@media (max-width: 515px) {
+
   .footerDiv {
-    margin: 0 10px;
+    flex-basis: 100%;
+    margin-bottom: 20px;
   }
-}
-@media (max-width: 480px) {
-  .footerWrapper{
-    height: 55vh;
-    padding: 1px 3%;
+
+  .footerLogo {
+    text-align: center;
   }
-  .footerLogo{
-    padding: 1px 0;
-    font-size: 24px;
-  }
-}
-@media (max-width: 435px) {
+
   .footerTitle {
-    font-weight: 550;
-    font-size: 16px;
-    line-height: 32px;
+    text-align: center;
   }
+
   .footerLink {
-    font-size: 14px;
+    text-align: center;
   }
 }
