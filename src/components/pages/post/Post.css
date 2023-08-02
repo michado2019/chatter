@@ -10,7 +10,7 @@
 .postAlert {
   position: absolute;
   right: 80px;
-  top: 150px;
+  top: 110px;
   color: green;
   display: flex;
   align-items: center;

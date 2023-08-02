@@ -6,6 +6,7 @@ export type AuthUserType = {
     photoUrl?: string | null;
     photoURL?: string | null;
     emailVerified?: boolean | null;
+    uid: string
   };
   export type UserProps = {
       user: AuthUserType | null,
