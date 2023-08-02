@@ -17,6 +17,8 @@
   max-height: 265px;
   min-height: 265px;
   margin-left: 40px;
+  position: sticky;
+  top: 66px;
 }
 .postDetails-contents {
   display: flex;
