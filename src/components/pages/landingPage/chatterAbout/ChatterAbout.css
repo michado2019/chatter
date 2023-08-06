@@ -15,18 +15,13 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
-}
-
-.chatterAbout-section1_1 {
-  flex: 1;
-  text-align: left;
-  margin-right: 20px;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 38px;
 }
 
 .chatterAbout-img {
-  max-width: 100%;
+  max-width: 300px;
+  margin: 20px;
 }
 
 .chatterAbout-section2 {
@@ -80,6 +75,12 @@
     text-align: center;
   }
 
+  .chatterAbout-img{
+    max-width: 100%;
+    min-width: 100%;
+    margin: 0;
+    margin-top: 40px;
+  }
   .chatterAbout-section2_boxDiv {
     flex-direction: column;
   }

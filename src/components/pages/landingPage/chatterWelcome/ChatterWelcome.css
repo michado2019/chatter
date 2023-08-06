@@ -13,7 +13,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 400px; 
+  height: 100vh; 
   background-color: rgba(0, 0, 0, 0.55);
 }
 
@@ -24,13 +24,33 @@
 .chatterWelcome-intro {
   font-size: 32px;
   margin-bottom: 20px;
+  animation: intro 1s;
+}
+@keyframes intro {
+0%{
+  margin-top: -600px;
+}
+100%{
+  margin-top: inherit;
+}
+  
 }
 
 .chatterWelcome-details {
   font-size: 18px;
   margin-bottom: 30px;
+  animation: details 1.3s;
 }
 
+@keyframes details{
+  0%{
+    margin-left: -700px;
+  }
+  100%{
+    margin-left: inherit;
+  }
+    
+  }
 .chatterWelcome-btn {
   display: inline-block;
   padding: 10px 20px;
@@ -39,6 +59,7 @@
   text-decoration: none;
   border-radius: 4px;
   font-size: 18px;
+  animation: btn 1.5s;
 }
 
 .chatterWelcome-btn:hover{
@@ -46,6 +67,15 @@
   transition: all 0.3s;
 }
 
+@keyframes btn {
+  0%{
+    margin-right: -700px;
+  }
+  100%{
+    margin-right: inherit;
+  }
+    
+  }
 /* Media Queries */
 @media screen and (max-width: 768px) {
   .chatterWelcome-intro {

@@ -42,7 +42,7 @@
 }
 
 /* Media Queries */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 576px) {
   .footerContents2 {
     flex-direction: column;
   }
