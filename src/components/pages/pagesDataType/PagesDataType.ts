@@ -27,5 +27,7 @@ export type Comment = {
   commentImg: string,
   commentName: string,
   commentDate: string,
-  replies: Comment[]
+  replies: Comment[],
+  replyMsg: string,
+  replyImg: string
 };

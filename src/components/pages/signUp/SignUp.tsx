@@ -10,18 +10,18 @@ const SignUp = () => {
   return (
     <div className="signUp-wrapper">
       <Navbar navbarLinks={navbarLinks}/>
-      <div className="signIn-Contents">
+      <div className="signUp-contents">
         <div
           className="signIn-Contents1"
           style={{ height: formDisplay ? "130vh" : "" }}
         >
-          <h2 className="signIn-title">CHATTER</h2>
+          <h2 className="signUp-title">CHATTER</h2>
           <p className="signIn-details">
             Unleash the Power of Words, Connect with Like-minded Readers and
             Writers
           </p>
         </div>
-        <div className="signIn-Contents2">
+        <div className="signUp-Contents2">
           <div className="signIn-Contents2_linkDiv">
             <h2
               className="signIn-Contents2_link"

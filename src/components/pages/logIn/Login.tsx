@@ -1,8 +1,11 @@
-import { useState, useContext } from "react";
-import { UserContext } from "../../context/userContext/UserContext";
+import React, { useState, useContext, useEffect } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import * as Yup from "yup";
 import { useFormik } from "formik";
+import * as Yup from "yup";
+import { getAuth, signInWithEmailAndPassword } from "../../firebase";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthUserType } from "../../context/userContext/userContextData/UserContextData";
+import { UserContext } from "../../context/userContext/UserContext";
 import "./Login.css";
 
 interface FormDataInterface {
@@ -11,8 +14,17 @@ interface FormDataInterface {
 }
 
 const Login = () => {
+  const userContext = useContext(UserContext);
+  const navigate = useNavigate();
   const [visibility, setVisibility] = useState(false);
-  // Formik configuration
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [successMsg, setSuccessMsg] = useState<string | null>(null);
+  const [user, setUser] = useState<AuthUserType | null>(() => {
+    const savedUser = localStorage.getItem("user");
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+  const [loading, setLoading] = useState(false);
+
   const formik = useFormik<FormDataInterface>({
     initialValues: {
       email: "",
@@ -27,42 +39,90 @@ const Login = () => {
         .required("Password is required"),
     }),
     onSubmit: (values) => {
-      // Form submission logic
-      console.log(values);
+      setLoading(true);
+
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, values.email, values.password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          if (user) {
+            setLoading(false);
+            setSuccessMsg("Login successful")
+            setUser(user);
+            userContext?.setUser({
+              displayName: user.displayName,
+              email: user.email,
+              photoUrl: user?.photoURL,
+              emailVerified: user?.emailVerified,
+            });
+            const navigateToSignIn = () => {
+              setTimeout(() => {
+                setSuccessMsg(null);
+                navigate("/blogs");
+              }, 3000);
+            };
+            navigateToSignIn();
+          }
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          setErrorMessage(errorMessage);
+          setLoading(false);
+          const clearError = () => {
+            setTimeout(() => {
+              setErrorMessage(null);
+              setSuccessMsg(null);
+            }, 5000);
+          };
+          clearError();
+        });
       formik.resetForm();
     },
   });
 
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(user));
+  }, [user]);
+
+  useEffect(() => {
+    if (user !== null) {
+      navigate("/blogs");
+    }
+  }, [user, navigate]);
+
   return (
     <div className="logIn-wrapper">
       <h2 className="logIn-form_title">Welcome back</h2>
-      <form className="register-form" onSubmit={formik.handleSubmit}>
-        <div className="registerForm1-flex2">
-          <label className="registerLabel">Email address</label>
+      {errorMessage && <div className="error-message" id="error-message">{errorMessage}</div>}
+      {successMsg && <div className="error-message" id="error-message">{successMsg}</div>}
+      <form className="login-form" onSubmit={formik.handleSubmit}>
+        <div className="loginForm1-flex2">
+          <label className="loginLabel">Email address</label>
           <input
             type="text"
             placeholder="johndoe@gmail.com"
-            className="registerForm2"
-            id="registerForm2"
+            className="loginForm2"
+            id="loginForm2"
             name="email"
             value={formik.values.email}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
           />
           {formik.touched.email && formik.errors.email && (
-            <div className="error-message">{formik.errors.email}</div>
+            <div className="loginError-message">{formik.errors.email}</div>
           )}
         </div>
-        <div className="registerForm1-flex2">
-          <label className="registerLabel">Password</label>
-          <div className="registerForm-flex_row">
+        <div className="loginForm1-flex2">
+          <label className="loginLabel">Password</label>
+          <div className="loginForm-flex_row">
             <input
               type={visibility ? "text" : "password"}
               placeholder="*********"
-              className="registerForm2"
+              className="loginForm2"
               name="password"
               value={formik.values.password}
               onChange={formik.handleChange}
+              autoComplete="on"
               onBlur={formik.handleBlur}
             />
             <Visibility
@@ -77,11 +137,16 @@ const Login = () => {
             />
           </div>
           {formik.touched.password && formik.errors.password && (
-            <div className="error-message">{formik.errors.password}</div>
+            <div className="loginError-message">{formik.errors.password}</div>
           )}
-          <button className="logIn-btn">Sign in</button>
+          <button className="logIn-btn">
+            {loading ? "Loging in..." : "Login"}
+          </button>
         </div>
       </form>
+      <button className="logIn-btn" id="login-btn">
+        <Link to="/retrievePassword">Forgot password?</Link>
+      </button>
     </div>
   );
 };

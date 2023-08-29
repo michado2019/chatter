@@ -137,6 +137,7 @@
     height: 24px;
     margin-right: 5px;
     cursor: pointer;
+    color: #543ee0 !important;
   }
   
   .bookmarkPage-post_comment,

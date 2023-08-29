@@ -4,12 +4,17 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import googleImg from "./assets/googleImg.png";
-import linkedInImg from "./assets/linkedInImg.png";
 import comfirmPImg from "./assets/VectorconfirmP.png";
-import { signInWithPopup, getAuth, provider } from "../../firebase";
+import {
+  signInWithPopup,
+  getAuth,
+  provider,
+  createUserWithEmailAndPassword,
+} from "../../firebase";
 import { UserContext } from "../../context/userContext/UserContext";
 import { AuthUserType } from "../../context/userContext/userContextData/UserContextData";
 import { useNavigate } from "react-router-dom";
+
 //FormData interface
 interface FormData {
   firstName: string;
@@ -17,7 +22,6 @@ interface FormData {
   email: string;
   password: string;
   confirmPassword: string;
-  userType: string;
 }
 
 const Register = () => {
@@ -26,6 +30,9 @@ const Register = () => {
 
   //States
   const [visibility, setVisibility] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [successMsg, setSuccessMsg] = useState<string | null>(null);
   const [user, setUser] = useState<AuthUserType | null>(() => {
     const savedUser = localStorage.getItem("user");
     return savedUser ? JSON.parse(savedUser) : null;
@@ -36,10 +43,15 @@ const Register = () => {
 
   //Google sign in
   const handleGoogleSignin = async () => {
+    setLoading(true);
+    setErrorMessage(null);
     const auth = getAuth();
     await signInWithPopup(auth, provider)
       .then((result) => {
         const user = result.user;
+        if (user !== null) {
+          setLoading(false);
+        }
         setUser(user);
         //Updating userContext
         userContext?.setUser({
@@ -54,6 +66,8 @@ const Register = () => {
         const errorCode = error.code;
         console.log(errorCode);
         const errorMessage = error.message;
+        setErrorMessage(errorMessage);
+        setLoading(false);
         console.log(errorMessage);
       });
   };
@@ -66,7 +80,6 @@ const Register = () => {
       email: "",
       password: "",
       confirmPassword: "",
-      userType: "Writer",
     },
     validationSchema: Yup.object().shape({
       firstName: Yup.string().required("First name is required"),
@@ -83,8 +96,46 @@ const Register = () => {
     }),
     onSubmit: (values) => {
       // Form submission logic
-      console.log(values);
+      setLoading(true);
+      setErrorMessage(null);
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, values.email, values.password)
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+          if (user !== null) {
+            setLoading(false);
+            setSuccessMsg("Registration successful");
+            //If there's a user, navigate to sign in page after 3secs
+            const navigateToSignIn = () => {
+              setTimeout(() => {
+                navigate("/sign-in");
+              }, 3000);
+            };
+            navigateToSignIn();
+          }
+        })
+        .catch((error) => {
+          // const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(errorMessage);
+          setLoading(false);
+          setSuccessMsg("Registration not successful");
+
+          //Clear error message aftre 5secs
+          const clearError = (setErrorMessage: any) => {
+            setTimeout(() => {
+              setErrorMessage(null);
+              setSuccessMsg("");
+            }, 5000);
+          };
+          clearError(setErrorMessage);
+          // ..
+        });
       formik.resetForm();
+      if (values.email === "" && values.password === "") {
+        setErrorMessage(null);
+      }
     },
   });
 
@@ -99,9 +150,35 @@ const Register = () => {
       navigate("/blogs");
     }
   }, [user, navigate]);
+
   return (
     <div className="registerWrapper">
-      <h2 className="registerTitle">Register as a Writer/Reader</h2>
+      <h2
+        className="registerTitle"
+        style={{ textAlign: "center", paddingBottom: "15px" }}
+      >
+        Register as a user of chatter
+      </h2>
+      {
+        //Error message
+        errorMessage !== null ? (
+          <div className="error-message" id="error-message">
+            {errorMessage}
+          </div>
+        ) : (
+          ""
+        )
+      }
+      {
+        //Success message
+        successMsg !== null ? (
+          <div className="error-message" id="error-message">
+            {successMsg}
+          </div>
+        ) : (
+          ""
+        )
+      }
       <form className="register-form" onSubmit={formik.handleSubmit}>
         <div className="registerForm1">
           <div className="registerForm1-flex">
@@ -141,19 +218,6 @@ const Register = () => {
             </div>
           </div>
         </div>
-        <div className="registerForm1">
-          <label className="registerLabel">Are you joining as?</label>
-          <select
-            className="registerForm1-input2"
-            name="userType"
-            value={formik.values.userType}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          >
-            <option value="Writer">Writer</option>
-            <option value="Reader">Reader</option>
-          </select>
-        </div>
         <div className="registerForm1-flexx">
           <div className="registerForm1-flex2">
             <label className="registerLabel">Email address</label>
@@ -182,6 +246,7 @@ const Register = () => {
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
+                autoComplete="on"
               />
               <Visibility
                 className="visibility"
@@ -206,6 +271,7 @@ const Register = () => {
                 placeholder="Confirm password"
                 className="registerForm2"
                 id="registerForm22"
+                autoComplete="on"
                 name="confirmPassword"
                 value={formik.values.confirmPassword}
                 onChange={formik.handleChange}
@@ -227,7 +293,10 @@ const Register = () => {
           </div>
         </div>
         <button className="signUp-btn" id="signUp-btn" type="submit">
-          Create account
+          {
+            //Loading
+            loading ? "Creating account..." : "Create account"
+          }
         </button>
       </form>
       <div className="registerForm1" id="registerForm1">
@@ -238,10 +307,6 @@ const Register = () => {
         >
           <img src={googleImg} alt="img" className="signUp-btn_icon" />
           Sign up with Google
-        </button>
-        <button className="signUp-btn" id="signUp-btn_white">
-          <img src={linkedInImg} alt="img" className="signUp-btn_icon" /> Sign
-          up with LinkedIn
         </button>
       </div>
     </div>

@@ -16,8 +16,13 @@ export type AllPostsType = {
   allPosts: PostData[];
 };
 
-const ForYou = (props: AllPostsType) => {
-  const { allPosts } = props;
+type isLoadingType = {
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const ForYou = (props: AllPostsType & isLoadingType ) => {
+  const { allPosts, isLoading, setIsLoading } = props;
 
   //States
   const [user, setUser] = useState({
@@ -41,7 +46,6 @@ const ForYou = (props: AllPostsType) => {
   const [bookmarkedPosts, setBookmarkedPosts] = useState<string[]>(
     initialBookmarkedPosts ? JSON.parse(initialBookmarkedPosts) : []
   );
-  const [isLoading, setIsLoading] = useState(true); // Loading state
 
   //Handlers
   const handleBookmark = (id: string | number) => {
@@ -131,14 +135,14 @@ const ForYou = (props: AllPostsType) => {
   };
 
   useEffect(() => {
+    setIsLoading(true); // Set loading state to true while data is being fetched
     const savedUser = localStorage.getItem("user");
     if (savedUser !== null) {
       const parsedUser = JSON.parse(savedUser);
       setUser(parsedUser);
     }
     setPostData(allPosts);
-    setIsLoading(false); // Set loading state to false after data is loaded
-  }, [allPosts]);
+  }, [allPosts, setIsLoading]);
 
   // Update the local storage whenever bookmarkedPosts change
   useEffect(() => {
@@ -158,25 +162,26 @@ const ForYou = (props: AllPostsType) => {
     return dateA - dateB;
   };
 
+  if(postData.length > 0){
+    setIsLoading(false); // Set loading state to false after data is loaded
+  }
   const sortedPosts = postData.sort(compareDates);
-
-  if (isLoading) {
-    return <Loading />; // Render a loading component while data is being fetched
-  }
-
-  if (postData.length === 0) {
-    return (
-      <div className="forYou-no_post">
-        <p>No post yet!</p>
-      </div>
-    );
-  }
 
   return (
     <div className="forYou-wrapper">
       <div className="forYou-contents">
+        {
+          isLoading !==false ?
+          <div><Loading /></div> : ""
+        }
+        {
+    postData.length === 0 && isLoading === false? 
+    <div className="forYou-no_post">
+      <p>No post yet!</p>
+    </div>: ""
+}
         <div>
-          {sortedPosts.map((each, index) => {
+          {sortedPosts?.map((each, index) => {
             const textContent = convertToHTML(each.html);
             const wordCount = textContent.split(" ").length;
             const timingInMinutes = Math.ceil(wordCount / 30);
@@ -233,7 +238,7 @@ const ForYou = (props: AllPostsType) => {
                 >
                   <div className="forYou-comment_form">
                     <img
-                      src={user.photoURL}
+                      src={user?.photoURL}
                       alt="img"
                       className="forYou-comment_userImg"
                     />

@@ -46,6 +46,15 @@ const PostDetails = (props: AllPostsType) => {
     initialBookmarkedPosts ? JSON.parse(initialBookmarkedPosts) : []
   );
   const [isLoading, setIsLoading] = useState(true); // Loading state
+  // States for handling replies
+    const [replyTextarea, setReplyTextarea] = useState({
+      id: "",
+      replyMsg: "",
+    });
+  
+    const [displayedReplyId, setDisplayedReplyId] = useState<string | null>(
+      null
+    );
 
   //useEffect
   useEffect(() => {
@@ -90,6 +99,7 @@ const PostDetails = (props: AllPostsType) => {
     // Open a new window with the sharing URL
     window.open(sharingUrl, "_blank");
   };
+
   const handleBookmark = (id: string | number) => {
     if (bookmarkedPosts.includes(id.toString())) {
       // If the post is already bookmarked, remove it from the bookmarkedPosts array
@@ -155,6 +165,66 @@ const PostDetails = (props: AllPostsType) => {
     const docRef = doc(db, "posts", id.toString());
     updateDoc(docRef, {
       comment: newPostData.find((each) => each.id === id)?.comment,
+    });
+  };
+
+
+  const handleDisplayReply = (id: string | number) => {
+    setDisplayedReplyId((prevId) =>
+      prevId === id.toString() ? null : id.toString()
+    );
+  };
+
+  const handleReplyChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+    id: string
+  ) => {
+    setReplyTextarea({
+      ...replyTextarea,
+      replyMsg: e.target.value,
+      id: id,
+    });
+  };
+
+  const handlePostReply = (postId: string | number, commentId: string) => {
+    const newPostData = postData.map((each) => {
+      if (each.id === postId) {
+        const newComments = each.comment?.map((comment) => {
+          if (comment.id === commentId) {
+            const reply = {
+              ...replyTextarea,
+              writer: {
+                displayName: user.displayName,
+                photoURL: user.photoURL,
+                replyMsg: replyTextarea.replyMsg,
+              },
+            };
+            return {
+              ...comment,
+              replies: [...(comment.replies || []), reply],
+            };
+          }
+          return comment;
+        });
+        return {
+          ...each,
+          comment: newComments,
+        };
+      }
+      return each;
+    });
+
+    setPostData(newPostData as PostData[]);
+
+    const docRef = doc(db, "posts", postId.toString());
+    updateDoc(docRef, {
+      comment: newPostData.find((each) => each.id === postId)?.comment,
+    });
+
+    setDisplayedReplyId(null); // Hide the reply form after posting
+    setReplyTextarea({
+      id: "",
+      replyMsg: "",
     });
   };
 
@@ -287,8 +357,6 @@ const PostDetails = (props: AllPostsType) => {
                     >
                       Post
                     </button>
-
-                    {/* Display comments */}
                     {each.comment?.map((comment) => (
                       <div key={comment.id} className="postDetails-reply">
                         <div className="postDetails-reply_flex">
@@ -314,16 +382,61 @@ const PostDetails = (props: AllPostsType) => {
                           </p>
                         </div>
                         <div className="postDetails-replies_div">
-                          <p className="postDetails-comment_content">
-                            {comment.replies?.length}
-                          </p>
-                          {comment.replies?.map((each) => {
-                            return (
-                              <div>
-                                <p>{each.replies?.length}</p>
+                                  <h3>
+                                    {comment?.replies?.length}
+                                  </h3>
+                          {
+                            // Display replies
+                            comment.replies?.map((reply) => (
+                              <div
+                                key={reply.id}
+                                className="postDetails-reply_flex"
+                              >
+                                <div className="postDetails-reply_flex2">
+                                  <p>
+                                    {reply.replyMsg}
+                                  </p>
+                                  <img
+                                    src={reply.replyImg}
+                                    alt="img"
+                                    className="postDetails-comment_userImg"
+                                  />
+                                </div>
                               </div>
-                            );
-                          })}
+                            ))
+                          }
+                          {/* Display reply form */}
+                          {displayedReplyId === comment.id.toString() && (
+                            <div className="postDetails-reply_form">
+                              <img
+                                src={user.photoURL}
+                                alt="img"
+                                className="postDetails-reply_userImg"
+                              />
+                              <textarea
+                                className="postDetails-reply_textarea"
+                                name="textarea"
+                                placeholder="Reply to this comment..."
+                                onChange={(e) => handleReplyChange(e, comment.id)}
+                                value={replyTextarea.replyMsg}
+                              />
+                              <button
+                                className="postDetails-reply_btn"
+                                style={{
+                                  display: replyTextarea.replyMsg?.length > 0 ? "block" : "none",
+                                }}
+                                onClick={() => handlePostReply(each.id, comment.id)}
+                              >
+                                Post
+                              </button>
+                            </div>
+                          )}
+                          <button
+                            className="postDetails-reply_toggle"
+                            onClick={() => handleDisplayReply(comment.id)}
+                          >
+                            Reply
+                          </button>
                         </div>
                       </div>
                     ))}
@@ -352,7 +465,7 @@ const PostDetails = (props: AllPostsType) => {
                         className="forYou-reactionsImg"
                         onClick={() => handleDisplay(each.id)}
                       >
-                        Show comment(s)
+                        Comment(s)
                       </div>
                     </div>
                     <div className="forYou-post_love">
@@ -409,3 +522,8 @@ const PostDetails = (props: AllPostsType) => {
 };
 
 export default PostDetails;
+
+
+ 
+
+ 

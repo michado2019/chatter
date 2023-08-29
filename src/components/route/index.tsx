@@ -22,10 +22,12 @@ import { db } from "../firebase";
 import Notifications from "../pages/notifications/Notifications";
 import ErrorPage from "../pages/errorPage/ErrorPage";
 import PostDetails from "../pages/postDetails/PostDetails";
+import RetrievePassword from "../pages/retrievePassword/RetrievePassword";
 
 const AppRouter = () => {
   //  //States
   const [allPosts, setAllPosts] = useState<PostData[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   //UseContexts
   const userContext = useContext(UserContext); //Context for authenticated user
@@ -33,18 +35,24 @@ const AppRouter = () => {
   // useEffect to fetch data from the database
   useEffect(() => {
     // Fetch data from the database
+    setIsLoading(true);
     async function getAllPosts() {
       const dbRef = collection(db, "posts");
       const posts = await getDocs(dbRef);
       if (!dbRef) {
         setAllPosts([]);
+        setIsLoading(false);
+      } else {
+        if(posts.docs.length > 0){
+          setAllPosts(
+            posts.docs.map((doc) => ({
+              ...(doc.data() as PostData),
+              id: doc.id,
+            }))
+          );
+        }
+        setIsLoading(false);
       }
-      setAllPosts(
-        posts.docs.map((doc) => ({
-          ...(doc.data() as PostData),
-          id: doc.id,
-        }))
-      );
     }
     getAllPosts();
   }, []);
@@ -67,7 +75,7 @@ const AppRouter = () => {
             userContext?.user === null ? (
               <Navigate to="/sign-in" />
             ) : (
-              <Blogs allPosts={allPosts} />
+              <Blogs allPosts={allPosts} isLoading={isLoading} setIsLoading={setIsLoading} />
             )
           }
         >
@@ -75,7 +83,7 @@ const AppRouter = () => {
           <Route path="/blogs/*/feed" element={<Feed />}>
             <Route
               path="/blogs/*/feed/forYou"
-              element={<ForYou allPosts={allPosts} />}
+              element={<ForYou allPosts={allPosts} isLoading={isLoading} setIsLoading={setIsLoading} />}
             />
           </Route>
           <Route
@@ -100,6 +108,7 @@ const AppRouter = () => {
           path="/postDetails/:id"
           element={<PostDetails allPosts={allPosts} />}
         />
+        <Route path="/retrievePassword" element={<RetrievePassword />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>

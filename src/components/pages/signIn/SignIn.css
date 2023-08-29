@@ -41,9 +41,9 @@
   justify-content: center;
   background-color: #fff;
   width: 70%;
-  height: 100vh;
+  height: 70vh;
   padding: 0 40px;
-  margin-top: -70px;
+  margin-top: 30px;
 }
 .signIn-Contents2_linkDiv {
   display: flex;

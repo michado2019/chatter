@@ -1,31 +1,103 @@
+/* Login.css */
+
 .logIn-wrapper {
-  margin-left: -240px;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
 }
+
 .logIn-form_title {
-  text-align: center;
-  margin: 40px 0;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
-.logIn-btn {
-  min-width: 199%;
-  max-width: 200%;
-  margin: 10px 0;
-  padding: 10px 12px 10px 20px;
-  background: #543ee0;
-  border: 1px solid #ced4da;
-  box-shadow: 0px 2px 2px rgba(33, 37, 41, 0.06),
-    0px 0px 1px rgba(33, 37, 41, 0.08);
-  border-radius: 7px;
-  font-family: "DM Sans";
-  font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  color: #fff;
-  margin-left: 10px;
+
+.error-message {
+  color: red;
+  margin-top: 10px;
 }
-.logIn-btn:hover {
-  background-color: #493ba0;
-  transition: all 0.3s;
+
+.success-message {
+  color: green;
+  margin-top: 10px;
+}
+
+.login-form {
+  margin-top: 20px;
+  padding-right: 20px;
+}
+
+.loginLabel {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.loginForm2 {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+
+.loginError-message{
+  color: red;
+  margin-top: -10px;
+  font-size: 12px;
+  margin-bottom: 10px;
+}
+
+.loginForm-flex_row {
+  position: relative;
+}
+
+.visibility {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
   cursor: pointer;
 }
 
-/*British council english score*/
+.logIn-btn {
+  background-color: #543ee0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logIn-btn:hover {
+  color: #543ee0;
+  border: 1px solid #543ee0;
+  background-color: #fff;
+  transition: all 0.3s;
+}
+
+#login-btn {
+  margin-top: 10px;
+  text-align: right;
+  background-color: #fff;
+  border: 1px solid #543ee0;
+}
+
+Link{
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .logIn-wrapper {
+    max-width: 100%;
+  }
+
+  .logIn-form_title {
+    font-size: 20px;
+  }
+}

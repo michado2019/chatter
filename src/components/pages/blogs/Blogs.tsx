@@ -12,7 +12,12 @@ import Notifications from "../notifications/Notifications";
 import { useState } from "react";
 import SmallScreenBlogSidebar from "../smallScreenBlogSidebar/SmallScreenBlogSidebar";
 
-const Blogs = (props: AllPostsType) => {
+type isLoadingType = {
+  isLoading: boolean;
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+};
+const Blogs = (props: AllPostsType & isLoadingType) => {
+  const { isLoading, setIsLoading } = props as isLoadingType;
   //States
   const [display, setDisplay] = useState(false); //Toggle blog sidebar
   return (
@@ -25,13 +30,13 @@ const Blogs = (props: AllPostsType) => {
         <SmallScreenBlogSidebar display={display} setDisplay={setDisplay} />
           <Routes>
             <Route path="/" element={<Feed />}>
-              <Route index element={<ForYou allPosts={props.allPosts} />} />
+              <Route index element={<ForYou allPosts={props.allPosts} isLoading={isLoading} setIsLoading={setIsLoading} />} />
             </Route>
             <Route path="/feed/*" element={<Feed />}>
-              <Route index element={<ForYou allPosts={props.allPosts} />} />
+              <Route index element={<ForYou allPosts={props.allPosts}isLoading={isLoading} setIsLoading={setIsLoading} />} />
               <Route
                 path="/feed/*/forYou"
-                element={<ForYou allPosts={props.allPosts} />}
+                element={<ForYou allPosts={props.allPosts} isLoading={isLoading} setIsLoading={setIsLoading}/>}
               />
             </Route>
             <Route path="/bookMarks" element={<BookMarks allPosts={props.allPosts}/>} />
