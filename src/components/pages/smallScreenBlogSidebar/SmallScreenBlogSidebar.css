@@ -2,11 +2,25 @@
   width: 280px;
   position: fixed;
   left: 0;
-  top: 52.5px;
-  height: 100%;
+  top: 55px;
+  overflow-y: scroll;
   background-color: #fff;
-  border: 1px solid #ddd;
+  max-height: calc(100vh - 55px); /* Set a maximum height to make it scrollable */
 }
+
+.smallScreenBlogSidebar::-webkit-scrollbar {
+  width: 3px;
+}
+
+.smallScreenBlogSidebar::-webkit-scrollbar-track {
+  background: #f0f0f0; /* Change scrollbar track color */
+}
+
+.smallScreenBlogSidebar::-webkit-scrollbar-thumb {
+  background: #888; /* Change scrollbar thumb color */
+  border-radius: 20px;
+}
+
 .smallScreenBlogSidebarMenu {
   font-size: 1.5rem;
   color: #fff !important;

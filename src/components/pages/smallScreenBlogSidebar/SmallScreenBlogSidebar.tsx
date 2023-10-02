@@ -23,7 +23,7 @@ const SmallScreenBlogSidebar = (props: BlogNavbarType) => {
   const { display, setDisplay } = props;
   //States
   const [skip, setSkip] = useState(3);
-  const [isSkip, setIsSkip] = useState(false);
+  const [isSkip, setIsSkip] = useState(true);
 
   //Handle skip
   const handleSkip = () => {
