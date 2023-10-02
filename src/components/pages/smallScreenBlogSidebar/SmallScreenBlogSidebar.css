@@ -5,6 +5,7 @@
   top: 55px;
   overflow-y: scroll;
   background-color: #fff;
+  z-index: 999;
   max-height: calc(100vh - 55px); /* Set a maximum height to make it scrollable */
 }
 
