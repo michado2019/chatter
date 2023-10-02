@@ -16,7 +16,7 @@ import { getAuth, signOut } from "firebase/auth";
 const BlogSidebar = () => {
   //States
   const [skip, setSkip] = useState(3);
-  const [isSkip, setIsSkip] = useState(false);
+  const [isSkip, setIsSkip] = useState(true);
 
   //Handle skip
   const handleSkip = () => {
