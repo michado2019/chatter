@@ -182,7 +182,9 @@ const BlogSidebar = () => {
             );
           })}
           <button onClick={handleSkip} className="blogSidebar-see_all">
-            See all
+            {
+              isSkip?"See more":"See less"
+}
           </button>
         </div>
         <div className="blogSidebar-section">
