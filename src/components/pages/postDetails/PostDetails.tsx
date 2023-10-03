@@ -47,14 +47,12 @@ const PostDetails = (props: AllPostsType) => {
   );
   const [isLoading, setIsLoading] = useState(true); // Loading state
   // States for handling replies
-    const [replyTextarea, setReplyTextarea] = useState({
-      id: "",
-      replyMsg: "",
-    });
-  
-    const [displayedReplyId, setDisplayedReplyId] = useState<string | null>(
-      null
-    );
+  const [replyTextarea, setReplyTextarea] = useState({
+    id: "",
+    replyMsg: "",
+  });
+
+  const [displayedReplyId, setDisplayedReplyId] = useState<string | null>(null);
 
   //useEffect
   useEffect(() => {
@@ -167,7 +165,6 @@ const PostDetails = (props: AllPostsType) => {
       comment: newPostData.find((each) => each.id === id)?.comment,
     });
   };
-
 
   const handleDisplayReply = (id: string | number) => {
     setDisplayedReplyId((prevId) =>
@@ -382,9 +379,7 @@ const PostDetails = (props: AllPostsType) => {
                           </p>
                         </div>
                         <div className="postDetails-replies_div">
-                                  <h3>
-                                    {comment?.replies?.length}
-                                  </h3>
+                          <h3>{comment?.replies?.length}</h3>
                           {
                             // Display replies
                             comment.replies?.map((reply) => (
@@ -393,9 +388,7 @@ const PostDetails = (props: AllPostsType) => {
                                 className="postDetails-reply_flex"
                               >
                                 <div className="postDetails-reply_flex2">
-                                  <p>
-                                    {reply.replyMsg}
-                                  </p>
+                                  <p>{reply.replyMsg}</p>
                                   <img
                                     src={reply.replyImg}
                                     alt="img"
@@ -417,15 +410,22 @@ const PostDetails = (props: AllPostsType) => {
                                 className="postDetails-reply_textarea"
                                 name="textarea"
                                 placeholder="Reply to this comment..."
-                                onChange={(e) => handleReplyChange(e, comment.id)}
+                                onChange={(e) =>
+                                  handleReplyChange(e, comment.id)
+                                }
                                 value={replyTextarea.replyMsg}
                               />
                               <button
                                 className="postDetails-reply_btn"
                                 style={{
-                                  display: replyTextarea.replyMsg?.length > 0 ? "block" : "none",
+                                  display:
+                                    replyTextarea.replyMsg?.length > 0
+                                      ? "block"
+                                      : "none",
                                 }}
-                                onClick={() => handlePostReply(each.id, comment.id)}
+                                onClick={() =>
+                                  handlePostReply(each.id, comment.id)
+                                }
                               >
                                 Post
                               </button>
@@ -522,8 +522,3 @@ const PostDetails = (props: AllPostsType) => {
 };
 
 export default PostDetails;
-
-
- 
-
- 

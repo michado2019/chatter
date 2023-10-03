@@ -58,7 +58,7 @@ const Login = () => {
             const navigateToSignIn = () => {
               setTimeout(() => {
                 setSuccessMsg(null);
-                navigate("/blogs");
+                navigate("/blogs/feed");
               }, 3000);
             };
             navigateToSignIn();
@@ -86,7 +86,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user !== null) {
-      navigate("/blogs");
+      navigate("/blogs/feed");
     }
   }, [user, navigate]);
 

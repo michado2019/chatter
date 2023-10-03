@@ -147,7 +147,7 @@ const Register = () => {
   //useEffect to navigate to blogs if user exists
   useEffect(() => {
     if (user !== null) {
-      navigate("/blogs");
+      navigate("/blogs/feed");
     }
   }, [user, navigate]);
 

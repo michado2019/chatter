@@ -105,7 +105,7 @@ const AppRouter = () => {
           <Route path="/sign-up/login" element={<Login />} />
         </Route>
         <Route
-          path="/postDetails/:id"
+          path="blogs/feed/forYou/:id"
           element={<PostDetails allPosts={allPosts} />}
         />
         <Route path="/retrievePassword" element={<RetrievePassword />} />

@@ -2,31 +2,26 @@
 export const blogSidebarDataOne = [
   {
     id: 1,
-    img: "VectorfeedImg.png",
     link: "Feed",
     path: "feed",
   },
   {
     id: 2,
-    img: "VectorbookMarksImg.png",
     link: "Bookmarks",
     path: "bookMarks",
   },
   {
     id: 3,
-    img: "VectorteamImg.png",
     link: "Team blogs",
     path: "teamBlogs",
   },
   {
     id: 4,
-    img: "VectordraftsImg.png",
     link: "Drafts",
     path: "draft",
   },
   {
     id: 5,
-    img: "VectoranalyticsImg.png",
     link: "Analytics",
     path: "analytics",
   },

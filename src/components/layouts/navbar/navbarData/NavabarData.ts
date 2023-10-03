@@ -26,7 +26,7 @@ export interface NavbarLink {
     },
     {
       id: 4,
-      link: "/blogs",
+      link: "/blogs/feed",
       name: "Blogs",
     },
   ];

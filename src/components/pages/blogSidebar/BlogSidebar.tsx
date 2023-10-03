@@ -71,6 +71,7 @@ const BlogSidebar = () => {
       setUser(parsedUser);
     }
   }, []);
+
   return (
     <div className="blogSidebar-wrapper">
       <div className="blogSidebar-contents" id="blogSidebar-contents">
@@ -81,88 +82,30 @@ const BlogSidebar = () => {
           >
             {title[0]}
           </h2>
-          <div className="blogSidebar-content">
-            <div className="blogSidebar-content_flex">
-              <img
-                src={feedImg}
+          {blogSidebarDataOne.map((each) => {
+            return (
+              <div>
+                <div className="blogSidebar-content">
+                  <div className="blogSidebar-content_flex">
+                    <img
+                src={each.id===1?feedImg:""||each.id===2?bookMarksImg:""||each.id===3?teamBlogsImg:""||each.id===4?draftsImg:""||each.id===5?analyticsImg:""}
                 alt="img"
                 className="blogSidebar-contents_img"
               />
-              <NavLink
-                to={blogSidebarDataOne[0].path}
-                style={({ isActive }) =>
-                  isActive ? activeStyle : inActiveStyle
-                }
-                className="blogSidebar-contents_link"
-              >
-                {blogSidebarDataOne[0].link}
-              </NavLink>
-            </div>
-            <div className="blogSidebar-content_flex">
-              <img
-                src={bookMarksImg}
-                alt="img"
-                className="blogSidebar-contents_img"
-              />
-              <NavLink
-                to={blogSidebarDataOne[1].path}
-                style={({ isActive }) =>
-                  isActive ? activeStyle : inActiveStyle
-                }
-                className="blogSidebar-contents_link"
-              >
-                {blogSidebarDataOne[1].link}
-              </NavLink>
-            </div>
-            <div className="blogSidebar-content_flex">
-              <img
-                src={teamBlogsImg}
-                alt="img"
-                className="blogSidebar-contents_img"
-              />
-              <NavLink
-                to={blogSidebarDataOne[2].path}
-                style={({ isActive }) =>
-                  isActive ? activeStyle : inActiveStyle
-                }
-                className="blogSidebar-contents_link"
-              >
-                {blogSidebarDataOne[2].link}
-              </NavLink>
-            </div>
-            <div className="blogSidebar-content_flex">
-              <img
-                src={draftsImg}
-                alt="img"
-                className="blogSidebar-contents_img"
-              />
-              <NavLink
-                to={blogSidebarDataOne[3].path}
-                style={({ isActive }) =>
-                  isActive ? activeStyle : inActiveStyle
-                }
-                className="blogSidebar-contents_link"
-              >
-                {blogSidebarDataOne[3].link}
-              </NavLink>
-            </div>
-            <div className="blogSidebar-content_flex">
-              <img
-                src={analyticsImg}
-                alt="img"
-                className="blogSidebar-contents_img"
-              />
-              <NavLink
-                to={blogSidebarDataOne[4].path}
-                style={({ isActive }) =>
-                  isActive ? activeStyle : inActiveStyle
-                }
-                className="blogSidebar-contents_link"
-              >
-                {blogSidebarDataOne[4].link}
-              </NavLink>
-            </div>
-          </div>
+                    <NavLink
+                      to={`/blogs/${each.path}`}
+                      style={({ isActive }) =>
+                        isActive ? activeStyle : inActiveStyle
+                      }
+                      className="blogSidebar-contents_link"
+                    >
+                      {each.link}
+                    </NavLink>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
         <div className="blogSidebar-section">
           <h2 className="blogSidebar-section_title">{title[1]}</h2>
@@ -182,46 +125,36 @@ const BlogSidebar = () => {
             );
           })}
           <button onClick={handleSkip} className="blogSidebar-see_all">
-            {
-              isSkip?"See more":"See less"
-}
+            {isSkip ? "See more" : "See less"}
           </button>
         </div>
         <div className="blogSidebar-section">
           <h2 className="blogSidebar-section_title">{title[2]}</h2>
           <div className="blogSidebar-personal">
-            <div className="blogSidebar-content_flex">
-              <img
-                src={accountImg}
+          {personalData.map((each) => {
+            return (
+              <div>
+                <div className="blogSidebar-content">
+                  <div className="blogSidebar-content_flex">
+                    <img
+                src={each.id===1?bellImg:""||each.id===2?accountImg:""}
                 alt="img"
                 className="blogSidebar-contents_img"
               />
-              <NavLink
-                to={personalData[0].path}
-                className="blogSidebar-contents_link2"
-                style={({ isActive }) =>
-                  isActive ? activeStyle : inActiveStyle
-                }
-              >
-                {personalData[0].link}
-              </NavLink>
-            </div>
-            <div className="blogSidebar-content_flex">
-              <img
-                src={bellImg}
-                alt="img"
-                className="blogSidebar-contents_img"
-              />
-              <NavLink
-                to={personalData[1].path}
-                className="blogSidebar-contents_link2"
-                style={({ isActive }) =>
-                  isActive ? activeStyle : inActiveStyle
-                }
-              >
-                {personalData[1].link}
-              </NavLink>
-            </div>
+                    <NavLink
+                      to={`/blogs/${each.path}`}
+                      style={({ isActive }) =>
+                        isActive ? activeStyle : inActiveStyle
+                      }
+                      className="blogSidebar-contents_link"
+                    >
+                      {each.link}
+                    </NavLink>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
           </div>
           <div className="blogSidebar-logout_div">
             <h2 className="userNameAlp">{user?.displayName?.slice(0, 2)}</h2>

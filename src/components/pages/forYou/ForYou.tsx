@@ -22,7 +22,7 @@ type isLoadingType = {
 };
 
 const ForYou = (props: AllPostsType & isLoadingType ) => {
-  const { allPosts, isLoading, setIsLoading } = props;
+const { allPosts, isLoading, setIsLoading } = props;
 
   //States
   const [user, setUser] = useState({
@@ -201,7 +201,7 @@ const ForYou = (props: AllPostsType & isLoadingType ) => {
                   </div>
                 </div>
                 <Link
-                  to={`/postDetails/${each.id}`}
+                  to={`forYou/${each.id}`}
                   className="forYou-details_link"
                 >
                   <div className="forYou-content_flex3">
